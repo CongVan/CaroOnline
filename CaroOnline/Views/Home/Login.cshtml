@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Caro Online</title>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/mdb.min.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/font/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    
+</head>
+<body class="mt-0 pt-0 px-5 text-left">
+
+    <!--Card-->
+    <div class="container">
+        <div class="row ">
+            <div class="col-3"></div>
+            <div class="col-5">
+                <div class="card card-cascade wider reverse my-1">
+
+                    <!--Card image-->
+                    <div class="view overlay hm-white-slight">
+                        <img src="~/Content/Cocaro.jpg" class="img-fluid" />
+                        @*<img src="~/Content/img/co-caro.jpg"  class="img-fluid">*@
+                        <a href="#!">
+                            <div class="mask"></div>
+                        </a>
+                    </div>
+                    <!--/Card image-->
+                    <!--Card content-->
+                    <div class="card-body text-left grey-text">
+                        <form>
+                            <p class="h5 text-center mb-4">Sign up</p>
+
+                            <div class="md-form">
+                                <i class="fa fa-user prefix grey-text"></i>
+                                <input type="text" id="orangeForm-name" class="form-control grey-text">
+                                <label for="orangeForm-name black-text">Your name</label>
+                            </div>
+                            <div class="md-form">
+                                <i class="fa fa-envelope prefix grey-text"></i>
+                                <input type="text" id="orangeForm-email" class="form-control">
+                                <label for="orangeForm-email grey-text">Your email</label>
+                            </div>
+
+                            <div class="md-form">
+                                <i class="fa fa-lock prefix grey-text"></i>
+                                <input type="password" id="orangeForm-pass" class="form-control">
+                                <label for="orangeForm-pass grey-text">Your password</label>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-deep-orange">Sign up</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!--/.Card content-->
+
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+    
+    <!--/.Card-->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/mdb.min.js"></script>
+</body>
+</html>

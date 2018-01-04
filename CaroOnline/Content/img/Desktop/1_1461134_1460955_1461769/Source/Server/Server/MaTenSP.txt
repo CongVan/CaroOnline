@@ -1,0 +1,22 @@
+Ma San Pham	Ten San Pham
+
+001		USB-Flash-C10-16gb
+002		USB-Flash-C10-32gb
+003		SamSung-Galaxy-Tab2A7
+004		Loa-ViTinh-Suket-207
+005		USB-Flash-C10-64gb
+006		USB-Kingtons-C10-64gb
+007		USB-Kingtons-C10-128gb
+008		Sony-Xperia-M5
+009		Sony-Xperia-Z5
+010		Samsung-Galaxy-S7
+011		Head-Phone-Chup-2203
+012		Chuot-Quang-Logitech-G502
+013		Chuot-Game-DRW-G9
+014		Chuot-Game-DRW-G8
+015		Chuot-Game-DRW-G7
+016		Chuot-Game-DRW-G4
+017		Iphone-5S-B
+018		Iphone-5S-W
+019		Asus-G502-VY
+020		Sac-Du-Phong-50000mA
