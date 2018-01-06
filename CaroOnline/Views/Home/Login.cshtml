@@ -3,7 +3,7 @@
 }
 
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,67 +12,187 @@
     <link href="~/Content/css/mdb.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
     <link href="~/Content/font/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    
+
 </head>
-<body class="mt-0 pt-0 px-5 text-left">
+<body class="mt-5 pt-0 px-5 text-left">
 
     <!--Card-->
     <div class="container">
         <div class="row ">
-            <div class="col-3"></div>
-            <div class="col-5">
-                <div class="card card-cascade wider reverse my-1">
 
-                    <!--Card image-->
-                    <div class="view overlay hm-white-slight">
-                        <img src="~/Content/Cocaro.jpg" class="img-fluid" />
-                        @*<img src="~/Content/img/co-caro.jpg"  class="img-fluid">*@
-                        <a href="#!">
-                            <div class="mask"></div>
-                        </a>
+            <div class="col-6">
+                <div class="modal-dialog cascading-modal mt-2" role="document">
+                    <!--Content-->
+                    <div class="modal-content">
+
+                        <!--Modal cascading tabs-->
+                        <div class="modal-c-tabs">
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs tabs-2 light-blue darken-3" role="tablist">
+                                <li class="nav-item waves-effect waves-light">
+                                    <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab" aria-selected="true">
+                                        <i class="fa fa-user mr-1"></i> ĐĂNG NHẬP
+                                    </a>
+                                </li>
+                                <li class="nav-item waves-effect waves-light">
+                                    <a class="nav-link" data-toggle="tab" href="#panel2" role="tab" aria-selected="false">
+                                        <i class="fa fa-user-plus mr-1"></i> ĐĂNG KÝ
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panels -->
+                            <div class="tab-content">
+                                <!--Panel 1-->
+                                <div class="tab-pane fade in active show" id="panel1" role="tabpanel">
+
+                                    <!--Body-->
+                                    <form action="/Home/Login" method="post">
+                                        <div class="modal-body mb-1">
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-user-circle-o prefix"></i>
+                                                <input type="text" id="form11" class="form-control" name="Name" required>
+                                                <label for="form11">Tên đăng nhập</label>
+                                            </div>
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-lock prefix"></i>
+                                                <input type="password" id="form12" class="form-control" name="Pass" required>
+                                                <label for="form12">Mật khẩu</label>
+                                            </div>
+                                            <div class="text-center mt-2">
+                                                <button type="submit" class="btn btn-outline-blue btn-rounded waves-effect waves-light">
+                                                    Đăng nhập
+                                                    <i class="fa fa-sign-in ml-1"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                    <!--Footer-->
+                                    <div class="modal-footer display-footer">
+                                        <div class="options text-center text-md-right mt-1">
+                                            @*<p>
+                                                    Not a member?
+                                                    <a href="#" class="blue-text">Sign Up</a>
+                                                </p>*@
+                                            <p>
+                                                Bạn quên
+                                                <a href="#" class="blue-text">mật khẩu?</a>
+                                            </p>
+                                        </div>
+                                        @* <button type="button" class="btn btn-outline-info waves-effects ml-auto" data-dismiss="modal">Close</button>*@
+                                    </div>
+
+                                </div>
+                                <!--/.Panel 1-->
+                                <!--Panel 2-->
+                                <div class="tab-pane fade" id="panel2" role="tabpanel">
+                                    <form action="/Home/Register" method="post" id="frmRegister">
+                                        <div class="modal-body">
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-envelope prefix"></i>
+                                                <input type="email" id="form13" class="form-control" name="Email" required>
+                                                <label for="form13">Email</label>
+                                            </div>
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-user-circle-o prefix"></i>
+                                                <input type="text" id="" class="form-control" name="Name" required>
+                                                <label for="form13">Tên đăng nhập</label>
+                                            </div>
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-lock prefix"></i>
+                                                <input type="password" id="form14" name="Pass" class="form-control" required>
+                                                <label for="form14">Mật khẩu</label>
+                                            </div>
+
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-lock prefix"></i>
+                                                <input type="password" id="form15" name="RePass" class="form-control" required>
+                                                <label for="form15">Nhập lại mật khẩu</label>
+                                            </div>
+
+                                            <div class="text-center form-sm mt-2">
+                                                <button type="submit" class="btn btn-outline-blue btn-rounded waves-effect waves-light">
+                                                    Đăng ký
+                                                    <i class="fa fa-sign-in ml-1"></i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    <!--Body-->
+                                    <!--Footer-->
+                                    <div class="modal-footer">
+                                        @*<div class="options text-right">
+                                                <p class="pt-1">
+                                                    Already have an account?
+                                                    <a href="#" class="blue-text">Log In</a>
+                                                </p>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>*@
+                                    </div>
+                                </div>
+                                <!--/.Panel 2-->
+                            </div>
+
+                        </div>
                     </div>
-                    <!--/Card image-->
-                    <!--Card content-->
-                    <div class="card-body text-left grey-text">
-                        <form>
-                            <p class="h5 text-center mb-4">Đăng nhập</p>
-
-                            <div class="md-form">
-                                <i class="fa fa-user prefix grey-text"></i>
-                                <input type="text" id="orangeForm-name" class="form-control grey-text">
-                                <label for="orangeForm-name black-text">Your name</label>
-                            </div>
-                            <div class="md-form">
-                                <i class="fa fa-envelope prefix grey-text"></i>
-                                <input type="text" id="orangeForm-email" class="form-control">
-                                <label for="orangeForm-email grey-text">Your email</label>
-                            </div>
-
-                            <div class="md-form">
-                                <i class="fa fa-lock prefix grey-text"></i>
-                                <input type="password" id="orangeForm-pass" class="form-control">
-                                <label for="orangeForm-pass grey-text">Your password</label>
-                            </div>
-
-                            <div class="text-center">
-                                <button class="btn btn-deep-orange">Sign up</button>
-                            </div>
-
-                        </form>
-                    </div>
-                    <!--/.Card content-->
-
+                    <!--/.Content-->
                 </div>
+
             </div>
-            <div class="col-3"></div>
+            <div class="col-6">
+                <img src="~/Content/Cocaro.jpg" class="img-fluid" />
+            </div>
         </div>
     </div>
-    
+
     <!--/.Card-->
     <script src="~/Content/js/jquery-3.2.1.min.js"></script>
 
     <script src="~/Content/js/popper.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/mdb.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var t="@ViewBag.msgError";
+            if (t != "") {
+                toastr.error(t, "Thông báo", {
+                    "positionClass": "toast-top-right",
+                });
+            }   
+            t = "@ViewBag.msgSuccess";
+            if (t != "") {
+                toastr.success(t, "Thông báo", {
+                    "positionClass": "toast-top-right",
+                });
+            } 
+            $("#frmRegister").on('submit', function (e) {
+                var c = 1;
+                $('#frmRegister input').each(function () {
+                    if ($(this).val() == "") {
+                        c = 0;
+                        return;
+                    }
+
+                });
+                if ($("#frmRegister input[name='Pass']").val() != $("#frmRegister input[name='RePass']").val()) {
+                    toastr.error("Nhập lại mật khẩu không đúng!", "Thông báo", {
+                        "positionClass": "toast-top-right",
+                    });
+                }
+                if (c == 0) {
+                    toastr.error("Vui lòng điền đầy đủ thông tin !", "Thông báo", {
+                        "positionClass": "toast-top-right",
+                    });
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+
+
+    </script>
 </body>
 </html>

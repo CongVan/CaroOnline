@@ -5,3 +5,24 @@
 
 <h2>Index</h2>
 
+@section js{
+<script>
+    $(document).ready(function () {
+        var t = "@ViewBag.msgError";
+        if (t != "") {
+            toastr.error(t, "Thông báo", {
+                "positionClass": "toast-top-right",
+            });
+        }
+        t = "@ViewBag.msgSuccess";
+        if (t != "") {
+            toastr.success(t, "Thông báo", {
+                "positionClass": "toast-top-right",
+            });
+        }
+    });
+
+
+    </script>    
+    
+}
