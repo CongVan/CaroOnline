@@ -1,4 +1,5 @@
-﻿using CaroOnline.Models;
+﻿using CaroOnline.Helper;
+using CaroOnline.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,23 @@ namespace CaroOnline.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            if (CurrentContext.IsLogged() == false)
+            {
+                return Redirect("/Home/Login");
+            }   
+
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
             return View();
         }
         public ActionResult Login()
         {
+            if (CurrentContext.IsLogged())
+            {
+                return Redirect("/Home/Index");
+            }
+
+
             ViewBag.msgError = TempData["msgError"]!=null?TempData["msgError"].ToString():null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
             return View();
@@ -31,6 +43,12 @@ namespace CaroOnline.Controllers
                 var u = ctx.Users.Where(c => c.Name == model.Name && c.Pass == model.Pass).FirstOrDefault();
                 if (u != null)
                 {
+                    Response.Cookies["userID"].Value = u.ID.ToString();
+                    Response.Cookies["userID"].Expires = DateTime.Now.AddDays(7);
+
+                    Session["isLogin"] = 1;
+                    Session["User"] = u;
+
                     TempData["msgSuccess"] = "Đăng nhập thành công!";
                     return Redirect("/Home/Index");
                 }
@@ -59,6 +77,14 @@ namespace CaroOnline.Controllers
                 TempData["msgSuccess"] = "Đăng ký thành công";
                 return Redirect("/Home/Login");
             }
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            CurrentContext.Detroy();
+            
+            return RedirectToAction("Index", "Home");
         }
     }
 }
