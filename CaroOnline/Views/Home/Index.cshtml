@@ -2,103 +2,118 @@
 @{
     ViewBag.Title = "Index";
 }
-@if(CurrentContext.IsLogged())
+@if (CurrentContext.IsLogged())
 {
     @*<h2>@CurrentContext.GetCurUser().Name</h2>*@
-    
+
 }
 
-<div class="col-5">
+<div class="col-9">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified indigo rounded" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-users"></i> Cộng đồng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-trophy"></i> Top game thủ</a>
+        </li>
+        @*<li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Mail</a>
+            </li>*@
+    </ul>
+    <!-- Tab panels -->
+    <div class="tab-content white card px-1 rounded">
+        <!--Panel 1-->
+        <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
+            <div class=" card-body pt-2">
+                <div class="row">
+                    @for (int i = 0; i < 12; i++)
+                    {
+                        <div class="col-2 mb-2 px-1">
+                            <div class="card text-center">
+                                <div class="card-body p-3">
+                                    @*<img src="~/Content/default_user.png" />*@
+                                    <img src="~/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
+                                </div>
+                                <h6 class="card-title primary-text grey lighten-4 py-1">Tài khoản 
+                                @if (i % 2 == 0)
+                                {
+                                    <i class="fa fa-circle success-text"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-circle grey-text"></i>
+                                }</h6>
+                                <p class="warning-text">Điểm: 500<i class="fa fa-heart"></i> 
 
-    <!--Card-->
-    <div class="card card-cascade wider">
-
-        <!--Card image-->
-        <div class="view gradient-card-header blue-gradient pt-1 pb-0 px-0">
-            <h2 class="h4-responsive mb-2 "><i class="fa fa-users"></i>&nbsp; CỘNG ĐỒNG</h2>
-            @*<p class=""><i class="fa fa-calendar"></i> 26.07.2017</p>*@
-
-        </div>
-        <!--/Card image-->
-        <!--Card content-->
-        <div class="card-body pt-2">
-            @for (int i = 0; i < 10; i++)
-            {
-                <div class="media mb-1">
-                    <div class="row">
-                        <div class="col-3">
-                            <a class="media-left waves-light pb-0">
-                                <img class="rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-13.jpg" alt="Generic placeholder image">
-                            </a>
-                        </div>
-
-                        <div class="col-9">
-                            <div class="media-body">
-                                <h4 class="media-heading h6">Tên người chơi</h4>
-                                <ul class="rating inline-ul">
-                                    <li><i class="fa fa-star amber-text"></i></li>
-                                    <li><i class="fa fa-star amber-text"></i></li>
-                                    <li><i class="fa fa-star amber-text"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                </ul>
-
+                                </p>
+                                <div class="card-footer px-0">
+                                    <span class="badge badge-pill green font-weight-light">10 Thắng</span>
+                                    <span class="badge badge-pill red font-weight-light">10 Thua</span>
+                                    <span class="badge badge-pill blue font-weight-light">10 Hòa</span>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
-                    
-                   
+                    }
                 </div>
-                <hr />
-            }
+                <nav aria-label="..." class="float-right">
+                    <ul class="pagination pg-red">
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">«</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">1</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link waves-effect waves-effect" href="#">
+                                2
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">4</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">5</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link waves-effect waves-effect">»</a>
+                        </li>
+                    </ul>
+                </nav>
 
-            
 
-            
+
+
+            </div>
         </div>
-        <!--/.Card content-->
-
+        <!--/.Panel 1-->
+        <!--Panel 2-->
+        <div class="tab-pane fade" id="panel6" role="tabpanel">
+            <br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+        </div>
+        <!--/.Panel 2-->
+        <!--Panel 3-->
+        @*<div class="tab-pane fade" id="panel7" role="tabpanel">
+                <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+            </div>*@
+        <!--/.Panel 3-->
     </div>
-    <!--/.Card-->
 
-</div>
-<div class="col-4">
-
-    <!--Card-->
-    <div class="card card-cascade wider">
-
-        <!--Card image-->
-        <div class="view gradient-card-header blue-gradient px-0 pt-1 pb-0">
-            <h2 class="h4-responsive mb-2"><i class="fa fa-trophy"></i> TOP GAME THỦ</h2>
-            @*<p class=""><i class="fa fa-calendar"></i> 26.07.2017</p>*@
-
-        </div>
-        <!--/Card image-->
-        <!--Card content-->
-        <div class="card-body text-center">
-
-            <p class="card-text mr-2 ml-2">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, ex, recusandae. Facere modi
-                sunt, quod quibusdam dignissimos neque rem nihil ratione est placeat vel, natus non quos laudantium
-                veritatis sequi.Ut enim ad minima veniam, quis nostrum.
-            </p>
-
-            <a href="#" class="orange-text mt-1 d-flex flex-row-reverse">
-                <h5 class="waves-effect p-2">Read more <i class="fa fa-chevron-right"></i></h5>
-            </a>
-        </div>
-        <!--/.Card content-->
-
-    </div>
-    <!--/.Card-->
 
 </div>
 
 
 
 @section js{
-<script>
+    <script>
     $(document).ready(function () {
         var t = "@ViewBag.msgError";
         if (t != "") {
@@ -115,6 +130,6 @@
     });
 
 
-    </script>    
-    
+    </script>
+
 }

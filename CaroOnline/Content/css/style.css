@@ -204,3 +204,31 @@ body {
 /*header, main, footer {
     padding-left: 240px;
 }*/
+
+.primary-text {
+    color: #4285F4;
+}
+
+.danger-text {
+    color: #ff3547;
+}
+
+.warning-text {
+    color: #FF8800;
+}
+
+.success-text {
+    color: #00C851;
+}
+
+.info-text {
+    color: #33b5e5;
+}
+
+.default-text {
+    color: #2BBBAD;
+}
+
+.secondary-text {
+    color: #aa66cc;
+}
