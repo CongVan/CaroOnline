@@ -79,12 +79,17 @@ namespace CaroOnline.Controllers
             }
         }
 
-        [HttpPost]
+        
         public ActionResult Logout()
         {
             CurrentContext.Detroy();
             
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
+        public ActionResult Play()
+        {
+            return View();
+        }
+     
     }
 }

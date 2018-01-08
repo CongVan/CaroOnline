@@ -1,6 +1,6 @@
 ﻿@using CaroOnline.Helper
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,71 +12,88 @@
     @RenderSection("css", false)
 </head>
 <body class="purple-gradient">
-    
+
     @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>*@
+        </div>*@
+    <main>
+        <div class="container-fluid body-content mt-1">
+            <div class="row">
+                <div class="col-3">
+                    <div class="card testimonial-card">
 
-    <div class="container-fluid body-content mt-1">
-        <div class="row">
-            <div class="col-3">
-                <div class="card testimonial-card">
-
-                    <!--Bacground color-->
-                    <div class="card-up" style="background-image: url('/Content/images.jpg');background-repeat:round">
-                    </div>
-
-                    <!--Avatar-->
-                    <div class="avatar">
-                        <img src="~/Content/default_user.png"  class="rounded-circle"  />
-                        @*<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle">*@
-                    </div>
-
-                    <div class="card-body">
-                        <!--Name-->
-                        <h4 class="card-title">@CurrentContext.GetCurUser().Name</h4>
-                        <hr>
-                        <div class="list-group">
-                            <a href="/Home/Index" class="list-group-item active card my-1 font-weight-normal"><i class="fa fa-home"></i> &nbsp;
-                                Trang chủ
-                            </a>
-                            <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal"><i class="fa fa-gamepad"></i> &nbsp; Vào chơi</a>
-                            <a href="/Home/History" class="list-group-item list-group-item-action card my-1"><i class="fa fa-history"></i> &nbsp; Lịch sử thi đấu</a>
-                            <a href="/Home/" class="list-group-item list-group-item-action card my-1"><i class="fa fa-save"></i> &nbsp;Ván đấu đã lưu</a>
-                            <a href="#" class="list-group-item list-group-item-action card my-1"><i class="fa fa-sign-out"></i> &nbsp;Thoát</a>
-                            @*<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>*@
+                        <!--Bacground color-->
+                        <div class="card-up" style="background-image: url('/Content/images.jpg');background-repeat:round">
                         </div>
-                       
+
+                        <!--Avatar-->
+                        <div class="avatar">
+                            <img src="~/Content/default_user.png" class="rounded-circle" />
+                            @*<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle">*@
+                        </div>
+
+                        <div class="card-body">
+                            <!--Name-->
+                            <a class="activator pt-4"><i class="fa fa-circle success-text"></i></a>
+                            <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
+                            <h6 class="warning-text">
+                                Điểm: 500&nbsp;<i class="fa fa-heart"></i>
+                            </h6>
+                            <h5 class="badge badge-pill success-color font-weight-light">10 Thắng</h5>
+                            <h5 class="badge badge-pill danger-color font-weight-light">10 Thua</h5>
+                            <h5 class="badge badge-pill special-color font-weight-light">10 Hòa</h5>
+                            <hr>
+                            <div class="list-group">
+                                <a href="/Home/Index" class=" list-group-item active card my-1 font-weight-normal">
+                                    
+                                    Trang chủ&nbsp;<i class="fa fa-home "></i>
+                                </a>
+                                <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal">  Vào chơi&nbsp;<i class="fa fa-gamepad"></i></a>
+                                <a href="/Home/History" class="list-group-item list-group-item-action card my-1"> Lịch sử thi đấu &nbsp;<i class="fa fa-history"></i></a>
+                                <a href="/Home/" class="list-group-item list-group-item-action card my-1"> Ván đấu đã lưu&nbsp;<i class="fa fa-save"></i></a>
+                                <a href="/Home/Logout" class="list-group-item list-group-item-action card my-1"> Thoát&nbsp;<i class="fa fa-sign-out"></i></a>
+                                @*<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>*@
+                            </div>
+
+                        </div>
+
                     </div>
+
+
 
                 </div>
-
-
+                @RenderBody()
 
             </div>
-            @RenderBody()
-            
+
         </div>
-        
-    </div>
+    </main>
+
+
     <script src="~/Content/js/jquery-3.2.1.min.js"></script>
     <script src="~/Content/js/ResizeSensor.js"></script>
     <script src="~/Content/js/popper.min.js"></script>
+    @*<script src="~/Content/js/bootstrap.js"></script>*@
     <script src="~/Content/js/bootstrap.min.js"></script>
-    <script src="~/Content/js/mdb.min.js"></script>
+    @*<script src="~/Content/js/mdb.min.js"></script>*@
+    <script>
+
+
+
+    </script>
     @RenderSection("js", false)
 </body>
 </html>

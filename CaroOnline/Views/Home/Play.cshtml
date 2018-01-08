@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Play";
+}
+
+<div class="col-6">
+    <div class="card rounded">
+        <canvas id="TableChess" class="rounded" width="631" height="631" style="border:1px solid #d3d3d3;"></canvas>
+    </div>
+</div>
+<div class="col-3">
+
+</div>
+@section js{
+    <script>
+        var cell = 30;
+        var canvas = document.getElementById('TableChess');
+        var context = canvas.getContext('2d');
+        //canvas.addEventListener("mousedown", getPosition, false);
+        canvas.addEventListener('mousedown', function (evt) {
+            var mousePos = getMousePos(canvas, evt);
+            var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+            alert(message);
+            //writeMessage(canvas, message);
+        }, false);
+        context.beginPath();
+
+
+        for (var i = 0; i <= 21; i++) {
+            context.moveTo(i * cell, 0);
+            context.lineTo(i*cell, 630);
+        }
+        for (var i = 0; i <= 21; i++) {
+            context.moveTo(0, i * cell);
+            context.lineTo(630, i * cell);
+        }
+
+        context.closePath();
+        context.lineWidth = 1;
+        context.strokeStyle = '#3f51b5';
+        context.stroke();
+        function getMousePos(canvas, evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+        function getPosition(event) {
+            var x = new Number();
+            var y = new Number();
+            var canvas = document.getElementById("TableChess");
+
+            if (event.x != undefined && event.y != undefined) {
+                x = event.x;
+                y = event.y;
+            }
+            else // Firefox method to get the position
+            {
+                x = event.clientX + document.body.scrollLeft +
+                    document.documentElement.scrollLeft;
+                y = event.clientY + document.body.scrollTop +
+                    document.documentElement.scrollTop;
+            }
+
+            x -= canvas.offsetLeft;
+            y -= canvas.offsetTop;
+
+            alert("x: " + x + "  y: " + y);
+        }
+    </script>
+}
