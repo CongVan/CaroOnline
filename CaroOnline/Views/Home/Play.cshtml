@@ -4,9 +4,9 @@
 }
 <img src="~/Content/o.png" style="display:none" id="imgX" />
 <img src="~/Content/x.png" style="display:none" id="imgY"/>
-<div class="col-6">
+<div class="col-6" style="">
     <div class="card rounded">
-        <canvas id="TableChess" class="rounded" width="631" height="631" style="border:1px solid #d3d3d3;"
+        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer"
                  onclick="storeGuess(event)"></canvas>
     </div>
 </div>
@@ -24,11 +24,14 @@
             var y = event.offsetY;
             guessX = x;
             guessY = y;
-            var i=Math.round(guessX / 30), j=Math.round(guessY / 30);
+            var i = Math.floor(guessX / 30), j = Math.floor(guessY / 30);
 
-            console.log("x coords: " + guessX + ", y coords: " + guessY);
-
-            context.drawImage(imgY,  (i* 30 )+1, (j * 30) +1,29,29);
+            if (guessX % 30 == 0 || guessY % 30 == 0) {
+                return;
+            }
+            //console.log("x:" + guessX + ", y:" + guessY);
+            //console.log("i:" + i + ", j:" + j);
+            context.drawImage(imgX,  (i* 30 )+3, (j * 30) +3,23,23);
         }
         var cell = 30;
         var canvas = document.getElementById('TableChess');
