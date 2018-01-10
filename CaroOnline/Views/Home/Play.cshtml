@@ -6,7 +6,8 @@
 <img src="~/Content/x.png" style="display:none" id="imgY"/>
 <div class="col-6">
     <div class="card rounded">
-        <canvas id="TableChess" class="rounded" width="631" height="631" style="border:1px solid #d3d3d3;"></canvas>
+        <canvas id="TableChess" class="rounded" width="631" height="631" style="border:1px solid #d3d3d3;"
+                 onclick="storeGuess(event)"></canvas>
     </div>
 </div>
 <div class="col-3">
@@ -14,6 +15,21 @@
 </div>
 @section js{
     <script>
+        
+
+        guessX = 0; //stores user's click on canvas
+        guessY = 0; //stores user's click on canvas
+        function storeGuess(event) {
+            var x = event.offsetX;
+            var y = event.offsetY;
+            guessX = x;
+            guessY = y;
+            var i=Math.round(guessX / 30), j=Math.round(guessY / 30);
+
+            console.log("x coords: " + guessX + ", y coords: " + guessY);
+
+            context.drawImage(imgY,  (i* 30 )+1, (j * 30) +1,29,29);
+        }
         var cell = 30;
         var canvas = document.getElementById('TableChess');
         var context = canvas.getContext('2d');
@@ -21,16 +37,16 @@
         var imgY = document.getElementById("imgY");
        
         //canvas.addEventListener("mousedown", getPosition, false);
-        canvas.addEventListener('mousedown', function (evt) {
-            var mousePos = getMousePos(canvas, evt);
-            var message = 'Mouse position: ' + Math.round(mousePos.x) + ',' + Math.round(mousePos.y);
-            //context.moveTo(mousePos.x, mousePos.y);
-            context.drawImage(imgX, (Math.round(mousePos.x) / 30) * 30, (Math.round(mousePos.y) / 30) * 30);
-            var t1 = (Math.round(mousePos.x) % 30) * 30, t2 = (Math.round(mousePos.y) % 30) * 30;
-            alert(message + "\n" + t1 + "," + t2);
+        //canvas.addEventListener('mousedown', function (evt) {
+        //    var mousePos = getMousePos(canvas, evt);
+        //    var message = 'Mouse position: ' + Math.round(mousePos.x) + ',' + Math.round(mousePos.y);
+        //    //context.moveTo(mousePos.x, mousePos.y);
+        //    context.drawImage(imgX, (Math.round(mousePos.x) / 30) * 30, (Math.round(mousePos.y) / 30) * 30);
+        //    var t1 = Math.round(mousePos.x / 30) * 30, t2 = Math.round(mousePos.y / 30) * 30;
+        //    alert(message + "\n" + t1 + "," + t2);
             
-            //writeMessage(canvas, message);
-        }, false);
+        //    //writeMessage(canvas, message);
+        //}, false);
         context.beginPath();
 
 
