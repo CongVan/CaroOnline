@@ -3,63 +3,77 @@
 @{
     ViewBag.Title = "Play";
 }
-<img src="~/Content/o.png" style="display:none" id="imgX" />
-<img src="~/Content/x.png" style="display:none" id="imgY"/>
+<img src="~/Content/o.png" style="display:none" id="imgO" />
+<img src="~/Content/x.png" style="display:none" id="imgX" />
 <div class="col-6" style="">
-    <div class="card rounded">
-        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer;user-select: none;"
-                 onclick="storeGuess(event)"></canvas>
+    <div class="card rounded" style="width:630px;height:630px">
+        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer;user-select: none;"></canvas>
+        @*onclick="storeGuess(event)"*@
     </div>
 </div>
 <div class="col-3">
-
+    <h2 id="test"></h2>
 </div>
 @section js{
     <script>
         //crate chessboard
-        var t=@Model;
-        guessX = 0; //stores user's click on canvas
-        guessY = 0; //stores user's click on canvas
-        function storeGuess(event) {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            guessX = x;
-            guessY = y;
-            var i = Math.floor(guessX / 30), j = Math.floor(guessY / 30);
+        //var t=;
 
-            if (guessX % 30 == 0 || guessY % 30 == 0) {
-                return;
-            }
-            console.log("x:" + guessX + ", y:" + guessY);
-            console.log("i:" + i + ", j:" + j);
-            console.log("i:" + (i*30) + ", j:" + (j*30));
-            context.drawImage(imgX,  (i* 30 )+3, (j * 30) +3,23,23);
-        }
         var cell = 30;
         var canvas = document.getElementById('TableChess');
         var context = canvas.getContext('2d');
         var imgX = document.getElementById("imgX");
         var imgY = document.getElementById("imgY");
-       
-        //canvas.addEventListener("mousedown", getPosition, false);
-        //canvas.addEventListener('mousedown', function (evt) {
-        //    var mousePos = getMousePos(canvas, evt);
-        //    var message = 'Mouse position: ' + Math.round(mousePos.x) + ',' + Math.round(mousePos.y);
-        //    //context.moveTo(mousePos.x, mousePos.y);
-        //    context.drawImage(imgX, (Math.round(mousePos.x) / 30) * 30, (Math.round(mousePos.y) / 30) * 30);
-        //    var t1 = Math.round(mousePos.x / 30) * 30, t2 = Math.round(mousePos.y / 30) * 30;
-        //    alert(message + "\n" + t1 + "," + t2);
+
+        canvas.addEventListener('click', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            var mouseX = evt.clientX - rect.left -0.5;
+            var mouseY = evt.clientY - rect.top;
+            $('#test').text(mouseX + " | " + mouseY);
+            if (mouseX % 30 == 0 || mouseY % 30 == 0) {
+                return;
+            }
+            var i = Math.floor(mouseX / 30), j = Math.floor(mouseY / 30);
+            context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+        }, false);
+        var oldX=-1, oldY=-1;
+        canvas.addEventListener('mousemove', function (evt) {
+            var rect = canvas.getBoundingClientRect();
+            var mouseX = evt.clientX - rect.left - 0.5;
+            var mouseY = evt.clientY - rect.top;
+            if (mouseX % 30 == 0 || mouseY % 30 == 0) {
+                return;
+            }
             
-        //    //writeMessage(canvas, message);
-        //}, false);
+            var oi = Math.floor(oldX / 30), oj = Math.floor(oldY / 30);
+            var i = Math.floor(mouseX / 30), j = Math.floor(mouseY / 30);
+            if (oi != -1 || oj != -1) {
+                if (oi != i || oj != j) {
+
+
+                    //context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+                    context.fillStyle = "white";
+                    context.fillRect((i * 30) + 3, (j * 30) + 3, 23, 23);
+                    oldX = mouseX;
+                    oldY = mouseY;
+                }
+            }
+            oldX = mouseX;
+            oldY = mouseY;
+              
+                context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+                
+            
+            $('#test').text(mouseX + " | " + mouseY);
+            
+        }, false);
         context.beginPath();
-
-
-        for (var i = 0; i <= 21; i++) {
+        
+        for (var i = 0; i < 21; i++) {
             context.moveTo(i * cell, 0);
-            context.lineTo(i*cell, 630);
+            context.lineTo(i * cell, 630);
         }
-        for (var i = 0; i <= 21; i++) {
+        for (var i = 0; i < 21; i++) {
             context.moveTo(0, i * cell);
             context.lineTo(630, i * cell);
         }
@@ -68,34 +82,6 @@
         context.lineWidth = 1;
         context.strokeStyle = '#3f51b5';
         context.stroke();
-        function getMousePos(canvas, evt) {
-            var rect = canvas.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-        }
-        function getPosition(event) {
-            var x = new Number();
-            var y = new Number();
-            var canvas = document.getElementById("TableChess");
 
-            if (event.x != undefined && event.y != undefined) {
-                x = event.x;
-                y = event.y;
-            }
-            else // Firefox method to get the position
-            {
-                x = event.clientX + document.body.scrollLeft +
-                    document.documentElement.scrollLeft;
-                y = event.clientY + document.body.scrollTop +
-                    document.documentElement.scrollTop;
-            }
-
-            x -= canvas.offsetLeft;
-            y -= canvas.offsetTop;
-
-            alert("x: " + x + "  y: " + y);
-        }
     </script>
 }

@@ -97,7 +97,7 @@ namespace CaroOnline.Controllers
             {
                 for (int j = 0; j < 21; j++)
                 {
-                    CB[i, j] = new Cell(i, j, j * 630, i * 630, 0);
+                    CB[i, j] = new Cell(i, j, j * 30, i * 30, 0);
                 }
             }
 
