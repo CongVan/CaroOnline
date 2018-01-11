@@ -1,4 +1,5 @@
-﻿
+﻿@using CaroOnline.Models
+@model Cell[,]
 @{
     ViewBag.Title = "Play";
 }
@@ -15,8 +16,8 @@
 </div>
 @section js{
     <script>
-        
-
+        //crate chessboard
+        var t=@Model;
         guessX = 0; //stores user's click on canvas
         guessY = 0; //stores user's click on canvas
         function storeGuess(event) {
@@ -31,6 +32,7 @@
             }
             console.log("x:" + guessX + ", y:" + guessY);
             console.log("i:" + i + ", j:" + j);
+            console.log("i:" + (i*30) + ", j:" + (j*30));
             context.drawImage(imgX,  (i* 30 )+3, (j * 30) +3,23,23);
         }
         var cell = 30;

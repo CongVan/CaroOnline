@@ -92,7 +92,16 @@ namespace CaroOnline.Controllers
             {
                 return Redirect("/Home/Login");
             }
-            return View();
+            var CB = new Cell[21, 21];
+            for (int i = 0; i < 21; i++)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    CB[i, j] = new Cell(i, j, j * 630, i * 630, 0);
+                }
+            }
+
+            return View(CB);
         }
      
     }
