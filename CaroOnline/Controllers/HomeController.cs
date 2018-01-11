@@ -88,6 +88,10 @@ namespace CaroOnline.Controllers
         }
         public ActionResult Play()
         {
+            if (CurrentContext.IsLogged() == false)
+            {
+                return Redirect("/Home/Login");
+            }
             return View();
         }
      

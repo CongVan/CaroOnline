@@ -6,7 +6,7 @@
 <img src="~/Content/x.png" style="display:none" id="imgY"/>
 <div class="col-6" style="">
     <div class="card rounded">
-        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer"
+        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer;user-select: none;"
                  onclick="storeGuess(event)"></canvas>
     </div>
 </div>
@@ -29,8 +29,8 @@
             if (guessX % 30 == 0 || guessY % 30 == 0) {
                 return;
             }
-            //console.log("x:" + guessX + ", y:" + guessY);
-            //console.log("i:" + i + ", j:" + j);
+            console.log("x:" + guessX + ", y:" + guessY);
+            console.log("i:" + i + ", j:" + j);
             context.drawImage(imgX,  (i* 30 )+3, (j * 30) +3,23,23);
         }
         var cell = 30;

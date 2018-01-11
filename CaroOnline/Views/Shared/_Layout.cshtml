@@ -48,7 +48,11 @@
                         <div class="card-body">
                             <!--Name-->
                             <a class="activator pt-4"><i class="fa fa-circle success-text"></i></a>
-                            <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
+                            @if (CurrentContext.IsLogged())
+                            {
+                                <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
+
+                            }
                             <h6 class="warning-text">
                                 Điểm: 500&nbsp;<i class="fa fa-heart"></i>
                             </h6>
