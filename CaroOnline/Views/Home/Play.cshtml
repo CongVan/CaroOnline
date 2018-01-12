@@ -16,8 +16,34 @@
 </div>
 @section js{
     <script>
+        class Cell{
+
+           constructor(x, y,Owner) {
+                this.x = x;
+                this.y = y;
+                this.Owner = Owner;
+           }
+
+        }
+        
+
+    </script>
+
+    <script>
         //crate chessboard
         //var t=;
+        var ArrMaxtrix = [];
+        for (var i = 0; i < 21; i++) {
+            var arr1 = [];
+            for (var j = 0; j < 21; j++) {
+                arr1.push(new Cell(i, j, 0));
+            }
+            ArrMaxtrix.push(arr1);
+            
+        }
+
+
+
 
         var cell = 30;
         var canvas = document.getElementById('TableChess');
@@ -34,7 +60,11 @@
                 return;
             }
             var i = Math.floor(mouseX / 30), j = Math.floor(mouseY / 30);
-            context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+
+            if (ArrMaxtrix[i][j].Owner == 0) {
+                context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+                ArrMaxtrix[i][j].Owner=1
+            }
         }, false);
         var oldX=-1, oldY=-1;
         canvas.addEventListener('mousemove', function (evt) {
@@ -50,20 +80,20 @@
             if (oi != -1 || oj != -1) {
                 if (oi != i || oj != j) {
 
-
-                    //context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
-                    context.fillStyle = "white";
-                    context.fillRect((i * 30) + 3, (j * 30) + 3, 23, 23);
-                    oldX = mouseX;
-                    oldY = mouseY;
+                    if (ArrMaxtrix[oi][oj].Owner == 0) {
+                        context.fillStyle = "white";
+                        context.fillRect((oi * 30) + 3, (oj * 30) + 3, 23, 23);
+                        oldX = mouseX;
+                        oldY = mouseY;
+                    }
                 }
             }
             oldX = mouseX;
             oldY = mouseY;
-              
+            if (ArrMaxtrix[i][j].Owner == 0) {
                 context.drawImage(imgX, (i * 30) + 3, (j * 30) + 3, 23, 23);
+            }
                 
-            
             $('#test').text(mouseX + " | " + mouseY);
             
         }, false);
