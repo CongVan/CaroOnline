@@ -112,8 +112,9 @@
 
 
 @section js{
-    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
-    <script src="~/signalr/Hubs"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    @*<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>*@
+    <script src="~/signalr/hubs"></script>
     <script>
     $(document).ready(function () {
         var t = "@ViewBag.msgError";
@@ -131,7 +132,7 @@
     });
         $(function () {
             // Reference the auto-generated proxy for the hub.
-            var chat = $.connection.OnlineHub;
+            var chat = $.connection.onlineHub;
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
@@ -139,17 +140,17 @@
             };
 
             // Start the connection.
-            var user =@CurrentContext.GetCurUser();
+            var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
             var login = 1;
             $.connection.hub.start().done(function () {
-                if (user != null && login==1) {
-                    chat.server.send(user.Name,'ND');
+             if (user != null && login==1) {
+              chat.server.send(user.Name,'ND');
                 }
 
-             });
+                });
 
 
-        });
+            });
         // This optional function html-encodes messages for display in the page.
         function htmlEncode(value) {
             var encodedValue = $('<div />').text(value).html();
