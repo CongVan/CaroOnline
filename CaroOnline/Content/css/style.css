@@ -3,6 +3,15 @@
     src: url(../font/Opensans/OpenSans-Regular.ttf);
     font-weight: 500;
 }
+
+@font-face {
+    font-family: 'FS NokioMedium';
+    src: url('../font/FS NokioMedium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'FS NokioRegular';
+    src: url('../font/FS NokioRegular.ttf') format('truetype');
+}
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color: #bdbdbd !important;
 }
@@ -12,7 +21,7 @@
 }
 
 body {
-    font-family: OpenSans !important; /*Roboto,sans-serif*/
+    font-family: 'FS NokioMedium' !important; /*Roboto,sans-serif*/
 }
 
 body {

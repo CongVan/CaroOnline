@@ -282,7 +282,10 @@
     <Content Include="Models\CaroOnlineDB.edmx.diagram">
       <DependentUpon>CaroOnlineDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\font\FS NokioMedium.ttf" />
+    <Content Include="Content\font\FS NokioRegular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Caro\Cell.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />

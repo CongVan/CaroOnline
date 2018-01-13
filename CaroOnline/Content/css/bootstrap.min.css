@@ -4783,7 +4783,8 @@ tbody.collapse.show {
     .list-group-item.active {
         z-index: 2;
         color: #fff;
-        background-color: #007bff;
+        /*background-color: #007bff;*/
+        background: linear-gradient(40deg,#45cafc,#303f9f);
         border-color: #007bff
     }
 

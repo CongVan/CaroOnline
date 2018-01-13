@@ -11,7 +11,7 @@
     <link href="~/Content/font/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     @RenderSection("css", false)
 </head>
-<body class="purple-gradient">
+<body class="" style="background-image: linear-gradient(-225deg, #22E1FF 0%, #1D8FE1 48%, #625EB1 100%);">
 
     @*<div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -45,7 +45,7 @@
                             @*<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle">*@
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body px-1 pt-0 pb-1">
                             <!--Name-->
                             <a class="activator pt-4"><i class="fa fa-circle success-text"></i></a>
                             @if (CurrentContext.IsLogged())
@@ -63,31 +63,31 @@
                             <div class="list-group">
                                 @if (Request.Url.AbsolutePath.Contains("/Home/Index"))
                                 {
-                                    <a href="/Home/Index" class=" list-group-item active card my-1 font-weight-normal ">
-                                        Trang chủ&nbsp;<i class="fa fa-home "></i>
+                                    <a href="/Home/Index" class=" list-group-item list-group-item-action active card my-1 font-weight-normal h4-responsive">
+                                        <i class="fa fa-home">&nbsp;|&nbsp;</i>Trang chủ
                                     </a>
                                 }
                                 else
                                 {
-                                    <a href="/Home/Index" class=" list-group-item card my-1 font-weight-normal ">
-                                        Trang chủ&nbsp;<i class="fa fa-home "></i>
+                                    <a href="/Home/Index" class=" list-group-item card my-1 font-weight-normal h4-responsive">
+                                        <i class="fa fa-home text-danger">&nbsp;|&nbsp;</i>Trang chủ
                                     </a>
                                 }
                                 @if (Request.Url.AbsolutePath.Contains("/Home/Play"))
                                 {
-                                    <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal active">  Vào chơi&nbsp;<i class="fa fa-gamepad"></i></a>
+                                    <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal active h4-responsive"><i class="fa fa-gamepad">&nbsp;|&nbsp;</i>  Vào chơi</a>
                                 }
                                 else
                                 {
-                                    <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal">  Vào chơi&nbsp;<i class="fa fa-gamepad"></i></a>
+                                    <a href="/Home/Play" class="list-group-item list-group-item-action card my-1 font-weight-normal h4-responsive"><i class="fa fa-gamepad text-danger">&nbsp;|&nbsp;</i>  Vào chơi</a>
                                 }
 
 
 
 
-                                <a href="/Home/History" class="list-group-item list-group-item-action card my-1"> Lịch sử thi đấu &nbsp;<i class="fa fa-history"></i></a>
-                                <a href="/Home/" class="list-group-item list-group-item-action card my-1"> Ván đấu đã lưu&nbsp;<i class="fa fa-save"></i></a>
-                                <a href="/Home/Logout" class="list-group-item list-group-item-action card my-1"> Thoát&nbsp;<i class="fa fa-sign-out"></i></a>
+                                <a href="/Home/History" class="list-group-item list-group-item-action card my-1 h4-responsive"><i class="fa fa-history text-danger">&nbsp;|&nbsp;</i> Lịch sử thi đấu </a>
+                                <a href="/Home/" class="list-group-item list-group-item-action card my-1 h4-responsive"><i class="fa fa-save text-danger">&nbsp;|&nbsp;</i> Ván đấu đã lưu</a>
+                                <a href="/Home/Logout" class="list-group-item list-group-item-action card my-1 h4-responsive"><i class="fa fa-sign-out text-danger">&nbsp;|&nbsp;</i> Thoát</a>
                                 @*<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>*@
                             </div>
 
