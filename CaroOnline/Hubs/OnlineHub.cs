@@ -17,5 +17,10 @@ namespace CaroOnline.Hubs
         {
             Clients.All.addNewMessageToPage(name, message);
         }
+        public override Task OnConnected()
+        {
+
+            return base.OnConnected();
+        }
     }
 }
