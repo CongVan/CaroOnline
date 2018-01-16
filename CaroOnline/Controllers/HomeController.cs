@@ -1,4 +1,5 @@
 ﻿using CaroOnline.Helper;
+using CaroOnline.Hubs;
 using CaroOnline.Models;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,73 @@ namespace CaroOnline.Controllers
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
-            int currIDUser = CurrentContext.GetCurUser().ID;
-            using(var ctx=new CaroOnlineDBEntities())
+            string currName = CurrentContext.GetCurUser().Name;
+            var Users = new List<Users>();
+            var lst = OnlineHub.ListUsers;
+            try
             {
-                var lstUser = ctx.Users.Where(c => c.ID != currIDUser).ToList();
-                return View(lstUser);
+                using (var ctx = new CaroOnlineDBEntities())
+                {
+                    foreach (var item in lst)
+                    {
+                        string sName = item["Name"].ToString();
+                        if (sName != currName)
+                        {
+
+                            var us = ctx.Users.Where(c => c.Name == sName).FirstOrDefault();
+                            if (us != null)
+                            {
+                                Users.Add(us);
+                            }
+                        }
+
+                    }
+                    return View(Users);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return View(Users);
             }
            
+            
+            
+
+        }
+        public ActionResult ReloadUser()
+        {
+            string currName = CurrentContext.GetCurUser().Name;
+            var Users = new List<Object>();
+            var lst = OnlineHub.ListUsers;
+            try
+            {
+                using (var ctx = new CaroOnlineDBEntities())
+                {
+                    foreach (var item in lst)
+                    {
+                        string sName = item["Name"].ToString();
+                        if (sName != currName)
+                        {
+                            var tempID = item["cID"].ToString();
+                            var us = ctx.Users.Where(c => c.Name == sName).Select(c => new { ID = c.ID, Name = c.Name, CID = tempID }).FirstOrDefault();
+                            if (us != null)
+                            {
+                                Users.Add(us);
+                            }
+                        }
+
+                    }
+                    return Json(Users, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+
+                return Json("", JsonRequestBehavior.AllowGet);
+            }
+            
+
         }
         public ActionResult Login()
         {
@@ -44,9 +105,13 @@ namespace CaroOnline.Controllers
         [HttpPost]
         public ActionResult Login(Users model)
         {
-            
+      
             using (var ctx= new CaroOnlineDBEntities())
             {
+               
+
+
+
                 var u = ctx.Users.Where(c => c.Name == model.Name && c.Pass == model.Pass).FirstOrDefault();
                 if (u != null)
                 {

@@ -18,7 +18,7 @@ namespace CaroOnline.Hubs
 
     public class OnlineHub : Hub
     {
-        private static List<Dictionary<string, string>> ListUsers = new List<Dictionary<string, string>>();
+        public static List<Dictionary<string, string>> ListUsers = new List<Dictionary<string, string>>();
         //public List<Users> UserOnline { get; set; }
         public void Hello()
         {
@@ -37,6 +37,10 @@ namespace CaroOnline.Hubs
         public void updateConnectionID()
         {
             Clients.All.updateConnectionID(ListUsers);
+        }
+        public void ReloadUsers()
+        {
+            Clients.All.reloadUsers();
         }
         public override Task OnConnected()
         {
@@ -59,6 +63,7 @@ namespace CaroOnline.Hubs
             {
                 ListUsers.Add(u);
             }
+            ReloadUsers();
             //UserHandler.ConnectedIds.Add(Context.ConnectionId);
             return base.OnConnected();
         }

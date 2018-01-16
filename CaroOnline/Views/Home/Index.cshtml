@@ -25,7 +25,7 @@
             <div class="card-body pt-2">
                 
                 <div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>
-                <div class="row">
+                <div class="row" id="ViewUsers">
 
                     @foreach(var us in Model)
                     {
@@ -33,18 +33,13 @@
                             <div class="card text-center">
                                 <div class="card-body px-5">
                                     @*<img src="~/Content/default_user.png" />*@
-                                    <img src="~/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
+                                    <img src="/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
                                 </div>
                                 <h6 class="card-title primary-text grey lighten-4 py-1 mb-1">
                                     @us.Name
-                                    @if (us.ID % 2 == 0)
-                                    {
+                                    
                                         <i class="fa fa-circle success-text"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-circle grey-text"></i>
-                                    }
+                                    
                                 </h6>
                                 <p class="warning-text mb-1">
                                     Điểm: 500 &nbsp;<i class="fa fa-heart"></i>
@@ -161,7 +156,48 @@
                 //    $()
                 //}
             }
+            chat.client.reloadUsers=function(){
+                $.ajax({
+                    url:"/Home/ReloadUser",
+                    success:function(data){
+                        if(data==""){
+                            return;
+                        }
+                        data.forEach(function(item){
+                            if($("#"+item.Name).length){
+                                return;
+                            }
+                            var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.cID+'">'+
+                            '<div class="card text-center">'+
+                                '<div class="card-body px-5">'+
+                                    '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">'+
+                                '</div>'+
+                                '<h6 class="card-title primary-text grey lighten-4 py-1 mb-1">'+
+                                    item.Name +
+                                        '<i class="fa fa-circle success-text"></i>'+
+                                '</h6>'+
+                                '<p class="warning-text mb-1">'+
+                                'Điểm: 500 &nbsp;<i class="fa fa-heart"></i>'+
 
+                                '</p>'+
+                                '<div class="card-footer px-0 pt-0 pt-1">'+
+                                    '<span class="badge badge-pill success-color font-weight-light">10 Thắng</span>'+
+                                    '<span class="badge badge-pill danger-color font-weight-light">10 Thua</span>'+
+                                    '<span class="badge badge-pill special-color font-weight-light">10 Hòa</span>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+                            
+                            $("#ViewUsers").append(html);    
+                        });
+                    },
+                    error:function(){
+                        alert("Error Call Reload User");
+                    }
+
+                });
+            }
+            
 
             // Start the connection.
             
