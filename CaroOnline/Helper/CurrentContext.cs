@@ -20,6 +20,10 @@ namespace CaroOnline.Helper
                     using (var ctx = new CaroOnlineDBEntities())
                     {
                         var user = ctx.Users.Where(u => u.ID == id).FirstOrDefault();
+                        if (user == null)
+                        {
+                            return false;
+                        }
                         HttpContext.Current.Session["isLogin"] = 1;
                         HttpContext.Current.Session["User"] = user;
 
@@ -42,7 +46,7 @@ namespace CaroOnline.Helper
             //login.Expires = DateTime.Now.AddDays(-7d);
 
 
-            HttpContext.Current.Response.Cookies["userID"].Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Current.Response.Cookies["userID"].Expires = DateTime.Now.AddDays(-8);
 
 
         }

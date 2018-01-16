@@ -6,19 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using CaroOnline.Filter;
 namespace CaroOnline.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
+        [CheckLogin]
         public ActionResult Index()
         {
+            
            // string t= String.Format("{0:N0}", 9001561346);
-            if (CurrentContext.IsLogged() == false)
-            {
-                return Redirect("/Home/Login");
-            }   
+             
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
@@ -56,6 +55,7 @@ namespace CaroOnline.Controllers
             
 
         }
+        [CheckLogin]
         public ActionResult ReloadUser()
         {
             string currName = CurrentContext.GetCurUser().Name;
@@ -109,9 +109,6 @@ namespace CaroOnline.Controllers
             using (var ctx= new CaroOnlineDBEntities())
             {
                
-
-
-
                 var u = ctx.Users.Where(c => c.Name == model.Name && c.Pass == model.Pass).FirstOrDefault();
                 if (u != null)
                 {
@@ -128,7 +125,7 @@ namespace CaroOnline.Controllers
                 
                 return Redirect("/Home/Login"); 
             }
-            return View();
+            
         }
         [HttpPost]
         public ActionResult Register(Users model)
@@ -158,6 +155,7 @@ namespace CaroOnline.Controllers
             
             return RedirectToAction("Login", "Home");
         }
+        [CheckLogin]
         public ActionResult Play()
         {
             if (CurrentContext.IsLogged() == false)
