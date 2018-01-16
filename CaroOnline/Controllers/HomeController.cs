@@ -13,6 +13,7 @@ namespace CaroOnline.Controllers
         // GET: Home
         public ActionResult Index()
         {
+           // string t= String.Format("{0:N0}", 9001561346);
             if (CurrentContext.IsLogged() == false)
             {
                 return Redirect("/Home/Login");
@@ -20,7 +21,13 @@ namespace CaroOnline.Controllers
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
-            return View();
+            int currIDUser = CurrentContext.GetCurUser().ID;
+            using(var ctx=new CaroOnlineDBEntities())
+            {
+                var lstUser = ctx.Users.Where(c => c.ID != currIDUser).ToList();
+                return View(lstUser);
+            }
+           
         }
         public ActionResult Login()
         {

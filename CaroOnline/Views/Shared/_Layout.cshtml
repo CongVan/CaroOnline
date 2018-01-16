@@ -51,7 +51,7 @@
                             @if (CurrentContext.IsLogged())
                             {
                                 <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
-
+                                <input type="hidden" id="currConnectID"/>
                             }
                             <h6 class="warning-text">
                                 Điểm: 500&nbsp;<i class="fa fa-heart"></i>
@@ -63,13 +63,13 @@
                             <div class="list-group">
                                 @if (Request.Url.AbsolutePath.Contains("/Home/Index"))
                                 {
-                                    <a href="/Home/Index" class=" list-group-item list-group-item-action active card my-1 font-weight-normal h4-responsive">
+                                    <a href="/Home/Index" class="list-group-item list-group-item-action active card my-1 font-weight-normal h4-responsive">
                                         <i class="fa fa-home">&nbsp;|&nbsp;</i>Trang chủ
                                     </a>
                                 }
                                 else
                                 {
-                                    <a href="/Home/Index" class=" list-group-item card my-1 font-weight-normal h4-responsive">
+                                    <a href="/Home/Index" class="list-group-item card my-1 font-weight-normal h4-responsive">
                                         <i class="fa fa-home text-danger">&nbsp;|&nbsp;</i>Trang chủ
                                     </a>
                                 }
