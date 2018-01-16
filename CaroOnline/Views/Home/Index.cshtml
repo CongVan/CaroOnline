@@ -27,12 +27,12 @@
                 <div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>
                 <div class="row" id="ViewUsers">
 
-                    @foreach(var us in Model)
+                    @*@foreach(var us in Model)
                     {
                         <div class="col-2 mb-2 px-1 User" id="@us.Name" data-uID="@us.ID" data-cnnID="">
                             <div class="card text-center">
                                 <div class="card-body px-5">
-                                    @*<img src="~/Content/default_user.png" />*@
+                                    <img src="~/Content/default_user.png" />
                                     <img src="/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
                                 </div>
                                 <h6 class="card-title primary-text grey lighten-4 py-1 mb-1">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                    }
+                    }*@
                 </div>
                 <nav aria-label="..." class="float-right">
                     <ul class="pagination pg-red">
@@ -167,7 +167,7 @@
                             if($("#"+item.Name).length){
                                 return;
                             }
-                            var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.cID+'">'+
+                            var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
                             '<div class="card text-center">'+
                                 '<div class="card-body px-5">'+
                                     '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">'+
@@ -203,7 +203,7 @@
             
             $.connection.hub.start().done(function () {
                 $('#currConnectID').val($.connection.hub.id);
-                chat.server.updateConnectionID();
+               // chat.server.updateConnectionID();
                 $('#btnTest').on('click',function(){
                     chat.server.send(user.Name,'ND');
                     chat.server.sendTo(user.Name,'To',1);

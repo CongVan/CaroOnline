@@ -22,36 +22,36 @@ namespace CaroOnline.Controllers
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
-            string currName = CurrentContext.GetCurUser().Name;
-            var Users = new List<Users>();
-            var lst = OnlineHub.ListUsers;
-            try
-            {
-                using (var ctx = new CaroOnlineDBEntities())
-                {
-                    foreach (var item in lst)
-                    {
-                        string sName = item["Name"].ToString();
-                        if (sName != currName)
-                        {
+            //string currName = CurrentContext.GetCurUser().Name;
+            //var Users = new List<Users>();
+            //var lst = OnlineHub.ListUsers;
+            //try
+            //{
+            //    using (var ctx = new CaroOnlineDBEntities())
+            //    {
+            //        foreach (var item in lst)
+            //        {
+            //            string sName = item["Name"].ToString();
+            //            if (sName != currName)
+            //            {
 
-                            var us = ctx.Users.Where(c => c.Name == sName).FirstOrDefault();
-                            if (us != null)
-                            {
-                                Users.Add(us);
-                            }
-                        }
+            //                var us = ctx.Users.Where(c => c.Name == sName).FirstOrDefault();
+            //                if (us != null)
+            //                {
+            //                    Users.Add(us);
+            //                }
+            //            }
 
-                    }
-                    return View(Users);
-                }
-            }
-            catch (Exception ex)
-            {
+            //        }
+            //        return View(Users);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                return View(Users);
-            }
-           
+            //    return View(Users);
+            //}
+            return View();
             
             
 
@@ -82,7 +82,7 @@ namespace CaroOnline.Controllers
                     return Json(Users, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception)
+            catch (Exception )
             {
 
                 return Json("", JsonRequestBehavior.AllowGet);
