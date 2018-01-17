@@ -50,6 +50,7 @@ namespace CaroOnline.Hubs
             var u = new Dictionary<string, string>();
             u.Add("Name", UName);
             u.Add("cID", Context.ConnectionId);
+            u.Add("inGame", "false");
             int fl = 0;
             foreach (var item in ListUsers)
             {
