@@ -26,56 +26,33 @@
                 
                 <div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>
                 <div class="row" id="ViewUsers">
-                    <div class="col-md-4 clearfix d-none d-md-block">
+                 
 
                         <!--Card-->
-                        <div class="card card-cascade narrower">
-
-                            <!--Card image-->
-                            <div class="view overlay hm-white-slight">
-                                <img src="~/Content/default_user.png" class="img-fluid" alt="">
-                                <a>
-                                    <div class="mask waves-effect waves-light"></div>
-                                </a>
-                            </div>
-                            <!--Card image-->
-                            <!--Card content-->
-                            <div class="card-body text-center no-padding">
-                                <!--Category & Title-->
-                                <a href="" class="text-muted">
-                                    <h5>Jeans</h5>
-                                </a>
-                                <h4 class="card-title">
-                                    <strong>
-                                        <a href="">Slim jeans</a>
-                                    </strong>
-                                </h4>
-
-                                <!--Description-->
-                                <p class="card-text">
-                                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci.
-                                </p>
-
-                                <!--Card footer-->
-                                <div class="card-footer">
-                                    <span class="left">99$</span>
-                                    <span class="right">
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Quick Look">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Wishlist">
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </span>
+                        @*<div class="col-3 mb-2 px-3 User" >
+                            <div class="card text-center">
+                                <div class="card-body px-5 ">
+                                    <img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">
                                 </div>
-
+                                <h5 class="card-title primary-text blue-grey lighten-4 py-1 mb-1">
+                                    Tài khoản
+                                    <i class="fa fa-circle success-text"></i>
+                                </h5>
+                                <hr class="my-0"/>
+                                <div class="card-text text-left px-0 d-flex justify-content-between text-center">
+                                    <h5 class="mb-0"><span class="badge green darken-2 font-weight-light">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>
+                                    <h5 class="mb-0"><span class="badge  red accent-4 font-weight-light">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>
+                                    <h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>
+                                    <h5 class="mb-0"><span class="badge   blue darken-2 font-weight-light">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>
+                                </div>                                
+                                <div class="card-footer px-0 pt-1 mb-0 pb-0">
+                                    <button class="btn btn-sm btn-danger btn-block">Thách đấu</button>
+                                </div>
                             </div>
-                            <!--Card content-->
+                        </div>*@
+                        <!--/.Card-->
 
-                        </div>
-                        <!--Card-->
-
-                    </div>
+                   
                     @*@foreach(var us in Model)
                     {
                         <div class="col-2 mb-2 px-1 User" id="@us.Name" data-uID="@us.ID" data-cnnID="">
@@ -216,25 +193,48 @@
                             if($("#"+item.Name).length){
                                 return;
                             }
-                            var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
-                                '<div class="card text-center">' +
-                                
+                            var html='<div class="col-3 mb-2 px-3 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
+                            '<div class="card text-center">'+
                                 '<div class="card-body px-5 ">'+
                                     '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">'+
                                 '</div>'+
-                                '<h6 class="card-title primary-text grey lighten-4 py-1 mb-1 ">'+
-                                    item.Name +
-                                        '&nbsp;&nbsp;<i class="fa fa-circle success-text"></i>'+
-                                '</h6>'+
-                                '<p class=" danger-text mb-0 pb-1">500&nbsp;<i class="fa fa-star"></i></p>' +
-                                '<button type="button" class="btn btn-primary btn-md ">Thách đấu</button>'+
-                                '<div class="card-footer px-0 pt-0 pt-1">'+
-                                    '<a class="btn-floating  btn-sm success-color m-0 white-text pr-1"><i class="fa fa-bolt">10</i></i></a>'+
-                                    '<a class="btn-floating btn-sm special-color my-0 mx-1 white-text pr-1"><i class="fa fa-minus">10</i></a>'+
-                                    '<a class="btn-floating btn-sm danger-color m-0 white-text pr-1"><i class="fa fa-ban">10</i></a>'+
+                                '<h5 class="card-title primary-text blue-grey lighten-4 py-1 mb-1">'
+                                    +item.Name+
+                                    '<i class="fa fa-circle success-text"></i>'+
+                                '</h5>'+
+                                '<hr class="my-0"/>'+
+                                '<div class="card-text text-left px-0 d-flex justify-content-between text-center">'+
+                                    '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge   blue darken-2 font-weight-light">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>'+
+                                '</div>'+
+                                '<div class="card-footer px-0 pt-1 mb-0 pb-0">'+
+                                    '<button class="btn btn-sm btn-danger btn-block">Thách đấu</button>'+
                                 '</div>'+
                             '</div>'+
                         '</div>';
+
+
+                        //    var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
+                        //        '<div class="card text-center">' +
+                                
+                        //        '<div class="card-body px-5 ">'+
+                        //            '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">'+
+                        //        '</div>'+
+                        //        '<h6 class="card-title primary-text grey lighten-4 py-1 mb-1 ">'+
+                        //            item.Name +
+                        //                '&nbsp;&nbsp;<i class="fa fa-circle success-text"></i>'+
+                        //        '</h6>'+
+                        //        '<p class=" danger-text mb-0 pb-1">500&nbsp;<i class="fa fa-star"></i></p>' +
+                        //        '<button type="button" class="btn btn-primary btn-md ">Thách đấu</button>'+
+                        //        '<div class="card-footer px-0 pt-0 pt-1">'+
+                        //            '<a class="btn-floating  btn-sm success-color m-0 white-text pr-1"><i class="fa fa-bolt">10</i></i></a>'+
+                        //            '<a class="btn-floating btn-sm special-color my-0 mx-1 white-text pr-1"><i class="fa fa-minus">10</i></a>'+
+                        //            '<a class="btn-floating btn-sm danger-color m-0 white-text pr-1"><i class="fa fa-ban">10</i></a>'+
+                        //        '</div>'+
+                        //    '</div>'+
+                        //'</div>';
                             
                             $("#ViewUsers").append(html);    
                         });
