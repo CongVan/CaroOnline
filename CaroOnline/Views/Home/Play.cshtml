@@ -5,15 +5,43 @@
 }
 <img src="~/Content/o.png" style="display:none" id="imgO" />
 <img src="~/Content/x.png" style="display:none" id="imgX" />
-<div class="col-6" style="">
+<div class="col-lg-6" style="">
     <div class="card rounded" style="width:630px;height:630px">
         <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer;user-select: none;"></canvas>
         @*onclick="storeGuess(event)"*@
     </div>
 </div>
-<div class="col-3">
+<div class="col-lg-3 col-md-6 mb-r">
+    
+    <div class="card card-body text-center">
+        <div class="avatar mt-1 px-5">
+            <img src="~/Content/default_user.png" class="rounded-circle img-fluid" >
+        </div>
+        <h5 class="font-bold">
+            <strong>Tài khoản</strong>
+        </h5>
+        <p class="grey-text">Graphic designer</p>
+        <div class="progress primary-color-dark">
+            <div class="indeterminate"></div>
+        </div>
+        <ul class="list-unstyled">
+            <!-- Facebook -->
+            <a class="icons-sm fb-ic">
+                <i class="fa fa-facebook blue-text"> </i>
+            </a>
+            <!-- Twitter -->
+            <a class="icons-sm tw-ic">
+                <i class="fa fa-twitter blue-text"> </i>
+            </a>
+            <!-- Instagram -->
+            <a class="icons-sm ins-ic">
+                <i class="fa fa-instagram blue-text"> </i>
+            </a>
+        </ul>
+    </div>
     <h2 id="test"></h2>
 </div>
+
 @section js{
 <script src="~/Scripts/Caro/Cell.js"></script>
     <script>

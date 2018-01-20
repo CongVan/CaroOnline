@@ -85,6 +85,8 @@ namespace CaroOnline.Hubs
                     break;
                 }
             }
+            //ReloadUsers();
+
           //  UserHandler.ConnectedIds.Remove(Context.ConnectionId);
             return base.OnDisconnected(stopCalled);
         }
