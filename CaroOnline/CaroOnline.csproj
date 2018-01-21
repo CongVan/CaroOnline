@@ -349,6 +349,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CurrentContext.cs" />
+    <Compile Include="Hubs\GameHub.cs" />
     <Compile Include="Hubs\OnlineHub.cs" />
     <Compile Include="Models\CaroOnlineDB.Context.cs">
       <AutoGen>True</AutoGen>

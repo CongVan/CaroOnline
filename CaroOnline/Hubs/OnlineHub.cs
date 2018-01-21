@@ -42,6 +42,13 @@ namespace CaroOnline.Hubs
         {
             Clients.All.reloadUsers();
         }
+        public void PairingGame(string uNameFrom, string userToID,string uNameTo,string userToCnnID)
+        {
+            //string uNameFrom = Context.ConnectionId;
+                
+
+            Clients.Client(userToCnnID).pairingGame(uNameFrom, uNameTo);
+        }
         public override Task OnConnected()
         {
            // string name = Context.User.Identity.Name;

@@ -81,38 +81,7 @@
 
                     }*@
                 </div>
-                <nav aria-label="..." class="float-right">
-                    <ul class="pagination pg-red">
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">«</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">1</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link waves-effect waves-effect" href="#">
-                                2
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">4</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">5</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link waves-effect waves-effect">»</a>
-                        </li>
-                    </ul>
-                </nav>
-
-
-
-
+                
             </div>
         </div>
         <!--/.Panel 1-->
@@ -132,7 +101,37 @@
     </div>
 
 </div>
+<div class="modal fade show" id="modalLoginAvatarDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+        <!--Content-->
+        <div class="modal-content">
 
+            <!--Header-->
+            <div class="modal-header">
+                <img src="~/Content/default_user.png" class="rounded-circle img-responsive" alt="Avatar photo">
+            </div>
+            <!--Body-->
+            <div class="modal-body text-center mb-1">
+
+                <h5 class="mt-1 mb-2" id="UNamePairing"></h5>
+
+
+                <div class="text-center">
+                    <button class="btn btn-primary mt-1 waves-effect waves-light">
+                        Đồng ý 
+                        @*<i class="fa fa-sign-in ml-1"></i>*@
+                    </button>
+                    <button class="btn btn-outline-light btn-primary mt-1 waves-effect waves-light">
+                        Từ chối
+                        @*<i class="fa fa-sign-in ml-1"></i>*@
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
 
 
 @section js{
@@ -140,6 +139,7 @@
     @*<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>*@
     <script src="~/signalr/hubs"></script>
     <script>
+        
         $(document).ready(function () {
             var t = "@ViewBag.msgError";
             if (t != "") {
@@ -186,7 +186,8 @@
                 $.ajax({
                     url:"/Home/ReloadUser",
                     success:function(data){
-                        if(data==""){
+                        if (data == "") {
+                            $("#ViewUsers").append('<p id="noDataFound" class="text-muted">Không có tài khoản online.</p>');
                             return;
                         }
                         data.forEach(function(item){
@@ -210,7 +211,7 @@
                                     '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>'+
                                 '</div>'+
                                 '<div class="card-footer px-0 pt-1 mb-0 pb-0">'+
-                                    '<button class="btn btn-sm btn-danger btn-block ">Thách đấu</button>'+
+                                '<button class="btn btn-sm btn-danger btn-block " id="btnPlay" data-uName="' + item.Name +'" data-cnnID="' + item.CID + '" data-uID="' + item.ID +'">Thách đấu</button>'+
                                 '</div>'+
                             '</div>'+
                         '</div>';
@@ -238,6 +239,7 @@
                             
                             $("#ViewUsers").append(html);    
                         });
+                        $("#noDataFound").hide();
                     },
                     error:function(){
                         alert("Error Call Reload User");
@@ -245,10 +247,13 @@
 
                 });
             }
-            
+            chat.client.pairingGame = function (uNameFrom, uNameTo) {
+                $("#UNamePairing").text(uNameFrom);
+                $('#modalLoginAvatarDemo').modal('toggle');
+
+            }
 
             // Start the connection.
-            
             $.connection.hub.start().done(function () {
                 $('#currConnectID').val($.connection.hub.id);
                // chat.server.updateConnectionID();
@@ -256,20 +261,23 @@
                     chat.server.send(user.Name,'ND');
                     chat.server.sendTo(user.Name,'To',1);
                 });
-                if (user != null && login==1) {
-                    
-                }
+                $("#ViewUsers").on("click", "#btnPlay", function () {
+                    alert("Play");
+                    var userToID = $(this).data("uid");
+                    var userToCnnID = $(this).data("cnnid");
+                    var uNameTo = $(this).data("uname");
+                    var uNameFrom = $("#currUserName").text();
+                    chat.server.pairingGame(uNameFrom,userToID, uNameTo, userToCnnID);
+                    $(this).text("Đang chờ ...");
+                    $(this).prop("disabled", "disabled");
+                });
                 
             });
 
-
+            
         });
-        // This optional function html-encodes messages for display in the page.
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
-        }
-
+       
+        
     </script>
 
 }

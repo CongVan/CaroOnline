@@ -50,7 +50,7 @@
                             <a class="activator pt-1"><i class="fa fa-circle success-text"></i></a>
                             @if (CurrentContext.IsLogged())
                             {
-                                <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
+                                <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4 " id="currUserName">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
                                 <input type="hidden" id="currConnectID"/>
                             }
                             <h6 class="warning-text">
