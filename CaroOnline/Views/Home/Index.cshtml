@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<div class="col-9 ">
+<div class="col-lg-9 col-md-9 col-sm-12">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified indigo rounded p-2" role="tablist" style="background-image: linear-gradient(60deg, #3d3393 0%, #2b76b9 37%, #2cacd1 65%, #35eb93 100%);">
         <li class="nav-item">
@@ -23,13 +23,13 @@
         <!--Panel 1-->
         <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
             <div class="card-body pt-2">
-                
+
                 <div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>
                 <div class="row" id="ViewUsers">
-                 
 
-                        <!--Card-->
-                        @*<div class="col-3 mb-2 px-3 User" >
+
+                    <!--Card-->
+                    @*<div class="col-3 mb-2 px-3 User" >
                             <div class="card text-center">
                                 <div class="card-body px-5 ">
                                     <img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">
@@ -44,44 +44,42 @@
                                     <h5 class="mb-0"><span class="badge  red accent-4 font-weight-light">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>
                                     <h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>
                                     <h5 class="mb-0"><span class="badge   blue darken-2 font-weight-light">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>
-                                </div>                                
+                                </div>
                                 <div class="card-footer px-0 pt-1 mb-0 pb-0">
                                     <button class="btn btn-sm btn-danger btn-block">Thách đấu</button>
                                 </div>
                             </div>
                         </div>*@
-                        <!--/.Card-->
-
-                   
+                    <!--/.Card-->
                     @*@foreach(var us in Model)
-                    {
-                        <div class="col-2 mb-2 px-1 User" id="@us.Name" data-uID="@us.ID" data-cnnID="">
-                            <div class="card text-center">
-                                <div class="card-body px-5">
-                                    <img src="~/Content/default_user.png" />
-                                    <img src="/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
-                                </div>
-                                <h6 class="card-title primary-text grey lighten-4 py-1 mb-1">
-                                    @us.Name
-                                    
-                                        <i class="fa fa-circle success-text"></i>
-                                    
-                                </h6>
-                                <p class="warning-text mb-1">
-                                    Điểm: 500 &nbsp;<i class="fa fa-heart"></i>
+                        {
+                            <div class="col-2 mb-2 px-1 User" id="@us.Name" data-uID="@us.ID" data-cnnID="">
+                                <div class="card text-center">
+                                    <div class="card-body px-5">
+                                        <img src="~/Content/default_user.png" />
+                                        <img src="/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
+                                    </div>
+                                    <h6 class="card-title primary-text grey lighten-4 py-1 mb-1">
+                                        @us.Name
 
-                                </p>
-                                <div class="card-footer px-0 pt-0 pt-1">
-                                    <span class="badge badge-pill success-color font-weight-light">10 Thắng</span>
-                                    <span class="badge badge-pill danger-color font-weight-light">10 Thua</span>
-                                    <span class="badge badge-pill special-color font-weight-light">10 Hòa</span>
+                                            <i class="fa fa-circle success-text"></i>
+
+                                    </h6>
+                                    <p class="warning-text mb-1">
+                                        Điểm: 500 &nbsp;<i class="fa fa-heart"></i>
+
+                                    </p>
+                                    <div class="card-footer px-0 pt-0 pt-1">
+                                        <span class="badge badge-pill success-color font-weight-light">10 Thắng</span>
+                                        <span class="badge badge-pill danger-color font-weight-light">10 Thua</span>
+                                        <span class="badge badge-pill special-color font-weight-light">10 Hòa</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    }*@
+                        }*@
                 </div>
-                
+
             </div>
         </div>
         <!--/.Panel 1-->
@@ -117,11 +115,11 @@
 
 
                 <div class="text-center">
-                    <button class="btn btn-primary mt-1 waves-effect waves-light">
-                        Đồng ý 
+                    <button class="btn btn-primary mt-1 waves-effect waves-light" id="btnYes">
+                        Đồng ý
                         @*<i class="fa fa-sign-in ml-1"></i>*@
                     </button>
-                    <button class="btn btn-outline-light btn-primary mt-1 waves-effect waves-light">
+                    <button class="btn btn-outline-light btn-primary mt-1 waves-effect waves-light" id="btnNo">
                         Từ chối
                         @*<i class="fa fa-sign-in ml-1"></i>*@
                     </button>
@@ -139,7 +137,7 @@
     @*<script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>*@
     <script src="~/signalr/hubs"></script>
     <script>
-        
+
         $(document).ready(function () {
             var t = "@ViewBag.msgError";
             if (t != "") {
@@ -153,9 +151,9 @@
                     "positionClass": "toast-top-right",
                 });
             }
-        });
-        $(function () {
-            var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
+
+
+             var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
             var login = 1;
             // Reference the auto-generated proxy for the hub.
             $.connection.hub.qs = { 'Uname' : user.Name };
@@ -173,7 +171,7 @@
 
             chat.client.updateConnectionID=function(listUsers){
                 //console.log(listUsers);
-                
+
                 listUsers.forEach(function(item){
                     $("#"+item.Name).data("cID",item.cID);
                 });
@@ -203,7 +201,7 @@
                                     +item.Name+
                                     '<i class="fa fa-circle success-text ml-2"></i>'+
                                 '</h5>'+
-                              
+
                                 '<div class="my-2 card-text text-left px-0 d-flex justify-content-between text-center px-1">'+
                                     '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light px-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>'+
                                     '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light px-2 pb-1">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>'+
@@ -211,7 +209,7 @@
                                     '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>'+
                                 '</div>'+
                                 '<div class="card-footer px-0 pt-1 mb-0 pb-0">'+
-                                '<button class="btn btn-sm btn-danger btn-block " id="btnPlay" data-uName="' + item.Name +'" data-cnnID="' + item.CID + '" data-uID="' + item.ID +'">Thách đấu</button>'+
+                                '<button class="btn btn-sm btn-danger btn-block btnPlay"  data-uName="' + item.Name +'" data-cnnID="' + item.CID + '" data-uID="' + item.ID +'">Thách đấu</button>'+
                                 '</div>'+
                             '</div>'+
                         '</div>';
@@ -219,7 +217,7 @@
 
                         //    var html='<div class="col-2 mb-2 px-1 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
                         //        '<div class="card text-center">' +
-                                
+
                         //        '<div class="card-body px-5 ">'+
                         //            '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">'+
                         //        '</div>'+
@@ -236,8 +234,8 @@
                         //        '</div>'+
                         //    '</div>'+
                         //'</div>';
-                            
-                            $("#ViewUsers").append(html);    
+
+                            $("#ViewUsers").append(html);
                         });
                         $("#noDataFound").hide();
                     },
@@ -247,12 +245,22 @@
 
                 });
             }
-            chat.client.pairingGame = function (uNameFrom, uNameTo) {
+            chat.client.pairingGame = function (uNameFrom, uCnnIdFrom ,uNameTo) {
                 $("#UNamePairing").text(uNameFrom);
+                $("#btnNo").data("ucnnidfrom", uCnnIdFrom);
                 $('#modalLoginAvatarDemo').modal('toggle');
 
             }
-
+            chat.client.noPairing = function (userCnnIDTo, uNameFrom, uCnnIdFrom) {
+                var msg = "Người chơi " + uNameFrom.trim() + " không đồng ý thách đấu !";
+                //alert("Không đồng ý!");
+                //alert("Không đồng ý");
+                //console.log("không đồng ý");
+                toastr.info(msg, "Thông báo", {
+                    "positionClass": "toast-top-right",
+                });
+                $(".btnPlay").find("[data-uName='${uNameFrom}']").text("Thách đấu");
+            }
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $('#currConnectID').val($.connection.hub.id);
@@ -261,8 +269,8 @@
                     chat.server.send(user.Name,'ND');
                     chat.server.sendTo(user.Name,'To',1);
                 });
-                $("#ViewUsers").on("click", "#btnPlay", function () {
-                    alert("Play");
+                $("#ViewUsers").on("click", ".btnPlay", function () {
+                    //alert("Play");
                     var userToID = $(this).data("uid");
                     var userToCnnID = $(this).data("cnnid");
                     var uNameTo = $(this).data("uname");
@@ -271,13 +279,21 @@
                     $(this).text("Đang chờ ...");
                     $(this).prop("disabled", "disabled");
                 });
-                
+                $("#btnYes").on("click", function () {
+
+                });
+                $("#btnNo").on("click", function () {
+                    var userCnnIDTo = $(this).data("ucnnidfrom");
+                    var uNameFrom = $("#currUserName").text();
+                    $('#modalLoginAvatarDemo').modal('toggle');
+                    chat.server.noPairing(userCnnIDTo, uNameFrom);
+
+                });
+
             });
 
-            
         });
-       
-        
+
     </script>
 
 }
