@@ -109,10 +109,10 @@
                 <img src="~/Content/default_user.png" class="rounded-circle img-responsive" alt="Avatar photo">
             </div>
             <!--Body-->
-            <div class="modal-body text-center mb-1">
+            <div class="modal-body text-center mb-1 px-0">
 
-                <h5 class="mt-1 mb-2" id="UNamePairing"></h5>
-
+                <h4 class="mt-1 mb-2" id="UNamePairing"></h4>
+                <h5 class="red-text " id="TimeCount"></h5>
 
                 <div class="text-center">
                     <button class="btn btn-primary mt-1 waves-effect waves-light" id="btnYes">
@@ -188,10 +188,12 @@
                             $("#ViewUsers").append('<p id="noDataFound" class="text-muted">Không có tài khoản online.</p>');
                             return;
                         }
-                        data.forEach(function(item){
-                            if($("#"+item.Name).length){
-                                return;
-                            }
+                        $("#ViewUsers").html("");
+                        data.forEach(function (item) {
+
+                            //if($("#"+item.Name).length){
+                            //    return;
+                            //}
                             var html='<div class="col-lg-3 col-md-3 col-sm-6 mb-2 px-3 User" id="'+item.Name+'" data-uID="'+item.ID+'" data-cnnID="'+item.CID+'">'+
                             '<div class="card text-center hoverable  view overlay hm-white-light hm-zoom">'+
                                 '<div class="card-body px-5 ">'+
@@ -203,9 +205,9 @@
                                 '</h5>'+
 
                                 '<div class="my-2 card-text text-left px-0 d-flex justify-content-between text-center px-1">'+
-                                    '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light px-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>'+
-                                    '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light px-2 pb-1">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>'+
-                                    '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light px-2 pb-1">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light pr-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light pr-2 pb-1">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>'+
+                                    '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light pr-2 pb-1">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>'+
                                     '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>'+
                                 '</div>'+
                                 '<div class="card-footer px-0 pt-1 mb-0 pb-0">'+
@@ -249,17 +251,26 @@
                 $("#UNamePairing").text(uNameFrom);
                 $("#btnNo").data("ucnnidfrom", uCnnIdFrom);
                 $('#modalLoginAvatarDemo').modal('toggle');
-
+                var ms = 10;
+                   
+                var countTime=setInterval(function () {
+                    $("#TimeCount").text(ms+"s")
+                    ms = ms - 1;
+                    if (ms < 0) {
+                        clearInterval(countTime);
+                    }
+                },1000);
             }
             chat.client.noPairing = function (userCnnIDTo, uNameFrom, uCnnIdFrom) {
-                var msg = "Người chơi " + uNameFrom.trim() + " không đồng ý thách đấu !";
+                var msg = "Người chơi <i><u>" + uNameFrom.trim() + "</u></i> không đồng ý thách đấu !";
                 //alert("Không đồng ý!");
                 //alert("Không đồng ý");
                 //console.log("không đồng ý");
-                toastr.info(msg, "Thông báo", {
+                toastr.error(msg, "Thông báo", {
                     "positionClass": "toast-top-right",
                 });
-                $(".btnPlay").find("[data-uName='${uNameFrom}']").text("Thách đấu");
+                $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
+                $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled",false);
             }
             // Start the connection.
             $.connection.hub.start().done(function () {
@@ -287,8 +298,8 @@
                     var uNameFrom = $("#currUserName").text();
                     $('#modalLoginAvatarDemo').modal('toggle');
                     chat.server.noPairing(userCnnIDTo, uNameFrom);
-
                 });
+
 
             });
 

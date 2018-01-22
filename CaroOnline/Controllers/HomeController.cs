@@ -108,7 +108,8 @@ namespace CaroOnline.Controllers
       
             using (var ctx= new CaroOnlineDBEntities())
             {
-               
+
+                
                 var u = ctx.Users.Where(c => c.Name == model.Name && c.Pass == model.Pass).FirstOrDefault();
                 if (u != null)
                 {
