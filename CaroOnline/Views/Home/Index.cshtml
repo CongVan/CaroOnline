@@ -104,24 +104,34 @@
         <!--Content-->
         <div class="modal-content">
 
-            <!--Header-->
-            <div class="modal-header">
-                <img src="~/Content/default_user.png" class="rounded-circle img-responsive" alt="Avatar photo">
-            </div>
             <!--Body-->
-            <div class="modal-body text-center mb-1 px-0">
+            <div class="modal-body text-center mb-1 px-2">
+                <h6 class="red-text modal-title font-weight-bold">MỜI THÁCH ĐẤU</h6>
+                <hr class="red d-inline-block mt-0 mb-3" style="width:25%" />
 
-                <h4 class="mt-1 mb-2" id="UNamePairing"></h4>
-                <h5 class="red-text " id="TimeCount"></h5>
+                <div class="mb-1 d-flex justify-content-between">
+                    
+                    <h5 class="black-text h6 "><i class="fa fa-user-circle"></i> Người mời :</h5>
+                    <h5 class="primary-text " id="UNamePairing"></h5>
+
+                    
+                </div>
+                <div class="d-flex justify-content-between">    
+                    <h5 class="black-text h6 "><i class="fa fa-clock-o"></i>Thời gian chờ : </h5>
+                    <div class="progress mt-2" style="width:50%">
+                        <div  id="TimeCount" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                   @* <h5 class="red-text " id="TimeCount"></h5>*@
+                </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary mt-1 waves-effect waves-light" id="btnYes">
-                        Đồng ý
-                        @*<i class="fa fa-sign-in ml-1"></i>*@
+                    <button class="btn btn-teal mt-1 waves-effect waves-light btn-md " id="btnYes">
+                        Đồng ý <i class="fa fa-chevron-circle-right ml-1"></i>
+                        
                     </button>
-                    <button class="btn btn-outline-light btn-primary mt-1 waves-effect waves-light" id="btnNo">
-                        Từ chối
-                        @*<i class="fa fa-sign-in ml-1"></i>*@
+                    <button class="btn btn-outline-teal mt-1 waves-effect waves-light btn-md" id="btnNo">
+                        Từ chối<i class="fa fa-ban ml-1"></i>
+                        
                     </button>
                 </div>
             </div>
@@ -153,8 +163,9 @@
             }
 
 
-             var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
+            var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
             var login = 1;
+            var countTime=null;
             // Reference the auto-generated proxy for the hub.
             $.connection.hub.qs = { 'Uname' : user.Name };
             var chat = $.connection.onlineHub;
@@ -252,16 +263,32 @@
                 $("#btnNo").data("ucnnidfrom", uCnnIdFrom);
                 $('#modalLoginAvatarDemo').modal('toggle');
                 var ms = 10;
-                   
-                var countTime=setInterval(function () {
-                    $("#TimeCount").text(ms+"s")
-                    ms = ms - 1;
+                $("#TimeCount").removeClass();  
+                $("#TimeCount").addClass("progress-bar bg-success");  
+                countTime=setInterval(function () {
+                    if(ms<7 && ms >4){
+                        $("#TimeCount").removeClass("bg-success");
+                        $("#TimeCount").addClass("bg-primary");
+                    }
+                    if(ms<=4 && ms >2){
+                        $("#TimeCount").removeClass("bg-primary");
+                        $("#TimeCount").addClass("bg-warning");
+                    }
+                    if(ms<=2){
+                        $("#TimeCount").removeClass("bg-warning");
+                        $("#TimeCount").addClass("bg-danger");
+                    }
+                    
+                    var per=ms*10;
+                    $("#TimeCount").attr("aria-valuenow",per);
+                    $("#TimeCount").css("width",per+"%");
+                    ms = ms - 0.01;
                     if (ms < 0) {
                         clearInterval(countTime);
                         $('#modalLoginAvatarDemo').modal('toggle');
                         $("#btnNo").trigger("click");
                     }
-                },1000);
+                },10);
             }
             chat.client.noPairing = function (userCnnIDTo, uNameFrom, uCnnIdFrom) {
                 var msg = "Người chơi <i><u>" + uNameFrom.trim() + "</u></i> không đồng ý thách đấu !";
@@ -303,6 +330,7 @@
                     var userCnnIDTo = $(this).data("ucnnidfrom");
                     var uNameFrom = $("#currUserName").text();
                     $('#modalLoginAvatarDemo').modal('toggle');
+                    clearInterval(countTime);
                     chat.server.noPairing(userCnnIDTo, uNameFrom);
                 });
 
