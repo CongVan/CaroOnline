@@ -3,11 +3,22 @@
 @{
     ViewBag.Title = "Play";
 }
+<style>
+    .check-board{
+        cursor:pointer;
+        user-select: none;
+        /*border-image:url(/Content/rsz_border.jpg) 630 630 round;*/
+        background-image:url(/Content/rsz_border.jpg);
+
+    }
+
+</style>
+
 <img src="~/Content/o.png" style="display:none" id="imgO" />
 <img src="~/Content/x.png" style="display:none" id="imgX" />
 <div class="col-lg-6" style="">
-    <div class="card rounded" style="width:630px;height:630px">
-        <canvas id="TableChess" class="rounded" width="630" height="630" style="border:1px solid #d3d3d3;cursor:pointer;user-select: none;"></canvas>
+    <div class="card rounded check-board" style="width:630px;height:630px">@* border:1px solid #d3d3d3; *@
+        <canvas id="TableChess" class="rounded " width="630" height="630" ></canvas>
         @*onclick="storeGuess(event)"*@
     </div>
 </div>
@@ -66,8 +77,8 @@
         var canvas = document.getElementById('TableChess');
         var context = canvas.getContext('2d');
         var imgX = document.getElementById("imgX");
-        var imgY = document.getElementById("imgY");
-        
+        var imgO = document.getElementById("imgO");
+        var currImg = imgX;
         canvas.addEventListener('click', function (evt) {
             var rect = canvas.getBoundingClientRect();
             var mouseX = evt.clientX - rect.left -0.5;
@@ -81,8 +92,13 @@
 
             if (ArrMaxtrix[i][j].Owner == 0) {
 
-                context.drawImage(imgX, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
-                ArrMaxtrix[i][j].Owner=1
+                context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                ArrMaxtrix[i][j].Owner = 1
+                if (currImg == imgO) {
+                    currImg = imgX;
+                } else {
+                    currImg = imgO;
+                }
             }
         }, false);
         var oldX=-1, oldY=-1;
@@ -103,8 +119,11 @@
                 if (oi != i || oj != j) {
 
                     if (ArrMaxtrix[oi][oj].Owner == 0) {
-                        context.fillStyle = "white";
-                        context.fillRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
+
+                        //context.fillStyle = "white";
+                        //context.fillRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
+                        context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                        
                         oldX = mouseX;
                         oldY = mouseY;
                     }
@@ -113,7 +132,7 @@
             oldX = mouseX;
             oldY = mouseY;
             if (ArrMaxtrix[i][j].Owner == 0) {
-                context.drawImage(imgX, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
+                context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
             }
                 
             $('#test').text(mouseX + " | " + mouseY);

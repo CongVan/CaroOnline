@@ -227,6 +227,7 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\ResizeSensor.js" />
     <Content Include="Content\js\speakingurl.min.js" />
+    <Content Include="Content\rsz_border.jpg" />
     <Content Include="Content\x.png" />
     <Content Include="Content\o.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
