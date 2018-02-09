@@ -8,8 +8,9 @@
         cursor:pointer;
         user-select: none;
         /*border-image:url(/Content/rsz_border.jpg) 630 630 round;*/
-        background-image:url(/Content/rsz_border.jpg);
-
+        /*background-image:url(/Content/background.png);*/
+        background-color:#ffcc99;
+        
     }
 
 </style>
@@ -17,7 +18,7 @@
 <img src="~/Content/o.png" style="display:none" id="imgO" />
 <img src="~/Content/x.png" style="display:none" id="imgX" />
 <div class="col-lg-6" style="">
-    <div class="card rounded check-board" style="width:630px;height:630px">@* border:1px solid #d3d3d3; *@
+    <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;" >@* border:1px solid #d3d3d3; *@
         <canvas id="TableChess" class="rounded " width="630" height="630" ></canvas>
         @*onclick="storeGuess(event)"*@
     </div>
@@ -138,12 +139,26 @@
             $('#test').text(mouseX + " | " + mouseY);
             
         }, false);
+        //draw point
+        context.strokeStyle = '#6d4c41';
+        for (var i = 1; i < 21; i++) {
+            for (var j = 0; j < 21; j++) {
+                context.beginPath();
+
+
+                context.arc(i * Cell.SizeRect(), j * Cell.SizeRect(), 1.25, 0, 2 * Math.PI, true);
+                context.fill();
+                context.stroke();
+            }
+        }
         context.beginPath();
         //draw line with x
         for (var i = 0; i < 21; i++) {
             
             context.moveTo(i * Cell.SizeRect(), 0);
             context.lineTo(i * Cell.SizeRect(), 630);
+            
+            
         }
         //draw line with y
         for (var i = 0; i < 22; i++) {
@@ -151,10 +166,11 @@
             context.moveTo(0, i * Cell.SizeRect());
             context.lineTo(630, i * Cell.SizeRect());
         }
-
+        
+        
         context.closePath();
         context.lineWidth = 1;
-        context.strokeStyle = 'rgba(76, 175, 80, 0.7) ';
+        context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7) 
 
             //'#3f51b5';
         context.stroke();
