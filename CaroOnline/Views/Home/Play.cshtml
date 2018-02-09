@@ -4,30 +4,29 @@
     ViewBag.Title = "Play";
 }
 <style>
-    .check-board{
-        cursor:pointer;
+    .check-board {
+        cursor: pointer;
         user-select: none;
         /*border-image:url(/Content/rsz_border.jpg) 630 630 round;*/
         /*background-image:url(/Content/background.png);*/
-        background-color:#ffcc99;
-        
+        background-color: #ffcc99;
     }
-
 </style>
 
 <img src="~/Content/o.png" style="display:none" id="imgO" />
 <img src="~/Content/x.png" style="display:none" id="imgX" />
 <div class="col-lg-6" style="">
-    <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;" >@* border:1px solid #d3d3d3; *@
-        <canvas id="TableChess" class="rounded " width="630" height="630" ></canvas>
-        @*onclick="storeGuess(event)"*@
-    </div>
+    <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;">
+        @* border:1px solid #d3d3d3; *@
+    <canvas id="TableChess" class="rounded " width="630" height="630"></canvas>
+    @*onclick="storeGuess(event)"*@
 </div>
-<div class="col-lg-3 col-md-6 mb-r">
-    
+</div>
+<div class="col-lg-3 col-md-6 mb-r px-4">
+
     <div class="card card-body text-center">
         <div class="avatar mt-1 px-5">
-            <img src="~/Content/default_user.png" class="rounded-circle img-fluid" >
+            <img src="~/Content/default_user.png" class="rounded-circle img-fluid">
         </div>
         <h5 class="font-bold">
             <strong>Tài khoản</strong>
@@ -55,10 +54,10 @@
 </div>
 
 @section js{
-<script src="~/Scripts/Caro/Cell.js"></script>
+    <script src="~/Scripts/Caro/Cell.js"></script>
     <script>
-        
-        
+
+
 
     </script>
 
@@ -72,7 +71,7 @@
                 arr1.push(new Cell(i, j, 0));
             }
             ArrMaxtrix.push(arr1);
-            
+
         }
 
         var canvas = document.getElementById('TableChess');
@@ -82,7 +81,7 @@
         var currImg = imgX;
         canvas.addEventListener('click', function (evt) {
             var rect = canvas.getBoundingClientRect();
-            var mouseX = evt.clientX - rect.left -0.5;
+            var mouseX = evt.clientX - rect.left - 0.5;
             var mouseY = evt.clientY - rect.top;
 
             $('#test').text(mouseX + " | " + mouseY);
@@ -102,7 +101,7 @@
                 }
             }
         }, false);
-        var oldX=-1, oldY=-1;
+        var oldX = -1, oldY = -1;
         canvas.addEventListener('mousemove', function (evt) {
             var rect = canvas.getBoundingClientRect();
             var mouseX = evt.clientX - rect.left - 0.5;
@@ -113,7 +112,7 @@
             if (mouseX % Cell.SizeRect() == 0 || mouseY % Cell.SizeRect() == 0) {
                 return;
             }
-            
+
             var oi = Math.floor(oldX / Cell.SizeRect()), oj = Math.floor(oldY / Cell.SizeRect());
             var i = Math.floor(mouseX / Cell.SizeRect()), j = Math.floor(mouseY / Cell.SizeRect());
             if (oi != -1 || oj != -1) {
@@ -124,7 +123,7 @@
                         //context.fillStyle = "white";
                         //context.fillRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
                         context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
-                        
+
                         oldX = mouseX;
                         oldY = mouseY;
                     }
@@ -133,11 +132,11 @@
             oldX = mouseX;
             oldY = mouseY;
             if (ArrMaxtrix[i][j].Owner == 0) {
-                context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect()-7);
+                context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
             }
-                
+
             $('#test').text(mouseX + " | " + mouseY);
-            
+
         }, false);
         //draw point
         context.strokeStyle = '#6d4c41';
@@ -154,25 +153,25 @@
         context.beginPath();
         //draw line with x
         for (var i = 0; i < 21; i++) {
-            
+
             context.moveTo(i * Cell.SizeRect(), 0);
             context.lineTo(i * Cell.SizeRect(), 630);
-            
-            
+
+
         }
         //draw line with y
         for (var i = 0; i < 22; i++) {
-            
+
             context.moveTo(0, i * Cell.SizeRect());
             context.lineTo(630, i * Cell.SizeRect());
         }
-        
-        
+
+
         context.closePath();
         context.lineWidth = 1;
-        context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7) 
+        context.strokeStyle = '#6d4c41';//rgba(76, 175, 80, 0.7)
 
-            //'#3f51b5';
+        //'#3f51b5';
         context.stroke();
 
     </script>
