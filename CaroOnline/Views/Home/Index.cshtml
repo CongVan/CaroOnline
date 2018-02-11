@@ -261,6 +261,7 @@
             chat.client.pairingGame = function (uNameFrom, uCnnIdFrom ,uNameTo) {
                 $("#UNamePairing").text(uNameFrom);
                 $("#btnNo").data("ucnnidfrom", uCnnIdFrom);
+                $("#btnYes").data("ucnnidfrom", uCnnIdFrom);
                 $('#modalLoginAvatarDemo').modal('toggle');
                 var ms = 10;
                 $("#TimeCount").removeClass();  
@@ -324,7 +325,12 @@
                     $(this).prop("disabled", "disabled");
                 });
                 $("#btnYes").on("click", function () {
-
+                    window.location.href = "/Home/Play";
+                    //var uNameFrom = $("#currUserName").text();
+                    var cnnIDFrom = $("#currConnectID").val();
+                    //var uNameTo = $("#currUserName").text();
+                    var cnnIDTo = $(this).data("ucnnidfrom");
+                    chat.server.yesPairing(cnnIDFrom, cnnIDTo);
                 });
                 $("#btnNo").on("click", function () {
                     var userCnnIDTo = $(this).data("ucnnidfrom");

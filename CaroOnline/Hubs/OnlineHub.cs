@@ -52,6 +52,24 @@ namespace CaroOnline.Hubs
             string uCnnIdFrom = Context.ConnectionId;
             Clients.Client(userCnnIDTo).noPairing(userCnnIDTo, uNameFrom, uCnnIdFrom);
         }
+        public void YesPairing(string cnnIDFrom, string cnnIDTo)
+        {
+            string uCnnIdFrom = Context.ConnectionId;
+            string uNameFrom="", uNameTo="";
+            foreach (var item in ListUsers)
+            {
+                if (item["cID"].ToString() == cnnIDFrom)
+                {
+                    uNameFrom = item["Name"].ToString();
+                }
+                if (item["cID"].ToString() == cnnIDTo)
+                {
+                    uNameTo = item["Name"].ToString();
+                }
+            }
+            
+            Clients.Client(cnnIDTo).noPairing(cnnIDFrom, cnnIDTo, uNameFrom, uNameTo);
+        }
         public override Task OnConnected()
         {
            // string name = Context.User.Identity.Name;
@@ -95,7 +113,7 @@ namespace CaroOnline.Hubs
                     break;
                 }
             }
-            //ReloadUsers();
+            ReloadUsers();
 
           //  UserHandler.ConnectedIds.Remove(Context.ConnectionId);
             return base.OnDisconnected(stopCalled);

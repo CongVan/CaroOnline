@@ -17,13 +17,18 @@ namespace CaroOnline.Hubs
 
         public override Task OnConnected()
         {
-            string User1= Context.QueryString["User1"];
-            string User2 = Context.QueryString["User2"];
+            string User1 = Context.QueryString["UserName1"];
+            string cnnIDUser1 = Context.QueryString["cnnIDUser1"];
+            string User2 = Context.QueryString["UserName2"];
+            string cnnIDUser2 = Context.QueryString["cnnIDUser2"];
+            
             //string Turn= Context.QueryString["Turn"];
             //string Chess = Context.QueryString["Chess"];
             var g = new Dictionary<string, string>();
             g.Add("User1", User1);
             g.Add("User2", User2);
+            g.Add("cnnIDUser1", cnnIDUser1);
+            g.Add("cnnIDUser2", cnnIDUser2);
             return base.OnConnected();
         }
     }
