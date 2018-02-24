@@ -161,8 +161,12 @@
                     "positionClass": "toast-top-right",
                 });
             }
-
-
+            t = "@ViewBag.NotPairing";
+            if (t != "") {
+                toastr.error(t, "Thông báo", {
+                    "positionClass": "toast-top-right",
+                });
+            }
             var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
             var login = 1;
             var countTime=null;

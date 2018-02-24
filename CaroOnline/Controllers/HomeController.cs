@@ -21,6 +21,8 @@ namespace CaroOnline.Controllers
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
+            ViewBag.NotPairing = TempData["NotPairing"] != null ? TempData["NotPairing"].ToString() : null;
+            
             //string currName = CurrentContext.GetCurUser().Name;
             //var Users = new List<Users>();
             //var lst = OnlineHub.ListUsers;
@@ -157,22 +159,36 @@ namespace CaroOnline.Controllers
             return RedirectToAction("Login", "Home");
         }
         [CheckLogin]
-        public ActionResult Play()
+        public ActionResult Play(string uname1,string cnnid1,string uname2,string cnnid2)
         {
             if (CurrentContext.IsLogged() == false)
             {
                 return Redirect("/Home/Login");
             }
-            var CB = new Cell[21, 21];
-            for (int i = 0; i < 21; i++)
+            if(String.IsNullOrEmpty(uname1)|| String.IsNullOrEmpty(uname2) || String.IsNullOrEmpty(cnnid1) || String.IsNullOrEmpty(cnnid2))
             {
-                for (int j = 0; j < 21; j++)
+                TempData["NotPairing"] = "Không thể ghép đôi.";
+                return Redirect("/Home/Index");
+            }
+            var lst = OnlineHub.ListUsers;
+            int flag = 0;
+            foreach (var item in lst)
+            {
+                if (item["cID"].ToString() == cnnid1)
                 {
-                    CB[i, j] = new Cell(i, j, j * 30, i * 30, 0);
+                    flag++;
+                }
+                if (item["cID"].ToString() == cnnid2)
+                {
+                    flag++;
                 }
             }
-
-            return View(CB);
+            if (flag < 2)
+            {
+                TempData["NotPairing"] = "Không tìm thấy người chơi.";
+                return Redirect("/Home/Index");
+            }
+            return View();
         }
      
     }

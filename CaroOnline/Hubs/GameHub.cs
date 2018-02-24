@@ -33,8 +33,14 @@ namespace CaroOnline.Hubs
             ListGame.Add(g);
             return base.OnConnected();
         }
+        public void UserLogout(string ulogout)
+        {
+            
+        }
         public override Task OnDisconnected(bool stopCalled)
         {
+
+
             return base.OnDisconnected(stopCalled);
         }
     }
