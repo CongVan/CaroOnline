@@ -68,7 +68,7 @@ namespace CaroOnline.Hubs
                 }
             }
             
-            Clients.Client(cnnIDTo).noPairing(cnnIDFrom, cnnIDTo, uNameFrom, uNameTo);
+            Clients.Client(cnnIDTo).yesPairing(cnnIDFrom, cnnIDTo, uNameFrom, uNameTo);
         }
         public override Task OnConnected()
         {

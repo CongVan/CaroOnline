@@ -29,7 +29,7 @@
             <img src="~/Content/default_user.png" class="rounded-circle img-fluid">
         </div>
         <h5 class="font-bold">
-            <strong>Tài khoản</strong>
+            <strong id="uName2">Tài khoản</strong>
         </h5>
         <p class="grey-text">Graphic designer</p>
         <div class="progress primary-color-dark">
@@ -55,14 +55,13 @@
 
 @section js{
 <script src="~/Scripts/Caro/Cell.js"></script>
-    <script>
-        
-        
-
-    </script>
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+<script src="~/signalr/hubs"></script>    
 
     <script>
-        //crate chessboard
+        //#region cratechessboard
+
+
         //var t=;
         var ArrMaxtrix = [];
         for (var i = 0; i < 21; i++) {
@@ -173,6 +172,37 @@
 
         //'#3f51b5';
         context.stroke();
+        //#endregion createchessboard
+        $(document).ready(function () {
 
+
+            var curUName = $('#currUserName').text().trim();
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var UserName1 = url.searchParams.get("uname1").trim();
+            var UserName2 = url.searchParams.get("uname2").trim();
+            var cnnIDUser1 = url.searchParams.get("cnnid1").trim();
+            var cnnIDUser2 = url.searchParams.get("cnnid2").trim();
+
+            $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'cnnIDUser1': cnnIDUser1, 'cnnIDUser2': cnnIDUser2 };
+            var hgame = $.connection.gameHub;
+            $.connection.hub.start().done(function () {
+                if (UserName1 != curUName) {
+                    $('#uName2').text(UserName1);
+                    
+                }else if (UserName2 != curUName) {
+                    $('#uName2').text ( UserName2);
+                }
+
+            });
+        });
+        
     </script>
+
+<script>
+        
+
+
+</script>
+
 }

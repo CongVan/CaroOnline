@@ -194,12 +194,13 @@
             chat.client.reloadUsers=function(){
                 $.ajax({
                     url:"/Home/ReloadUser",
-                    success:function(data){
+                    success: function (data) {
+                        $("#ViewUsers").html("");
                         if (data == "") {
                             $("#ViewUsers").append('<p id="noDataFound" class="text-muted">Không có tài khoản online.</p>');
                             return;
                         }
-                        $("#ViewUsers").html("");
+                        //$("#ViewUsers").html("");
                         data.forEach(function (item) {
 
                             //if($("#"+item.Name).length){
@@ -259,9 +260,10 @@
                 });
             }
             chat.client.pairingGame = function (uNameFrom, uCnnIdFrom ,uNameTo) {
-                $("#UNamePairing").text(uNameFrom);
-                $("#btnNo").data("ucnnidfrom", uCnnIdFrom);
-                $("#btnYes").data("ucnnidfrom", uCnnIdFrom);
+                $("#UNamePairing").text(uNameFrom.trim());
+                $("#btnNo").data("ucnnidfrom", uCnnIdFrom.trim());
+                $("#btnYes").data("ucnnidfrom", uCnnIdFrom.trim());
+                $("#btnYes").data("uNamefrom", uNameFrom.trim());
                 $('#modalLoginAvatarDemo').modal('toggle');
                 var ms = 10;
                 $("#TimeCount").removeClass();  
@@ -306,6 +308,24 @@
                 $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
                 $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled",false);
             }
+            chat.client.yesPairing = function (cnnIDFrom, cnnIDTo, uNameFrom, uNameTo) {
+                window.location.href = '/Home/Play?uname1=' + uNameFrom + '&cnnid1=' + cnnIDFrom + '&uname2=' + uNameTo + '&cnnid2=' + cnnIDTo;
+
+                //var msg = "Người chơi <i><u>" + uNameFrom.trim() + "</u></i> không đồng ý thách đấu !";
+                ////alert("Không đồng ý!");
+                ////alert("Không đồng ý");
+                ////console.log("không đồng ý");
+                //toastr.error(msg, "Thông báo", {
+                //    "positionClass": "toast-top-right",
+                //    "closeButton": true,
+                //    "newestOnTop": true, // true/false
+                //    "progressBar": true,
+                //    "timeOut": "10000",
+                //});
+                //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
+                //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled", false);
+            }
+
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $('#currConnectID').val($.connection.hub.id);
@@ -325,12 +345,14 @@
                     $(this).prop("disabled", "disabled");
                 });
                 $("#btnYes").on("click", function () {
-                    window.location.href = "/Home/Play";
-                    //var uNameFrom = $("#currUserName").text();
-                    var cnnIDFrom = $("#currConnectID").val();
-                    //var uNameTo = $("#currUserName").text();
-                    var cnnIDTo = $(this).data("ucnnidfrom");
+
+                    var uNameFrom = $("#currUserName").text().trim();
+                    var cnnIDFrom = $("#currConnectID").val().trim();
+                    var uNameTo = $(this).data("uNamefrom").trim();
+                    var cnnIDTo = $(this).data("ucnnidfrom").trim();
                     chat.server.yesPairing(cnnIDFrom, cnnIDTo);
+                    window.location.href = '/Home/Play?uname1=' + uNameFrom + '&cnnid1=' + cnnIDFrom + '&uname2=' + uNameTo + '&cnnid2=' + cnnIDTo;
+
                 });
                 $("#btnNo").on("click", function () {
                     var userCnnIDTo = $(this).data("ucnnidfrom");

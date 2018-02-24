@@ -18,8 +18,8 @@ namespace CaroOnline.Hubs
         public override Task OnConnected()
         {
             string User1 = Context.QueryString["UserName1"];
-            string cnnIDUser1 = Context.QueryString["cnnIDUser1"];
             string User2 = Context.QueryString["UserName2"];
+            string cnnIDUser1 = Context.QueryString["cnnIDUser1"];
             string cnnIDUser2 = Context.QueryString["cnnIDUser2"];
             
             //string Turn= Context.QueryString["Turn"];
@@ -29,7 +29,13 @@ namespace CaroOnline.Hubs
             g.Add("User2", User2);
             g.Add("cnnIDUser1", cnnIDUser1);
             g.Add("cnnIDUser2", cnnIDUser2);
+            g.Add("Chess", "");
+            ListGame.Add(g);
             return base.OnConnected();
+        }
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            return base.OnDisconnected(stopCalled);
         }
     }
 }
