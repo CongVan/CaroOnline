@@ -14,6 +14,11 @@ namespace CaroOnline.Hubs
         {
             Clients.All.hello();
         }
+        public void PaintChess(string competitorId,string i,string j,string currOwner)
+        {
+            Clients.Client(competitorId).paintChess(competitorId, i, j, currOwner);
+        }
+
 
         public override Task OnConnected()
         {

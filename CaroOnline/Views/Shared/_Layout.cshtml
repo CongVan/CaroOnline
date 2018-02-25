@@ -206,7 +206,7 @@
                             <h5 class="badge badge-pill special-color font-weight-light">10 Hòa</h5>
                             <hr >
                             <div class="list-group">
-                                @if (Request.Url.AbsolutePath.Contains("/Home/Index"))
+                                @if (Request.Url.AbsolutePath.Contains("/Home/Index") || Request.Url.AbsolutePath=="/")
                                 {
                                     <a href="/Home/Index" class="list-group-item list-group-item-action active card my-1 font-weight-normal h4-responsive">
                                         <i class="fa fa-home">&nbsp;|&nbsp;</i>Trang chủ
