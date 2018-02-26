@@ -18,7 +18,7 @@
 <div class="col-lg-6" style="">
     <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;">
         @* border:1px solid #d3d3d3; *@
-    <canvas id="TableChess" class="rounded " width="630" height="630"></canvas>
+    <canvas id="TableChess" class="rounded " width="630" height="630" style="pointer-events:none"></canvas>
     @*onclick="storeGuess(event)"*@
 </div>
 </div>
@@ -51,6 +51,9 @@
         </ul>
     </div>
     <h2 id="test"></h2>
+    <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
+    <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
+    <p class="white-text h6" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</p>
 </div>
 
 @section js{
@@ -160,12 +163,10 @@
             var url = new URL(url_string);
             var UserName1 = url.searchParams.get("uname1").trim();
             var UserName2 = url.searchParams.get("uname2").trim();
-            var cnnIDUser1 = url.searchParams.get("cnnid1").trim();
-            var cnnIDUser2 = url.searchParams.get("cnnid2").trim();
 
             var competitorId,competitorImg,competitorOwner,currOwner;
 
-            $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'cnnIDUser1': cnnIDUser1, 'cnnIDUser2': cnnIDUser2 };
+            $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2 };
             var hgame = $.connection.gameHub;
 
             hgame.client.paintChess = function (competitorId, i, j, currOwner) {
@@ -173,24 +174,45 @@
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
             };
-
-
+            hgame.client.readyGame = function () {
+                $('#btnStart').removeAttr("disabled");
+                $('#txtReady').text("Người chơi đã sẵng sàng hãy bắt đầu ngay!!!");
+            }
+            hgame.client.startGame = function () {
+                $('#TableChess').css("pointer-events", "auto");
+            }
             $.connection.hub.start().done(function () {
                 if (UserName1 != curUName) {//đối thủ là u1
                     $('#uName2').text(UserName1);
                     currImg = imgX;
-                    competitorId = cnnIDUser1;
+                    //competitorId = cnnIDUser1;
                     competitorImg = imgO;
                     competitorOwner = 1;
                     currOwner = 2;
+                    hgame.server.updateCnnID(UserName1);
+                    $('#btnReady').css('display', 'block');
+
                 }else if (UserName2 != curUName) {//đối thủ là u2
                     $('#uName2').text(UserName2);
                     currImg = imgO;
-                    competitorId = cnnIDUser2;
+                    //competitorId = cnnIDUser2;
                     competitorImg = imgX;
                     competitorOwner = 2;
                     currOwner = 1;
+                    hgame.server.updateCnnID(UserName2);
+
+                    $('#btnStart').css('display', 'block');
+                    $('#btnStart').attr("disabled");
+                    $('#txtReady').css('display', 'block');
                 }
+                $('#btnReady').on('click', function () {
+                    hgame.server.readyGame($('#uName2').text().trim());
+                });
+                $('#btnStart').on('click', function () {
+                    hgame.server.startGame($('#uName2').text().trim());
+                    $('#TableChess').css("pointer-events", 'auto');
+
+                });
                 canvas.addEventListener('click', function (evt) {
                     var rect = canvas.getBoundingClientRect();
                     var mouseX = evt.clientX - rect.left - 0.5;

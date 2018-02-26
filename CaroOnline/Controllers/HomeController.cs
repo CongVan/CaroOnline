@@ -159,35 +159,18 @@ namespace CaroOnline.Controllers
             return RedirectToAction("Login", "Home");
         }
         [CheckLogin]
-        public ActionResult Play(string uname1,string cnnid1,string uname2,string cnnid2)
+        public ActionResult Play(string uname1,string uname2)
         {
             if (CurrentContext.IsLogged() == false)
             {
                 return Redirect("/Home/Login");
             }
-            if(String.IsNullOrEmpty(uname1)|| String.IsNullOrEmpty(uname2) || String.IsNullOrEmpty(cnnid1) || String.IsNullOrEmpty(cnnid2))
+            if(String.IsNullOrEmpty(uname1)|| String.IsNullOrEmpty(uname2))
             {
                 TempData["NotPairing"] = "Không thể ghép đôi.";
                 return Redirect("/Home/Index");
             }
-            var lst = OnlineHub.ListUsers;
-            int flag = 0;
-            foreach (var item in lst)
-            {
-                if (item["cID"].ToString() == cnnid1)
-                {
-                    flag++;
-                }
-                if (item["cID"].ToString() == cnnid2)
-                {
-                    flag++;
-                }
-            }
-            if (flag < 2)
-            {
-                TempData["NotPairing"] = "Không tìm thấy người chơi.";
-                return Redirect("/Home/Index");
-            }
+            
             return View();
         }
      

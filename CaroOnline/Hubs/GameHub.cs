@@ -18,22 +18,80 @@ namespace CaroOnline.Hubs
         {
             Clients.Client(competitorId).paintChess(competitorId, i, j, currOwner);
         }
-
+        public void ReadyGame(string uname)
+        {
+            var cid = "";
+            foreach (var item in ListGame)
+            {
+                if(item["User1"].ToString()==uname )
+                {
+                    cid = item["Id1"].ToString();
+                }
+                if ( item["User2"].ToString() == uname)
+                {
+                    cid = item["Id2"].ToString();
+                }
+            }
+            Clients.Client(cid).readyGame();
+        }
+        public void StartGame(string uname)
+        {
+            var cid = "";
+            foreach (var item in ListGame)
+            {
+                if (item["User1"].ToString() == uname)
+                {
+                    cid = item["Id1"].ToString();
+                }
+                if (item["User2"].ToString() == uname)
+                {
+                    cid = item["Id2"].ToString();
+                }
+            }
+            Clients.Client(cid).startGame();
+        }
+        public void UpdateCnnID(string UserName)
+        {
+            foreach (var item in ListGame)
+            {
+                if(item["User1"].ToString()==UserName )
+                {
+                    item.Add("Id1", Context.ConnectionId);
+                }
+                if (item["User2"].ToString() == UserName)
+                {
+                    item.Add("Id2", Context.ConnectionId);
+                }
+            }
+        }
 
         public override Task OnConnected()
         {
             string User1 = Context.QueryString["UserName1"];
             string User2 = Context.QueryString["UserName2"];
-            string cnnIDUser1 = Context.QueryString["cnnIDUser1"];
-            string cnnIDUser2 = Context.QueryString["cnnIDUser2"];
-            
+            //string cnnIDUser1 = Context.QueryString["cnnIDUser1"];
+            //string cnnIDUser2 = Context.QueryString["cnnIDUser2"];
+
             //string Turn= Context.QueryString["Turn"];
             //string Chess = Context.QueryString["Chess"];
+
+            foreach (var item in ListGame)
+            {
+                if (item["User1"].ToString() == User1 || item["User1"] == User2)
+                {
+                    return base.OnConnected();
+                }
+                if (item["User2"].ToString() == User1 || item["User2"] == User2)
+                {
+                    return base.OnConnected();
+                }
+            }
+
             var g = new Dictionary<string, string>();
             g.Add("User1", User1);
             g.Add("User2", User2);
-            g.Add("cnnIDUser1", cnnIDUser1);
-            g.Add("cnnIDUser2", cnnIDUser2);
+            //g.Add("cnnIDUser1", cnnIDUser1);
+            //g.Add("cnnIDUser2", cnnIDUser2);
             g.Add("Chess", "");
             ListGame.Add(g);
             return base.OnConnected();
