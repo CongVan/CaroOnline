@@ -54,6 +54,7 @@
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
     <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
     <p class="white-text h6" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</p>
+    <button class="btn btn-warning" id="btnTestHub">Test Hub</button>
 </div>
 
 @section js{
@@ -166,7 +167,7 @@
 
             var competitorId,competitorImg,competitorOwner,currOwner;
 
-            $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2 };
+            $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'curUName': curUName };
             var hgame = $.connection.gameHub;
 
             hgame.client.paintChess = function (competitorId, i, j, currOwner) {
@@ -174,14 +175,20 @@
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
             };
-            hgame.client.readyGame = function () {
+            hgame.client.readygame = function () {
                 $('#btnStart').removeAttr("disabled");
                 $('#txtReady').text("Người chơi đã sẵng sàng hãy bắt đầu ngay!!!");
             }
             hgame.client.startGame = function () {
                 $('#TableChess').css("pointer-events", "auto");
             }
+            hgame.client.hello = function (hello) {
+                alert(hello);
+            }
             $.connection.hub.start().done(function () {
+                $('#btnTestHub').on('click', function () {
+                    hgame.server.hello();
+                });
                 if (UserName1 != curUName) {//đối thủ là u1
                     $('#uName2').text(UserName1);
                     currImg = imgX;
@@ -189,7 +196,7 @@
                     competitorImg = imgO;
                     competitorOwner = 1;
                     currOwner = 2;
-                    hgame.server.updateCnnID(UserName1);
+                    //hgame.server.updateCnnID(UserName1);
                     $('#btnReady').css('display', 'block');
 
                 }else if (UserName2 != curUName) {//đối thủ là u2
@@ -199,7 +206,7 @@
                     competitorImg = imgX;
                     competitorOwner = 2;
                     currOwner = 1;
-                    hgame.server.updateCnnID(UserName2);
+                    //hgame.server.updateCnnID(UserName2);
 
                     $('#btnStart').css('display', 'block');
                     $('#btnStart').attr("disabled");
@@ -209,7 +216,7 @@
                     hgame.server.readyGame($('#uName2').text().trim());
                 });
                 $('#btnStart').on('click', function () {
-                    hgame.server.startGame($('#uName2').text().trim());
+                    hgame.server.startgame($('#uName2').text().trim());
                     $('#TableChess').css("pointer-events", 'auto');
 
                 });
