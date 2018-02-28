@@ -15,9 +15,19 @@ namespace CaroOnline.Hubs
         {
             Clients.All.hello("123");
         }
-        public void PaintChess(string competitorId,string i,string j,string currOwner)
+        public void PaintChess(string turnUser,string i,string j,string currOwner)
         {
-            Clients.Client(competitorId).paintChess(competitorId, i, j, currOwner);
+            var cid = "";
+            foreach (var item in ListUsers)
+            {
+                if (item["Name"].ToString() == turnUser)
+                {
+                    cid = item["cID"].ToString();
+                    break;
+                }
+
+            }
+            Clients.Client(cid).paintchess(turnUser, i, j, currOwner);
         }
         public void ReadyGame(string uname)
         {
@@ -36,16 +46,13 @@ namespace CaroOnline.Hubs
         public void StartGame(string uname)
         {
             var cid = "";
-            foreach (var item in ListGame)
+            foreach (var item in ListUsers)
             {
-                if (item["User1"].ToString() == uname)
+                if (item["Name"].ToString() == uname)
                 {
-                    cid = item["Id1"].ToString();
+                    cid = item["cID"].ToString();
                 }
-                if (item["User2"].ToString() == uname)
-                {
-                    cid = item["Id2"].ToString();
-                }
+                
             }
             Clients.Client(cid).startgame();
         }

@@ -64,8 +64,8 @@
 
     <script>
         //#region cratechessboard
-
-
+        var turnUser = "";
+        var curUName = "";
         //var t=;
         var ArrMaxtrix = [];
         for (var i = 0; i < 21; i++) {
@@ -85,6 +85,10 @@
         
         var oldX = -1, oldY = -1;
         canvas.addEventListener('mousemove', function (evt) {
+            if (turnUser != curUName) {
+                //alert("không phải lượt của bạn");
+                return;
+            }
             var rect = canvas.getBoundingClientRect();
             var mouseX = evt.clientX - rect.left - 0.5;
             var mouseY = evt.clientY - rect.top;
@@ -116,7 +120,6 @@
             if (ArrMaxtrix[i][j].Owner == 0) {
                 context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
             }
-
             $('#test').text(mouseX + " | " + mouseY);
 
         }, false);
@@ -125,8 +128,6 @@
         for (var i = 1; i < 21; i++) {
             for (var j = 0; j < 21; j++) {
                 context.beginPath();
-
-
                 context.arc(i * Cell.SizeRect(), j * Cell.SizeRect(), 1.25, 0, 2 * Math.PI, true);
                 context.fill();
                 context.stroke();
@@ -157,9 +158,9 @@
         context.stroke();
         //#endregion createchessboard
         $(document).ready(function () {
+            
 
-
-            var curUName = $('#currUserName').text().trim();
+             curUName = $('#currUserName').text().trim();
             var url_string = window.location.href;
             var url = new URL(url_string);
             var UserName1 = url.searchParams.get("uname1").trim();
@@ -170,17 +171,21 @@
             $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'curUName': curUName };
             var hgame = $.connection.gameHub;
 
-            hgame.client.paintChess = function (competitorId, i, j, currOwner) {
+            hgame.client.paintchess = function (turnu, i, j, currOwner) {
                 context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
+                $('#TableChess').css("pointer-events", "auto");
+                turnUser = curUName;
             };
             hgame.client.readygame = function () {
                 $('#btnStart').removeAttr("disabled");
                 $('#txtReady').text("Người chơi đã sẵng sàng hãy bắt đầu ngay!!!");
             }
-            hgame.client.startGame = function () {
+            hgame.client.startgame = function () {
                 $('#TableChess').css("pointer-events", "auto");
+                $('#btnStart').attr("disabled", "disabled");
+                turnUser = $('#uName2').text().trim();
             }
             hgame.client.hello = function (hello) {
                 alert(hello);
@@ -207,20 +212,24 @@
                     competitorOwner = 2;
                     currOwner = 1;
                     //hgame.server.updateCnnID(UserName2);
-
                     $('#btnStart').css('display', 'block');
-                    $('#btnStart').attr("disabled");
+                    $('#btnStart').attr("disabled","disabled");
                     $('#txtReady').css('display', 'block');
                 }
                 $('#btnReady').on('click', function () {
                     hgame.server.readyGame($('#uName2').text().trim());
                 });
                 $('#btnStart').on('click', function () {
-                    hgame.server.startgame($('#uName2').text().trim());
+                    hgame.server.startGame($('#uName2').text().trim());
                     $('#TableChess').css("pointer-events", 'auto');
-
+                    turnUser = curUName;
                 });
                 canvas.addEventListener('click', function (evt) {
+                    if (turnUser != curUName){
+                        alert("không phải lượt của bạn");
+                        return;
+                    }
+                        
                     var rect = canvas.getBoundingClientRect();
                     var mouseX = evt.clientX - rect.left - 0.5;
                     var mouseY = evt.clientY - rect.top;
@@ -235,8 +244,8 @@
 
                         context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                         ArrMaxtrix[i][j].Owner = currOwner;
-                        
-                        hgame.server.paintChess(competitorId, i, j, currOwner);
+                        turnUser = $("#uName2").text().trim();
+                        hgame.server.paintChess(turnUser, i, j, currOwner);
                         //if (currImg == imgO) {
                         //    currImg = imgX;
                         //} else {
