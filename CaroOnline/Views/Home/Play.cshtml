@@ -53,7 +53,7 @@
     <h2 id="test"></h2>
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
     <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
-    <p class="white-text h6" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</p>
+    <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</h4>
     <button class="btn btn-warning" id="btnTestHub">Test Hub</button>
 </div>
 
@@ -177,6 +177,8 @@
                 context.stroke();
                 $('#TableChess').css("pointer-events", "auto");
                 turnUser = curUName;
+                $('#txtReady').text("LƯỢT CỦA BẠN");
+                $('#txtReady').css('display', 'block');
             };
             hgame.client.readygame = function () {
                 $('#btnStart').removeAttr("disabled");
@@ -184,7 +186,7 @@
             }
             hgame.client.startgame = function () {
                 $('#TableChess').css("pointer-events", "auto");
-                $('#btnStart').attr("disabled", "disabled");
+                $('#btnReady').attr("disabled", "disabled");
                 turnUser = $('#uName2').text().trim();
             }
             hgame.client.hello = function (hello) {
@@ -220,9 +222,11 @@
                     hgame.server.readyGame($('#uName2').text().trim());
                 });
                 $('#btnStart').on('click', function () {
+                    $('#btnStart').attr("disabled", "disabled");
                     hgame.server.startGame($('#uName2').text().trim());
                     $('#TableChess').css("pointer-events", 'auto');
                     turnUser = curUName;
+                    $('#txtReady').text("LƯỢT CỦA BẠN");
                 });
                 canvas.addEventListener('click', function (evt) {
                     if (turnUser != curUName){
@@ -246,6 +250,7 @@
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
                         hgame.server.paintChess(turnUser, i, j, currOwner);
+                        $('#txtReady').text("LƯỢT ĐI: " + turnUser);
                         //if (currImg == imgO) {
                         //    currImg = imgX;
                         //} else {
