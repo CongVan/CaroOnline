@@ -18,9 +18,9 @@
 <div class="col-lg-6" style="">
     <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;">
         @* border:1px solid #d3d3d3; *@
-    <canvas id="TableChess" class="rounded " width="630" height="630" style="pointer-events:none"></canvas>
-    @*onclick="storeGuess(event)"*@
-</div>
+        <canvas id="TableChess" class="rounded " width="630" height="630" style="pointer-events:none"></canvas>
+        @*onclick="storeGuess(event)"*@
+    </div>
 </div>
 <div class="col-lg-3 col-md-6 mb-r px-4">
 
@@ -54,13 +54,14 @@
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
     <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
     <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</h4>
+    <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtTimer"></h4>
     <button class="btn btn-warning" id="btnTestHub">Test Hub</button>
 </div>
 
 @section js{
-<script src="~/Scripts/Caro/Cell.js"></script>
-<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
-<script src="~/signalr/hubs"></script>    
+    <script src="~/Scripts/Caro/Cell.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/signalr/hubs"></script>
 
     <script>
         //#region cratechessboard
@@ -82,7 +83,7 @@
         var imgX = document.getElementById("imgX");
         var imgO = document.getElementById("imgO");
         var currImg = imgX;
-        
+
         var oldX = -1, oldY = -1;
         canvas.addEventListener('mousemove', function (evt) {
             if (turnUser != curUName) {
@@ -158,27 +159,50 @@
         context.stroke();
         //#endregion createchessboard
         $(document).ready(function () {
-            
 
-             curUName = $('#currUserName').text().trim();
+
+            curUName = $('#currUserName').text().trim();
             var url_string = window.location.href;
             var url = new URL(url_string);
             var UserName1 = url.searchParams.get("uname1").trim();
             var UserName2 = url.searchParams.get("uname2").trim();
-
-            var competitorId,competitorImg,competitorOwner,currOwner;
+            var countTime1, countTime;
+            var competitorId, competitorImg, competitorOwner, currOwner;
 
             $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'curUName': curUName };
             var hgame = $.connection.gameHub;
 
             hgame.client.paintchess = function (turnu, i, j, currOwner) {
-                context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
-                ArrMaxtrix[i][j].Owner = currOwner;
-                context.stroke();
+                if (currOwner > 0) {
+                    context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                    ArrMaxtrix[i][j].Owner = currOwner;
+                    context.stroke();
+                }
+                
                 $('#TableChess').css("pointer-events", "auto");
                 turnUser = curUName;
                 $('#txtReady').text("LƯỢT CỦA BẠN");
                 $('#txtReady').css('display', 'block');
+                var ms = 10;
+                countTime = setInterval(function () {
+                    
+                    $("#txtTimer").css("display", "block");
+                    $("#txtTimer").text("Thời gian: "+ms + " giây");
+                    //$("#TimeCount").css("width", per + "%");
+                    ms = ms - 1;
+                    if (ms <= 0) {
+                        clearInterval(countTime);
+                        $("#txtTimer").css("display", "none");
+                        //alert("Bạn đã mất lượt.");
+                        var oi = Math.floor(oldX / Cell.SizeRect()), oj = Math.floor(oldY / Cell.SizeRect());
+                        if (ArrMaxtrix[oi][oj].Owner == 0) {
+                            context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                        }
+                        turnUser = $("#uName2").text().trim();
+                        hgame.server.paintChess(turnUser, -1, -1, 0);
+                        $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                    }
+                }, 1000);
             };
             hgame.client.readygame = function () {
                 $('#btnStart').removeAttr("disabled");
@@ -206,7 +230,7 @@
                     //hgame.server.updateCnnID(UserName1);
                     $('#btnReady').css('display', 'block');
 
-                }else if (UserName2 != curUName) {//đối thủ là u2
+                } else if (UserName2 != curUName) {//đối thủ là u2
                     $('#uName2').text(UserName2);
                     currImg = imgO;
                     //competitorId = cnnIDUser2;
@@ -215,7 +239,7 @@
                     currOwner = 1;
                     //hgame.server.updateCnnID(UserName2);
                     $('#btnStart').css('display', 'block');
-                    $('#btnStart').attr("disabled","disabled");
+                    $('#btnStart').attr("disabled", "disabled");
                     $('#txtReady').css('display', 'block');
                 }
                 $('#btnReady').on('click', function () {
@@ -227,13 +251,38 @@
                     $('#TableChess').css("pointer-events", 'auto');
                     turnUser = curUName;
                     $('#txtReady').text("LƯỢT CỦA BẠN");
+
+                    var ms = 10;
+                    countTime = setInterval(function () {
+
+
+                        $("#txtTimer").css("display", "block");
+                        $("#txtTimer").text("Thời gian: " + ms + " giây");
+                        //$("#TimeCount").css("width", per + "%");
+                        
+                        if (ms < 0) {
+                            clearInterval(countTime);
+                            $("#txtTimer").css("display", "none");
+                            //alert("Bạn đã mất lượt.");
+                            var oi = Math.floor(oldX / Cell.SizeRect()), oj = Math.floor(oldY / Cell.SizeRect());
+                            if (ArrMaxtrix[oi][oj].Owner == 0) {
+                                context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                            }
+                            turnUser = $("#uName2").text().trim();
+                            hgame.server.paintChess(turnUser, -1, -1, 0);
+                            $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                        }
+                        ms = ms - 1;
+                    }, 1000);
+
                 });
                 canvas.addEventListener('click', function (evt) {
-                    if (turnUser != curUName){
+                    if (turnUser != curUName) {
                         alert("không phải lượt của bạn");
                         return;
                     }
-                        
+                    clearInterval(countTime);
+                    $("#txtTimer").css("display", "none");
                     var rect = canvas.getBoundingClientRect();
                     var mouseX = evt.clientX - rect.left - 0.5;
                     var mouseY = evt.clientY - rect.top;
@@ -247,6 +296,7 @@
                     if (ArrMaxtrix[i][j].Owner == 0) {
 
                         context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                        context.stroke();
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
                         hgame.server.paintChess(turnUser, i, j, currOwner);
@@ -260,13 +310,13 @@
                 }, false);
             });
         });
-        
+
     </script>
 
-<script>
-        
+    <script>
 
 
-</script>
+
+    </script>
 
 }
