@@ -299,8 +299,14 @@
                         context.stroke();
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
-                        hgame.server.paintChess(turnUser, i, j, currOwner);
-                        $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                        if (CheckWinner(currOwner) == true) {
+                            alert("Bạn thắng");
+
+                        } else {
+                            hgame.server.paintChess(turnUser, i, j, currOwner);
+                            $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                        }
+
                         //if (currImg == imgO) {
                         //    currImg = imgX;
                         //} else {
@@ -309,6 +315,41 @@
                     }
                 }, false);
             });
+            function CheckWinner() {
+                //$.each(ArrMaxtrix, function (key, item) {
+                //    if (item.Owner != currOwner) {
+                //        continue;
+                //    } else {
+                //        return CheckWithColumn(item.x, item.y);
+
+                //    }
+                //});
+                var c = 0;
+                ArrMaxtrix.forEach(function(item){
+                    if (item.Owner != currOwner) {
+                        return;
+                    } else {
+                        if (CheckWithColumn(item.x, item.y)==false)
+                            c = 1;
+                        return;
+                    }
+                   
+                });
+                if (c == 1)
+                    return true;
+                return false;
+            }
+            function CheckWithColumn(currRow, currCol) {
+                if (currRow > 21 - 5) {
+                    return false;
+                }
+                for (var i = 1; i < 5; i++) {
+                    if (ArrMaxtrix[currRow][currCol + i].Owner != currOwner) {
+                        return false;
+                    }
+                }
+
+            }
         });
 
     </script>
