@@ -299,7 +299,7 @@
                         context.stroke();
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
-                        if (CheckWinner(currOwner) == true) {
+                        if (CheckWinner() == true) {
                             alert("Bạn thắng");
 
                         } else {
@@ -325,19 +325,22 @@
                 //    }
                 //});
                 var c = 0;
-                ArrMaxtrix.forEach(function(item){
-                    if (item.Owner != currOwner) {
-                        return;
-                    } else {
-                        if (CheckWithColumn(item.x, item.y)==false)
-                            c = 1;
-                        return;
+                var check=false;
+                for (var i = 0; i < ArrMaxtrix.length; i++) {
+                    for (var j = 0; j < ArrMaxtrix[i].length; j++) {
+                        if (ArrMaxtrix[i][j].Owner != currOwner) {
+                            continue;
+                        } else {
+                            if (CheckWithColumn(i, j) == true) {
+                                check=true;
+                                break;
+                            }
+                        }
                     }
-                   
-                });
-                if (c == 1)
-                    return true;
-                return false;
+                    if (check)
+                        break;
+                }
+                return check;    
             }
             function CheckWithColumn(currRow, currCol) {
                 if (currRow > 21 - 5) {
@@ -348,7 +351,7 @@
                         return false;
                     }
                 }
-
+                return true;
             }
         });
 
