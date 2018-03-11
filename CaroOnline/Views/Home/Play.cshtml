@@ -71,10 +71,10 @@
 
                 <div class="mb-2 ">
 
-                    <h4 class="blue-text h4 font-weight-bold"><i class="fa fa-trophy mr-2"></i>BẠN ĐÃ CHIẾN THẮNG</h4>
-                    <h4 class="warning-text h4 font-weight-bold"><i class="fa fa-frown-o mr-2"></i>BẠN ĐÃ THUA</h4>
+                    <h4 id="msgWin" class="blue-text h4 font-weight-bold"><i class="fa fa-trophy mr-2"></i>BẠN ĐÃ CHIẾN THẮNG</h4>
+                    <h4 id="msgLost" class="warning-text h4 font-weight-bold"><i class="fa fa-frown-o mr-2"></i>BẠN ĐÃ THUA</h4>
                 </div>
-                <button class="btn btn-lg btn-outline-success font-weight-bold">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></button>
+                <a href="/" class="btn btn-lg btn-outline-success font-weight-bold">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
             </div>
 
         </div>
@@ -198,7 +198,9 @@
                 context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
-                alert("Bạn thua cmnr");
+                //alert("Bạn thua cmnr");
+                $("#msgWin").hide();
+                $('#modalLoginAvatarDemo').modal('toggle');
             };
 
 
@@ -330,9 +332,11 @@
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
                         if (CheckWinner() == true) {
-                            alert("Bạn thắng");
-                            hgame.server.lostGame(turnUser,i, j);
+                            //alert("Bạn thắng");
 
+                            hgame.server.lostGame(turnUser, i, j);
+                            $("#msgLost").hide();
+                            $('#modalLoginAvatarDemo').modal('toggle');
                         } else {
                             hgame.server.paintChess(turnUser, i, j, currOwner);
                             $('#txtReady').text("LƯỢT ĐI: " + turnUser);
