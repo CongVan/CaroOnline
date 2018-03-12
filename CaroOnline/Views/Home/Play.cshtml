@@ -11,7 +11,6 @@
         /*background-image:url(/Content/background.png);*/
         background-color: #ffcc99;
     }
-
 </style>
 
 <img src="~/Content/o.png" style="display:none" id="imgO" />
@@ -210,16 +209,16 @@
                     ArrMaxtrix[i][j].Owner = currOwner;
                     context.stroke();
                 }
-                
+
                 $('#TableChess').css("pointer-events", "auto");
                 turnUser = curUName;
                 $('#txtReady').text("LƯỢT CỦA BẠN");
                 $('#txtReady').css('display', 'block');
                 var ms = 10;
                 countTime = setInterval(function () {
-                    
+
                     $("#txtTimer").css("display", "block");
-                    $("#txtTimer").text("Thời gian: "+ms + " giây");
+                    $("#txtTimer").text("Thời gian: " + ms + " giây");
                     //$("#TimeCount").css("width", per + "%");
                     ms = ms - 1;
                     if (ms <= 0) {
@@ -291,7 +290,7 @@
                         $("#txtTimer").css("display", "block");
                         $("#txtTimer").text("Thời gian: " + ms + " giây");
                         //$("#TimeCount").css("width", per + "%");
-                        
+
                         if (ms < 0) {
                             clearInterval(countTime);
                             $("#txtTimer").css("display", "none");
@@ -360,14 +359,14 @@
                 //    }
                 //});
                 var c = 0;
-                var check=false;
+                var check = false;
                 for (var i = 0; i < ArrMaxtrix.length; i++) {
                     for (var j = 0; j < ArrMaxtrix[i].length; j++) {
                         if (ArrMaxtrix[i][j].Owner != currOwner) {
                             continue;
                         } else {
-                            if (CheckWithColumn(i, j) == true) {
-                                check=true;
+                            if (CheckWithColumn(i, j) || CheckWithRow(i, j) || CheckWithDiagonalStart(i, j) || CheckWithDiagonalEnd(i,j)) {
+                                check = true;
                                 break;
                             }
                         }
@@ -375,7 +374,7 @@
                     if (check)
                         break;
                 }
-                return check;    
+                return check;
             }
             function CheckWithColumn(currRow, currCol) {
                 if (currCol > 21 - 5) {
@@ -393,7 +392,29 @@
                     return false;
                 }
                 for (var i = 1; i < 5; i++) {
-                    if (ArrMaxtrix[currRow][currCol + i].Owner != currOwner) {
+                    if (ArrMaxtrix[currRow + i][currCol].Owner != currOwner) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function CheckWithDiagonalStart(currRow, currCol) {//xuôi
+                if (currCol > 21 - 5 || currRow > 21 - 5) {
+                    return false;
+                }
+                for (var i = 1; i < 5; i++) {
+                    if (ArrMaxtrix[currRow + i][currCol + i].Owner != currOwner) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function CheckWithDiagonalEnd(currRow, currCol) {//ngược
+                if (currCol < 4 || currRow > 21 - 5) {
+                    return false;
+                }
+                for (var i = 1; i < 5; i++) {
+                    if (ArrMaxtrix[currRow + i][currCol - i].Owner != currOwner) {
                         return false;
                     }
                 }
