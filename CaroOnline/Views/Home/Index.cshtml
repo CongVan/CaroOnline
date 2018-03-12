@@ -9,10 +9,10 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified indigo rounded p-2" role="tablist" style="background-image: linear-gradient(60deg, #3d3393 0%, #2b76b9 37%, #2cacd1 65%, #35eb93 100%);">
         <li class="nav-item">
-            <a class="nav-link active h4-responsive" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-users"></i> Cộng đồng</a>
+            <a class="nav-link active h4-responsive" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-users mr-2"></i>NGƯỜI CHƠI</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link h4-responsive" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-trophy"></i> Top game thủ</a>
+            <a class="nav-link h4-responsive" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-sticky-note-o mr-2"></i> LUẬT CHƠI</a>
         </li>
         @*<li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Mail</a>
@@ -26,68 +26,26 @@
 
                 <div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>
                 <div class="row" id="ViewUsers">
-
-
-                    <!--Card-->
-                    @*<div class="col-3 mb-2 px-3 User" >
-                            <div class="card text-center">
-                                <div class="card-body px-5 ">
-                                    <img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">
-                                </div>
-                                <h5 class="card-title primary-text blue-grey lighten-4 py-1 mb-1">
-                                    Tài khoản
-                                    <i class="fa fa-circle success-text"></i>
-                                </h5>
-                                <hr class="my-0"/>
-                                <div class="card-text text-left px-0 d-flex justify-content-between text-center">
-                                    <h5 class="mb-0"><span class="badge green darken-2 font-weight-light">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>
-                                    <h5 class="mb-0"><span class="badge  red accent-4 font-weight-light">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>
-                                    <h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>
-                                    <h5 class="mb-0"><span class="badge   blue darken-2 font-weight-light">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>
-                                </div>
-                                <div class="card-footer px-0 pt-1 mb-0 pb-0">
-                                    <button class="btn btn-sm btn-danger btn-block">Thách đấu</button>
-                                </div>
-                            </div>
-                        </div>*@
-                    <!--/.Card-->
-                    @*@foreach(var us in Model)
-                        {
-                            <div class="col-2 mb-2 px-1 User" id="@us.Name" data-uID="@us.ID" data-cnnID="">
-                                <div class="card text-center">
-                                    <div class="card-body px-5">
-                                        <img src="~/Content/default_user.png" />
-                                        <img src="/Content/default_user.png" alt="Material Design for Bootstrap - example photo" class="img-fluid rounded-circle z-depth-1-half">
-                                    </div>
-                                    <h6 class="card-title primary-text grey lighten-4 py-1 mb-1">
-                                        @us.Name
-
-                                            <i class="fa fa-circle success-text"></i>
-
-                                    </h6>
-                                    <p class="warning-text mb-1">
-                                        Điểm: 500 &nbsp;<i class="fa fa-heart"></i>
-
-                                    </p>
-                                    <div class="card-footer px-0 pt-0 pt-1">
-                                        <span class="badge badge-pill success-color font-weight-light">10 Thắng</span>
-                                        <span class="badge badge-pill danger-color font-weight-light">10 Thua</span>
-                                        <span class="badge badge-pill special-color font-weight-light">10 Hòa</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        }*@
                 </div>
-
             </div>
         </div>
         <!--/.Panel 1-->
         <!--Panel 2-->
-        <div class="tab-pane fade " id="panel6" role="tabpanel">
-            <br>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+        <div class="tab-pane fade text-center px-5" id="panel6" role="tabpanel">
+            <h2 class="success-text mb-2">LUẬT CHƠI CỜ CARO</h2>
+            <hr class="success-color d-inline-block mt-0 mb-3" style="width:25%;height:2px" />
+            <p class="h5 ">
+                Người chơi có 5 quân cờ liên tiếp theo hàng ngang,dọc,chéo trước sẽ chiến thắng.
+
+            </p>
+            <p class=" px-5 h5">
+               <span class="success-text">Thắng: +80 điểm.</span>
+                
+                <span class="danger-text">Thua : -100 điểm.</span> 
+
+                <span class="primary-text">Hòa : +0 điểm.</span> 
+            </p>
+            
         </div>
         <!--/.Panel 2-->
         <!--Panel 3-->

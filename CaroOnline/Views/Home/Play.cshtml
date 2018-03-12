@@ -66,12 +66,13 @@
             <!--Body-->
             <div class="modal-body text-center  px-2 py-1">
                 <h2 class="red-text modal-title font-weight-bold">TRẬN ĐẤU KẾT THÚC</h2>
-                <hr class="red d-inline-block mt-0 mb-3" style="width:25%" />
+                <hr class="red d-inline-block mt-0 mb-3" style="width:25%;height:2px" />
 
                 <div class="mb-2 ">
 
                     <h4 id="msgWin" class="blue-text h4 font-weight-bold"><i class="fa fa-trophy mr-2"></i>BẠN ĐÃ CHIẾN THẮNG</h4>
                     <h4 id="msgLost" class="warning-text h4 font-weight-bold"><i class="fa fa-frown-o mr-2"></i>BẠN ĐÃ THUA</h4>
+                    <h4 id="msgClaim" class="primary-text h4 font-weight-bold"><i class="fa fa-smile-o mr-2"></i>HÒA CỜ</h4>
                 </div>
                 <a href="/" class="btn btn-lg btn-outline-success font-weight-bold">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
             </div>
@@ -182,7 +183,7 @@
         //#endregion createchessboard
         $(document).ready(function () {
 
-
+            var countTurn = 0;
             curUName = $('#currUserName').text().trim();
             var url_string = window.location.href;
             var url = new URL(url_string);
@@ -193,17 +194,27 @@
 
             $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'curUName': curUName };
             var hgame = $.connection.gameHub;
-            hgame.client.lostgame = function (turnu, i, j) {
+            hgame.client.lostgame = function (turnu, i, j, type) {
                 context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
                 //alert("Bạn thua cmnr");
-                $("#msgWin").hide();
+                $("#msgWin").css("display","none");
+                $("#msgClaim").css("display", "none");
+                $("#msgLost").css("display", "block");
+                if (type == "1") {
+                    $("#msgClaim").css("display", "block");
+                    $("#msgLost").css("display", "none");
+                    $("#msgWin").css("display", "none");
+                }
+
                 $('#modalLoginAvatarDemo').modal('toggle');
             };
 
 
             hgame.client.paintchess = function (turnu, i, j, currOwner) {
+                countTurn++;
+                //alert(countTurn);
                 if (currOwner > 0) {
                     context.drawImage(competitorImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                     ArrMaxtrix[i][j].Owner = currOwner;
@@ -308,6 +319,7 @@
 
                 });
                 canvas.addEventListener('click', function (evt) {
+
                     if (turnUser != curUName) {
                         alert("không phải lượt của bạn");
                         return;
@@ -325,16 +337,30 @@
                     var i = Math.floor(mouseX / Cell.SizeRect()), j = Math.floor(mouseY / Cell.SizeRect());
 
                     if (ArrMaxtrix[i][j].Owner == 0) {
-
+                        countTurn++;
+                        //alert(countTurn);
                         context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                         context.stroke();
                         ArrMaxtrix[i][j].Owner = currOwner;
                         turnUser = $("#uName2").text().trim();
+                        if (countTurn == 21 * 21) {//hòa cờ
+                            hgame.server.lostGame(turnUser, i, j, 1);
+                            $("#msgLost").css("display", "none");
+                            $("#msgClaim").css("display", "block");
+                            $("msgWin").css("display", "none");
+                            $('#modalLoginAvatarDemo').modal('toggle');
+                            hgame.server.paintChess(turnUser, i, j, currOwner);
+                            $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                            return;
+                        }
+
+
                         if (CheckWinner() == true) {
                             //alert("Bạn thắng");
-
-                            hgame.server.lostGame(turnUser, i, j);
-                            $("#msgLost").hide();
+                            hgame.server.lostGame(turnUser, i, j, 0);
+                            $("#msgLost").css("display", "none");
+                            $("#msgClaim").css("display", "none");
+                            $("msgWin").css("display", "block");
                             $('#modalLoginAvatarDemo').modal('toggle');
                         } else {
                             hgame.server.paintChess(turnUser, i, j, currOwner);
@@ -365,7 +391,7 @@
                         if (ArrMaxtrix[i][j].Owner != currOwner) {
                             continue;
                         } else {
-                            if (CheckWithColumn(i, j) || CheckWithRow(i, j) || CheckWithDiagonalStart(i, j) || CheckWithDiagonalEnd(i,j)) {
+                            if (CheckWithColumn(i, j) || CheckWithRow(i, j) || CheckWithDiagonalStart(i, j) || CheckWithDiagonalEnd(i, j)) {
                                 check = true;
                                 break;
                             }
