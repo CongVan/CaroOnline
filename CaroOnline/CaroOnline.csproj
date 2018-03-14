@@ -227,6 +227,7 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\ResizeSensor.js" />
     <Content Include="Content\js\speakingurl.min.js" />
+    <Content Include="Content\loading.svg" />
     <Content Include="Content\rsz_border.jpg" />
     <Content Include="Content\x.png" />
     <Content Include="Content\o.png" />
@@ -235,8 +236,8 @@
     <Content Include="Global.asax" />
     <Content Include="Models\CaroOnlineDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CaroOnlineDB.Context.cs</LastGenOutput>
       <DependentUpon>CaroOnlineDB.edmx</DependentUpon>
+      <LastGenOutput>CaroOnlineDB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\CaroOnlineDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -328,6 +329,8 @@
     <Content Include="Content\img\Desktop\1_1461134_1460955_1461769\Source\Server\Server\Server.aps" />
     <Content Include="Content\img\Desktop\1_1461134_1460955_1461769\Source\Server\Server\Server.idc" />
     <Content Include="Content\img\Desktop\1_1461134_1460955_1461769\Source\Server\Server\Server.vcxproj" />
+    <Content Include="Content\font\FS NokioMedium.ttf" />
+    <Content Include="Content\font\FS NokioRegular.ttf" />
     <EntityDeploy Include="Models\CaroOnlineDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CaroOnlineDB.Designer.cs</LastGenOutput>
@@ -335,8 +338,6 @@
     <Content Include="Models\CaroOnlineDB.edmx.diagram">
       <DependentUpon>CaroOnlineDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\font\FS NokioMedium.ttf" />
-    <Content Include="Content\font\FS NokioRegular.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Caro\Cell.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

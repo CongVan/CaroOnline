@@ -25,7 +25,7 @@ namespace CaroOnline.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Games> Games { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }

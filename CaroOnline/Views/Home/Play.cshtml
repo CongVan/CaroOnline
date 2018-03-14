@@ -73,8 +73,11 @@
                     <h4 id="msgWin" class="blue-text h4 font-weight-bold"><i class="fa fa-trophy mr-2"></i>BẠN ĐÃ CHIẾN THẮNG <span class="ml-3 warning-text">+90 điểm</span></h4>
                     <h4 id="msgLost" class="warning-text h4 font-weight-bold"><i class="fa fa-frown-o mr-2"></i>BẠN ĐÃ THUA <span class="ml-3 black-text">-100 điểm</span></h4>
                     <h4 id="msgClaim" class="primary-text h4 font-weight-bold"><i class="fa fa-smile-o mr-2"></i>HÒA CỜ</h4>
+                    <div  id="loaderEndGame">
+                        <img src="~/Content/loading.svg" style="width:40px;height:40px" />Vui lòng đợi lưu kết quả trận đấu.
+                        </div>
                 </div>
-                <a href="/" class="btn btn-lg btn-outline-success font-weight-bold">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
+                <a href="/" id="backHome"  class="btn btn-lg btn-outline-success font-weight-bold disabled">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
             </div>
 
         </div>
@@ -255,6 +258,11 @@
                 $('#btnReady').attr("disabled", "disabled");
                 turnUser = $('#uName2').text().trim();
             }
+            hgame.client.endgame = function () {
+                $("#loaderEndGame").css("display", "none");
+                $("#backHome").removeClass("disabled");
+                console.log("Lưu game thành công!");
+            }
             hgame.client.hello = function (hello) {
                 alert(hello);
             }
@@ -355,13 +363,31 @@
                         }
 
 
-                        if (CheckWinner() == true) {
+                        if (CheckWinner() == true) {//You WIN
                             //alert("Bạn thắng");
                             hgame.server.lostGame(turnUser, i, j, 0);
                             $("#msgLost").css("display", "none");
                             $("#msgClaim").css("display", "none");
                             $("msgWin").css("display", "block");
-                            $('#modalLoginAvatarDemo').modal('toggle');
+                            $('#modalLoginAvatarDemo').modal('toggle');                           
+                            $.ajax({
+                                url: "/Home/EndGame",
+                                data: { uname1: UserName1, uname2: UserName2, winer: curUName },
+                                success: function (result) {
+                                    if (result.data == "1") {
+                                        $("#loaderEndGame").css("display", "none");
+                                        $("#backHome").removeClass("disabled");
+                                        console.log("Lưu game thành công!");
+                                        hgame.server.endGame(turnUser);
+                                    }
+                                    else {
+                                        console.log(result.msg);
+                                    }                                    
+                                },
+                                error: function () {
+                                    console.log("Lỗi lưu game!");
+                                }
+                            })
                         } else {
                             hgame.server.paintChess(turnUser, i, j, currOwner);
                             $('#txtReady').text("LƯỢT ĐI: " + turnUser);

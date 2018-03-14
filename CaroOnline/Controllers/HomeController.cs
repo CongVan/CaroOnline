@@ -173,6 +173,32 @@ namespace CaroOnline.Controllers
             
             return View();
         }
-     
+        public ActionResult EndGame(string uname1,string uname2,string winer)
+        {
+            
+            using (var ctx=new CaroOnlineDBEntities())
+            {
+                var game = new Games();
+                game.User1 = uname1;
+                game.User2 = uname2;
+                game.Winer = winer;
+                game.DateGame = DateTime.Now;
+                try
+                {
+                    ctx.Games.Add(game);
+                    ctx.SaveChanges();
+
+                    return Json(new { data="1",msg=""}, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { data = "0", msg = ex.Message }, JsonRequestBehavior.AllowGet);
+                    
+                }
+            }
+            
+        }
+
+
     }
 }

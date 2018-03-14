@@ -29,6 +29,20 @@ namespace CaroOnline.Hubs
             }
             Clients.Client(cid).paintchess(turnUser, i, j, currOwner);
         }
+        public void EndGame(string turnUser)
+        {
+            var cid = "";
+            foreach (var item in ListUsers)
+            {
+                if (item["Name"].ToString() == turnUser)
+                {
+                    cid = item["cID"].ToString();
+                    break;
+                }
+
+            }
+            Clients.Client(cid).endgame();
+        }
         public void LostGame(string turnUser, string i,string j,string type)
         {
             var cid = "";

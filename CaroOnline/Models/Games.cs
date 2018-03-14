@@ -15,9 +15,9 @@ namespace CaroOnline.Models
     public partial class Games
     {
         public int ID { get; set; }
-        public Nullable<int> UserId1 { get; set; }
-        public Nullable<int> UserId2 { get; set; }
+        public string User1 { get; set; }
+        public string User2 { get; set; }
         public Nullable<System.DateTime> DateGame { get; set; }
-        public Nullable<int> Winer { get; set; }
+        public string Winer { get; set; }
     }
 }

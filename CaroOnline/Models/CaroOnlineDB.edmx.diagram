@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="459986b535f943bd87225a083207d39d" Name="Diagram1">
-        <EntityTypeShape EntityType="CaroOnlineDBModel.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CaroOnlineDBModel.Games" Width="1.5" PointX="3.375" PointY="0.75" />
+      <Diagram DiagramId="accb83447f1843a695918f50ebe83b7a" Name="Diagram1">
+        <EntityTypeShape EntityType="CaroOnlineDBModel.Games" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaroOnlineDBModel.Users" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
