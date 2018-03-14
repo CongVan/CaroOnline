@@ -230,6 +230,7 @@
     <Content Include="Content\rsz_border.jpg" />
     <Content Include="Content\x.png" />
     <Content Include="Content\o.png" />
+    <Content Include="Database\db.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\CaroOnlineDB.Context.tt">
@@ -371,6 +372,9 @@
       <DependentUpon>CaroOnlineDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Cell.cs" />
+    <Compile Include="Models\Games.cs">
+      <DependentUpon>CaroOnlineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>CaroOnlineDB.tt</DependentUpon>
     </Compile>

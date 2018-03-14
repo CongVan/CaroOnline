@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="459986b535f943bd87225a083207d39d" Name="Diagram1">
         <EntityTypeShape EntityType="CaroOnlineDBModel.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CaroOnlineDBModel.Games" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
