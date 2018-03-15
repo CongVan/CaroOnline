@@ -198,7 +198,21 @@ namespace CaroOnline.Controllers
             }
             
         }
-
+        public ActionResult History()
+        {
+            return View();
+            
+        }
+        public ActionResult GetHistoryGame()
+        {
+            var u = CurrentContext.GetCurUser().Name;
+            
+            using (var ctx = new CaroOnlineDBEntities())
+            {
+                var games = ctx.Games.Where(c => c.User1 == u || c.User2 == u).ToList();
+                return Json(games, JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }

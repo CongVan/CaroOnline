@@ -9,7 +9,7 @@
     <link href="~/Content/css/mdb.min.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
     <link href="~/Content/font/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    
+
     @RenderSection("css", false)
 </head>
 <body class="" style="background-image: linear-gradient(-225deg, #22E1FF 0%, #1D8FE1 48%, #625EB1 100%);">
@@ -32,7 +32,7 @@
         </div>*@
     <header>
         <!-- Sidebar navigation -->
-        <div  id="slide-out" class="side-nav  fixed mdb-sidenav  blue-gradient" style="transform: translateX(-100%);display:none!important">
+        <div id="slide-out" class="side-nav  fixed mdb-sidenav  blue-gradient" style="transform: translateX(-100%);display:none!important">
             <ul class="custom-scrollbar list-unstyled scrollbar scrollbar-danger">
                 <!-- Logo -->
                 <li>
@@ -197,7 +197,7 @@
                             @if (CurrentContext.IsLogged())
                             {
                                 <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4 " id="currUserName">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
-                                <input type="hidden" id="currConnectID"/>
+                                <input type="hidden" id="currConnectID" />
                             }
                             <h6 class="warning-text">
                                 Điểm: 500&nbsp;<i class="fa fa-heart"></i>
@@ -206,9 +206,9 @@
                             <h5 class="badge badge-pill success-color font-weight-light">10 Thắng</h5>
                             <h5 class="badge badge-pill danger-color font-weight-light">10 Thua</h5>
                             <h5 class="badge badge-pill special-color font-weight-light">10 Hòa</h5>
-                            <hr >
+                            <hr>
                             <div class="list-group">
-                                @if (Request.Url.AbsolutePath.Contains("/Home/Index") || Request.Url.AbsolutePath=="/")
+                                @if (Request.Url.AbsolutePath.Contains("/Home/Index") || Request.Url.AbsolutePath == "/")
                                 {
                                     <a href="/Home/Index" class="list-group-item list-group-item-action active card my-1 font-weight-normal h4-responsive text-uppercase">
                                         <i class="fa fa-home">&nbsp;|&nbsp;</i>Trang chủ
@@ -228,11 +228,18 @@
                                 {
                                     <a href="/Home/Play" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 font-weight-normal h4-responsive text-uppercase"><i class="fa fa-gamepad text-danger">&nbsp;|&nbsp;</i>  Vào chơi</a>
                                 }
+                                @if (Request.Url.AbsolutePath.Contains("/Home/Play"))
+                                {
+                                    <a href="/Home/History" class=" list-group-item list-group-item-action card my-1 h4-responsive text-uppercase active"><i class="fa fa-history ">&nbsp;|&nbsp;</i> Lịch sử thi đấu </a>
+                                }
+                                else
+                                {
+                                    <a href="/Home/History" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 h4-responsive text-uppercase"><i class="fa fa-history text-danger">&nbsp;|&nbsp;</i> Lịch sử thi đấu </a>
+                                }
 
 
 
 
-                                <a href="/Home/History" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 h4-responsive text-uppercase"><i class="fa fa-history text-danger">&nbsp;|&nbsp;</i> Lịch sử thi đấu </a>
                                 <a href="/Home/" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 h4-responsive text-uppercase"><i class="fa fa-save text-danger">&nbsp;|&nbsp;</i> Ván đấu đã lưu</a>
                                 <a href="/Home/Logout" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 h4-responsive text-uppercase"><i class="fa fa-sign-out text-danger">&nbsp;|&nbsp;</i> Thoát</a>
                                 @*<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>*@
