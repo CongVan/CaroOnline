@@ -200,18 +200,22 @@ namespace CaroOnline.Controllers
         }
         public ActionResult History()
         {
-            return View();
+            var u = CurrentContext.GetCurUser();
+            if (u == null)
+            {
+                return Redirect("/Home/Index");
+            }
+            using (var ctx = new CaroOnlineDBEntities())
+            {
+                var games = ctx.Games.Where(c => c.User1 == u.Name || c.User2 == u.Name).Take(6).ToList();
+                //return Json(games, JsonRequestBehavior.AllowGet);
+                return View(games);
+            }
             
         }
         public ActionResult GetHistoryGame()
         {
-            var u = CurrentContext.GetCurUser().Name;
-            
-            using (var ctx = new CaroOnlineDBEntities())
-            {
-                var games = ctx.Games.Where(c => c.User1 == u || c.User2 == u).ToList();
-                return Json(games, JsonRequestBehavior.AllowGet);
-            }
+            return View();
         }
 
     }
