@@ -18,5 +18,9 @@ namespace CaroOnline.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Pass { get; set; }
+        public Nullable<int> Win { get; set; }
+        public Nullable<int> Lost { get; set; }
+        public Nullable<int> Equal { get; set; }
+        public Nullable<int> Point { get; set; }
     }
 }

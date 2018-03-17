@@ -256,6 +256,9 @@
             hgame.client.startgame = function () {
                 $('#TableChess').css("pointer-events", "auto");
                 $('#btnReady').attr("disabled", "disabled");
+                $('#txtReady').text("");
+                $('#txtReady').css('display', 'none');
+
                 turnUser = $('#uName2').text().trim();
             }
             hgame.client.endgame = function () {
@@ -294,6 +297,8 @@
                 }
                 $('#btnReady').on('click', function () {
                     hgame.server.readyGame($('#uName2').text().trim());
+                    $('#txtReady').text("Đang chờ đối thủ bắt đầu.");
+                    $('#txtReady').css('display', 'block');
                 });
                 $('#btnStart').on('click', function () {
                     $('#btnStart').attr("disabled", "disabled");

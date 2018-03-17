@@ -207,7 +207,7 @@ namespace CaroOnline.Controllers
             }
             using (var ctx = new CaroOnlineDBEntities())
             {
-                var games = ctx.Games.Where(c => c.User1 == u.Name || c.User2 == u.Name).Take(6).ToList();
+                var games = ctx.Games.Where(c => c.User1 == u.Name || c.User2 == u.Name).Take(20).ToList();
                 //return Json(games, JsonRequestBehavior.AllowGet);
                 return View(games);
             }
