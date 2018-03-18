@@ -33,11 +33,13 @@
         </h5>
         <p class="grey-text">Graphic designer</p>
         <div class="progress" style="height: 20px">
-            <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%; height: 20px" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">10</div>
+            <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         
     </div>
     <h2 id="test"></h2>
+    <button class="btn btn-primary btn-block btn-lg mb-1" disabled id="btnSave" ><i class="fa fa-save mr-2"></i>LƯU VÁN ĐẤU</button>
+    <button class="btn btn-default btn-block btn-lg mb-1" disabled id="btnGameOver"><i class="fa fa-circle-thin mr-2"></i>ĐẦU HÀNG</button>
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
     <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
     <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</h4>
@@ -48,7 +50,7 @@
 <div class="modal fade show" id="modalLoginAvatarDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog cascading-modal modal-avatar modal-md" role="document">
         <!--Content-->
-        <div class="modal-content">
+        <div class="modal-content" >
 
             <!--Body-->
             <div class="modal-body text-center  px-2 py-1">
@@ -348,6 +350,7 @@
                         var per = ms * 10;
                         $("#TimeCount").attr("aria-valuenow", per);
                         $("#TimeCount").css("width", per + "%");
+                        
                         ms = ms - 0.01;
                         //if (ms < 0) {
                         //    clearInterval(countTime);
@@ -370,12 +373,15 @@
                             turnUser = $("#uName2").text().trim();
                             hgame.server.paintChess(turnUser, -1, -1, 0);
                             $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                            $("#TimeCount").attr("aria-valuenow", 0);
+                            $("#TimeCount").css("width", 0 + "%");
                         }
                     }, 10);
 
                 });
                 canvas.addEventListener('click', function (evt) {
-
+                    $("#TimeCount").attr("aria-valuenow", 0);
+                    $("#TimeCount").css("width", 0 + "%");
                     if (turnUser != curUName) {
                         //alert("không phải lượt của bạn");
                         console.log("không phải lượt của bạn");
