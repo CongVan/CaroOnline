@@ -73,6 +73,28 @@
         <!--/.Content-->
     </div>
 </div>
+<div class="modal fade show" id="modalSaving" tabindex="-1" role="dialog" aria-labelledby="lblSave" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog cascading-modal modal-avatar modal-md" role="document">
+        <!--Content-->
+        <h5 class="modal-title" id="lblSave">Thông báo</h5>
+        <div class="modal-content">
+
+            <!--Body-->
+            <div class="modal-body text-center  px-2 py-1">
+                
+                    <div id="loaderSaving">
+                        <h4>Việc lưu ván đấu đang chơi sẽ làm dừng ván đấu và bạn sẽ bị trừ 50 điểm. Bạn  vẫn có thể tiếp tục ván đấu đã lưu .</h4>
+                        <img src="~/Content/loading.svg" style="width:40px;height:40px" />
+                    </div>
+               
+                <button class="btn btn-outline-danger" id="btnSubmitSave"><i class="fa fa-save mr-2"></i> Lưu</button>
+                <button class="btn btn-danger" id="btnBackSave"><i class="fa fa-backward"></i> Quay lại</button>
+            </div>
+
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
 @section js{
     <script src="~/Scripts/Caro/Cell.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
@@ -80,6 +102,7 @@
 
     <script>
         //#region cratechessboard
+        var isPause = false;
         var turnUser = "";
         var curUName = "";
         //var t=;
@@ -250,7 +273,11 @@
                     //    //$("#btnNo").trigger("click");
                     //}
 
-                   // ms = ms - 1;
+                    // ms = ms - 1;
+                    if (isPause) {
+                        ms = ms+ 0.01;
+                    }
+
                     if (ms <= 0) {
                         clearInterval(countTime);
                         $("#txtTimer").css("display", "none");
@@ -284,6 +311,10 @@
                 $("#loaderEndGame").css("display", "none");
                 $("#backHome").removeClass("disabled");
                 console.log("Lưu game thành công!");
+            }
+            hgame.client.saved = function () {
+                alert("đối thủ đã lưu game");
+                window.location.href = "/";
             }
             hgame.client.hello = function (hello) {
                 alert(hello);
@@ -328,7 +359,7 @@
                     turnUser = curUName;
                     $('#txtReady').text("LƯỢT CỦA BẠN");
                     $("#TimeCount").removeClass();
-                    $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped"); 
+                    $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped");
                     var ms = 10;
                     countTime = setInterval(function () {
 
@@ -352,7 +383,7 @@
                         var per = ms * 10;
                         $("#TimeCount").attr("aria-valuenow", per);
                         $("#TimeCount").css("width", per + "%");
-                        
+
                         ms = ms - 0.01;
                         //if (ms < 0) {
                         //    clearInterval(countTime);
@@ -361,6 +392,10 @@
                         //}
 
                         // ms = ms - 1;
+
+                        if (isPause) {
+                            ms += 10;
+                        }
                         if (ms <= 0) {
                             clearInterval(countTime);
                             $("#txtTimer").css("display", "none");
@@ -371,7 +406,7 @@
                                     context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                                 }
                             }
-                          
+
                             turnUser = $("#uName2").text().trim();
                             hgame.server.paintChess(turnUser, -1, -1, 0);
                             $('#txtReady').text("LƯỢT ĐI: " + turnUser);
@@ -426,7 +461,7 @@
                             $("#msgLost").css("display", "none");
                             $("#msgClaim").css("display", "none");
                             $("msgWin").css("display", "block");
-                            $('#modalLoginAvatarDemo').modal('toggle');                           
+                            $('#modalLoginAvatarDemo').modal('toggle');
                             $.ajax({
                                 url: "/Home/EndGame",
                                 data: { uname1: UserName1, uname2: UserName2, winer: curUName },
@@ -439,7 +474,7 @@
                                     }
                                     else {
                                         console.log(result.msg);
-                                    }                                    
+                                    }
                                 },
                                 error: function () {
                                     console.log("Lỗi lưu game!");
@@ -457,6 +492,36 @@
                         //}
                     }
                 }, false);
+
+                $("#btnSave").on('click', function () {
+                    isPause = true;
+                    $("#modalSaving").modal('toggle');
+                });
+                $("#btnSubmitSave").on("click", function () {
+                    isPause = true;
+                    var chess = JSON.stringify(ArrMaxtrix).toString();
+                    $.ajax({
+                        traditional: true,
+                        url: "/Home/Saved",
+                        dataType: "json",
+                        data: { 'u1': UserName1, 'u2': UserName2, 'turn': turnUser,'chess':chess},
+                        success: function (data) {
+                            if (data == "1") {
+                                console.log("Saved");
+                            }
+                        },
+                        error: function () {
+                            console.log("Lỗi saved");
+                        }
+                    });
+                    var u = turnUser == UserName1 ? UserName2 : UserName1;
+                    hgame.server.saved(u);
+                    
+                });
+                $("#btnBackSave").on("click", function () {
+                    isPause = false;
+                    $("#modalSaving").modal('toggle');
+                });
             });
             function CheckWinner() {
                 //$.each(ArrMaxtrix, function (key, item) {

@@ -15,6 +15,21 @@ namespace CaroOnline.Hubs
         {
             Clients.All.hello("123");
         }
+        public void saved(string turnUser)
+        {
+            var cid = "";
+            foreach (var item in ListUsers)
+            {
+                if (item["Name"].ToString() == turnUser)
+                {
+                    cid = item["cID"].ToString();
+                    break;
+                }
+
+            }
+
+            Clients.Client(cid).saved();
+        }
         public void PaintChess(string turnUser,string i,string j,string currOwner)
         {
             var cid = "";
@@ -160,5 +175,6 @@ namespace CaroOnline.Hubs
 
             return base.OnDisconnected(stopCalled);
         }
+        
     }
 }

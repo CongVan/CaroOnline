@@ -218,5 +218,30 @@ namespace CaroOnline.Controllers
         {
             return View();
         }
+        public ActionResult Saved(string u1,string u2,string turn,string chess)
+        {
+            var game = new GameSave();
+            game.User1 = u1;
+            game.User2 = u2;
+            game.Turrn = turn;
+            game.Chess = chess;
+            game.Date = DateTime.Now;
+            using(var ctx=new CaroOnlineDBEntities())
+            {
+                try
+                {
+                    ctx.GameSave.Add(game);
+                    ctx.SaveChanges();
+
+                    return Json("1", JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+
+                    return Json("0", JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+        }
     }
 }
