@@ -15,6 +15,17 @@
           <Property Name="DateGame" Type="datetime" />
           <Property Name="Winer" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="GameSave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User1" Type="varchar" MaxLength="100" />
+          <Property Name="User2" Type="varchar" MaxLength="100" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Chess" Type="varchar(max)" />
+          <Property Name="Turrn" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="ID" />
@@ -30,6 +41,7 @@
         </EntityType>
         <EntityContainer Name="CaroOnlineDBModelStoreContainer">
           <EntitySet Name="Games" EntityType="Self.Games" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameSave" EntityType="Self.GameSave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -62,7 +74,19 @@
         <EntityContainer Name="CaroOnlineDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Games" EntityType="Self.Games" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="GameSave" EntityType="CaroOnlineDBModel.GameSave" />
         </EntityContainer>
+        <EntityType Name="GameSave">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Chess" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Turrn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -91,6 +115,18 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Pass" ColumnName="Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameSave">
+            <EntityTypeMapping TypeName="CaroOnlineDBModel.GameSave">
+              <MappingFragment StoreEntitySet="GameSave">
+                <ScalarProperty Name="Turrn" ColumnName="Turrn" />
+                <ScalarProperty Name="Chess" ColumnName="Chess" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="User2" ColumnName="User2" />
+                <ScalarProperty Name="User1" ColumnName="User1" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

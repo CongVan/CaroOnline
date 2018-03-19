@@ -27,5 +27,6 @@ namespace CaroOnline.Models
     
         public virtual DbSet<Games> Games { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<GameSave> GameSave { get; set; }
     }
 }

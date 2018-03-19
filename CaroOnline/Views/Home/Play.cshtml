@@ -276,7 +276,8 @@
                 $('#btnReady').attr("disabled", "disabled");
                 $('#txtReady').text("");
                 $('#txtReady').css('display', 'none');
-
+                $("#btnSave").removeAttr("disabled");
+                $("#btnGameOver").removeAttr("disabled");
                 turnUser = $('#uName2').text().trim();
             }
             hgame.client.endgame = function () {
@@ -320,11 +321,12 @@
                 });
                 $('#btnStart').on('click', function () {
                     $('#btnStart').attr("disabled", "disabled");
+                    $("#btnSave").removeAttr("disabled");
+                    $("#btnGameOver").removeAttr("disabled");
                     hgame.server.startGame($('#uName2').text().trim());
                     $('#TableChess').css("pointer-events", 'auto');
                     turnUser = curUName;
                     $('#txtReady').text("LƯỢT CỦA BẠN");
-
                     $("#TimeCount").removeClass();
                     $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped"); 
                     var ms = 10;

@@ -213,10 +213,10 @@ namespace CaroOnline.Controllers
             }
             
         }
-        public ActionResult GetHistoryGame()
+      
+        public ActionResult GameSave()
         {
             return View();
         }
-
     }
 }

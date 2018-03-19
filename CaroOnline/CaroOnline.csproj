@@ -376,6 +376,9 @@
     <Compile Include="Models\Games.cs">
       <DependentUpon>CaroOnlineDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GameSave.cs">
+      <DependentUpon>CaroOnlineDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>CaroOnlineDB.tt</DependentUpon>
     </Compile>
@@ -395,6 +398,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Play.cshtml" />
     <Content Include="Views\Home\History.cshtml" />
+    <Content Include="Views\Home\GameSave.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
