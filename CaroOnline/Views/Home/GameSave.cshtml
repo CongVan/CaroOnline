@@ -1,6 +1,6 @@
 ﻿@using CaroOnline.Helper
 @using CaroOnline.Models
-@model List<Games>
+@model List<GameSave>
 @{
     ViewBag.Title = "GameSave";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,32 +21,63 @@
         <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
             <div class="card-body px-2 ">
                 <div class="row">
+                    @{
+                        var curName = CurrentContext.GetCurUser().Name;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 mb-2">
+                            <div class="card">
+                                <div class="card-body p-0">
+                                </div>
+                                <blockquote class="blockquote bq-primary mb-0 p-0 ">
+                                    <ul class="list-group list-group-flush">
+                                        @{
+                                            var target = curName == item.User1 ? item.User2 : item.User1;
+                                        }
+                                        <li class="list-group-item py-1 white-text primary-color"><i class="fa fa-user-circle-o"></i> Đối thủ: @target</li>
+                                        <li class="list-group-item py-1"><i class="fa fa-angle-right"></i> Lượt đi: @item.Turrn</li>
+                                        <li class="list-group-item py-1 d-flex justify-content-between">
+                                            <span><i class="fa fa-calendar"></i> Ngày: @item.Date.Value.ToString("HH:mm - dd/MM ")</span>
+                                            <button class="btn btn-outline-blue btn-sm" data-gameid="@item.ID" data-target="@target" id="reStart">Tiếp tục</button>
+                                        </li>
+                                        @*<li class="list-group-item py-1"></li>*@
+                                    </ul>
+                                </blockquote>
 
-                    <div class="col-md-6 mb-2">
-                        <div class="card">
-                            <div class="card-body p-0">
+
+
                             </div>
-                            <blockquote class="blockquote bq-success mb-0 p-0 ">
-                                <ul class="list-group list-group-flush">
-                                   
-                                        <li class="list-group-item py-1 white-text success-color"><i class="fa fa-user-circle-o"></i> Đối thủ: User</li>
-                                    
-                                    
-                                    <li class="list-group-item py-1"><i class="fa fa-angle-right"></i> Lượt đi: Bạn</li>
-                                    <li class="list-group-item py-1 d-flex justify-content-between">
-                                    <span><i class="fa fa-calendar"></i> Ngày: 10/12 08:09</span>
-                                        <button class="btn btn-outline-blue btn-sm">Tiếp tục</button>
-                                    </li>
-                                    @*<li class="list-group-item py-1"></li>*@
-                                </ul>
-                            </blockquote>
-
-
 
                         </div>
+                                            }
 
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @section js{
+     <script>
+         $(document).ready(function () {
+
+             $("#reStart").on('click', function () {
+                 $.ajax({
+                     async:false,
+                     url: "/Home/CheckOnline?uName=" + $(this).data("target"),
+                     success: function (data) {
+                         if (data == "0") {
+                             alert("Đôi thủ k online");
+                         } else {
+                             alert("Đang chờ đối thủ đồng ý!");
+                         }
+                     },
+                     error: function () {
+                         alert("K tìm đc đối thủ");
+                     }
+                 });
+             });
+         });
+
+        </script>   
+    
+    }

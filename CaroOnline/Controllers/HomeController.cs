@@ -216,7 +216,16 @@ namespace CaroOnline.Controllers
       
         public ActionResult GameSave()
         {
-            return View();
+            var u = CurrentContext.GetCurUser();
+            if (u == null)
+            {
+                return Redirect("/Home/Index");
+            }
+            using (var ctx=new CaroOnlineDBEntities())
+            {
+                var games = ctx.GameSave.Where(c => c.User1 == u.Name || c.User2 == u.Name).OrderByDescending(c=>c.Date).ToList();
+                return View(games);
+            }
         }
         public ActionResult Saved(string u1,string u2,string turn,string chess)
         {
@@ -232,16 +241,29 @@ namespace CaroOnline.Controllers
                 {
                     ctx.GameSave.Add(game);
                     ctx.SaveChanges();
-
-                    return Json("1", JsonRequestBehavior.AllowGet);
+                    TempData["msgSuccess"] = "Lưu game thành công!";
+                    return Redirect("/Home/Index");
                 }
                 catch (Exception ex)
                 {
 
-                    return Json("0", JsonRequestBehavior.AllowGet);
+                    TempData["msgError"] = "Lưu game không thành công!";
+                    return Redirect("/Home/Index");
                 }
                 
             }
+            
+        }
+        public ActionResult CheckOnline(string uName)
+        {
+            foreach (var item in OnlineHub.ListUsers)
+            {
+                if (item["Name"].ToString() == uName)
+                {
+                    return Json("1", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("0", JsonRequestBehavior.AllowGet);
         }
     }
 }

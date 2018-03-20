@@ -95,6 +95,14 @@
         <!--/.Content-->
     </div>
 </div>
+<form id="frmSaved" method="post" action="/Home/Saved">
+    <input name="u1" type="hidden"/>
+    <input name="u2" type="hidden"/>
+    <input name="turn" type="hidden"/>
+    <input name="chess" type="hidden"/>
+
+</form>
+
 @section js{
     <script src="~/Scripts/Caro/Cell.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
@@ -500,23 +508,28 @@
                 $("#btnSubmitSave").on("click", function () {
                     isPause = true;
                     var chess = JSON.stringify(ArrMaxtrix).toString();
-                    $.ajax({
-                        traditional: true,
-                        url: "/Home/Saved",
-                        dataType: "json",
-                        data: { 'u1': UserName1, 'u2': UserName2, 'turn': turnUser,'chess':chess},
-                        success: function (data) {
-                            if (data == "1") {
-                                console.log("Saved");
-                            }
-                        },
-                        error: function () {
-                            console.log("Lỗi saved");
-                        }
-                    });
+                    $("#frmSaved input[name='u1']").val(UserName1);
+                    $("#frmSaved input[name='u2']").val(UserName2);
+                    $("#frmSaved input[name='turn']").val(turnUser);
+                    $("#frmSaved input[name='chess']").val(chess);
+                    
+                    //$.ajax({
+                    //    traditional: true,
+                    //    url: "/Home/Saved",
+                    //    dataType: "json",
+                    //    data: { 'u1': UserName1, 'u2': UserName2, 'turn': turnUser, 'chess': ArrMaxtrix },
+                    //    success: function (data) {
+                    //        if (data == "1") {
+                    //            console.log("Saved");
+                    //        }
+                    //    },
+                    //    error: function () {
+                    //        console.log("Lỗi saved");
+                    //    }
+                    //});
                     var u = turnUser == UserName1 ? UserName2 : UserName1;
                     hgame.server.saved(u);
-                    
+                    $("#frmSaved").submit();
                 });
                 $("#btnBackSave").on("click", function () {
                     isPause = false;
