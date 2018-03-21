@@ -103,6 +103,30 @@
     </div>
 </div>
 
+<!-- Modal restart game-->
+
+<div class="modal fade show" id="modalRestart" tabindex="-1" role="dialog" aria-labelledby="lblSave" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog cascading-modal modal-avatar modal-md" role="document">
+        <!--Content-->
+        @*<h5 class="modal-title" id="lblSave">Thông báo</h5>*@
+        <div class="modal-content">
+
+            <!--Body-->
+            <div class="modal-body text-center  px-2 py-1">
+
+                <div>
+                    <h4 id="lblloaderRestart"></h4>
+                    <img src="~/Content/loading.svg" style="width:40px;height:40px" />
+                </div>
+
+                <button class="btn btn-outline-danger" id="btnOkRestart"><i class="fa fa-save mr-2"></i>Đồng ý</button>
+                <button class="btn btn-danger" id="btnNotOkRestarts" data-dismiss="modal"><i class="fa fa-backward"></i>Thôi</button>
+            </div>
+
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
 
 @section js{
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
@@ -135,6 +159,17 @@
             // Reference the auto-generated proxy for the hub.
             $.connection.hub.qs = { 'Uname' : user.Name };
             var chat = $.connection.onlineHub;
+            var linkback = "",fromback="";
+            chat.client.restartGame = function (from, link) {
+                linkback = link;
+                fromback = from;
+                $("#modalRestart").modal("toggle");
+                $("#lblloaderRestart").text("Người chơi " + from + " muốn tiếp tục trận đấu đã lưu với bạn.");
+            }
+
+            chat.client.okRestart = function (link) {
+                window.location.href = link;
+            }
             //$.connection.onlineHub.qs="Uname="+user.Name;
             // Create a function that the hub can call back to display messages.
             chat.client.addNewMessageToPage = function (name, message) {
@@ -292,9 +327,14 @@
                 //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
                 //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled", false);
             }
-
+            
             // Start the connection.
             $.connection.hub.start().done(function () {
+                $("#btnOkRestart").on("click", function () {
+                    window.location.href = linkback;
+                    chat.server.okRestart(fromback, linkback)
+                });
+
                 $('#currConnectID').val($.connection.hub.id);
                // chat.server.updateConnectionID();
                 $('#btnTest').on('click',function(){

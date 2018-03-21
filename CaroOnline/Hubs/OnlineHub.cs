@@ -34,6 +34,39 @@ namespace CaroOnline.Hubs
             //Clients.All.addNewMessageToPage(name, message);
             Clients.Client(Context.ConnectionId).sendTo(name, message, Context.ConnectionId);
         }
+        public void RestartGame(string name,string from,string link)
+        {
+            var cid = "";
+            foreach (var item in ListUsers)
+            {
+                if (item["Name"].ToString() == name)
+                {
+                    cid = item["cID"].ToString();
+                    break;
+                }
+
+            }
+
+            Clients.Client(cid).restartGame(from,link);
+            //Clients.All.addNewMessageToPage(name, message);
+            //Clients.Client(Context.ConnectionId).sendTo(name, message, Context.ConnectionId);
+        }
+        public void OkRestart(string name, string link)
+        {
+            var cid = "";
+            foreach (var item in ListUsers)
+            {
+                if (item["Name"].ToString() == name)
+                {
+                    cid = item["cID"].ToString();
+                    break;
+                }
+
+            }
+            Clients.Client(cid).okRestart(link);
+            //Clients.All.addNewMessageToPage(name, message);
+            //Clients.Client(Context.ConnectionId).sendTo(name, message, Context.ConnectionId);
+        }
         public void updateConnectionID()
         {
             Clients.All.updateConnectionID(ListUsers);

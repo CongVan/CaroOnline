@@ -15,14 +15,14 @@ namespace CaroOnline.Controllers
         [CheckLogin]
         public ActionResult Index()
         {
-            
-           // string t= String.Format("{0:N0}", 9001561346);
-             
+
+            // string t= String.Format("{0:N0}", 9001561346);
+
 
             ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
             ViewBag.NotPairing = TempData["NotPairing"] != null ? TempData["NotPairing"].ToString() : null;
-            
+
             //string currName = CurrentContext.GetCurUser().Name;
             //var Users = new List<Users>();
             //var lst = OnlineHub.ListUsers;
@@ -53,8 +53,8 @@ namespace CaroOnline.Controllers
             //    return View(Users);
             //}
             return View();
-            
-            
+
+
 
         }
         [CheckLogin]
@@ -84,12 +84,12 @@ namespace CaroOnline.Controllers
                     return Json(Users, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
 
                 return Json("", JsonRequestBehavior.AllowGet);
             }
-            
+
 
         }
         public ActionResult Login()
@@ -100,18 +100,18 @@ namespace CaroOnline.Controllers
             }
 
 
-            ViewBag.msgError = TempData["msgError"]!=null?TempData["msgError"].ToString():null;
+            ViewBag.msgError = TempData["msgError"] != null ? TempData["msgError"].ToString() : null;
             ViewBag.msgSuccess = TempData["msgSuccess"] != null ? TempData["msgSuccess"].ToString() : null;
             return View();
         }
         [HttpPost]
         public ActionResult Login(Users model)
         {
-      
-            using (var ctx= new CaroOnlineDBEntities())
+
+            using (var ctx = new CaroOnlineDBEntities())
             {
 
-                
+
                 var u = ctx.Users.Where(c => c.Name == model.Name && c.Pass == model.Pass).FirstOrDefault();
                 if (u != null)
                 {
@@ -125,16 +125,16 @@ namespace CaroOnline.Controllers
                     return Redirect("/Home/Index");
                 }
                 TempData["msgError"] = "Tên đăng nhập hoặc mật khẩu không đúng!";
-                
-                return Redirect("/Home/Login"); 
+
+                return Redirect("/Home/Login");
             }
-            
+
         }
         [HttpPost]
         public ActionResult Register(Users model)
         {
-            
-            using(var ctx= new CaroOnlineDBEntities())
+
+            using (var ctx = new CaroOnlineDBEntities())
             {
                 try
                 {
@@ -143,7 +143,7 @@ namespace CaroOnline.Controllers
                 }
                 catch (Exception ex)
                 {
-                    TempData["msgError"] = "Lỗi đăng ký : " +ex.Message;
+                    TempData["msgError"] = "Lỗi đăng ký : " + ex.Message;
                     return Redirect("/Home/Login");
                 }
                 TempData["msgSuccess"] = "Đăng ký thành công";
@@ -151,32 +151,32 @@ namespace CaroOnline.Controllers
             }
         }
 
-        
+
         public ActionResult Logout()
         {
             CurrentContext.Detroy();
-            
+
             return RedirectToAction("Login", "Home");
         }
         [CheckLogin]
-        public ActionResult Play(string uname1,string uname2)
+        public ActionResult Play(string uname1, string uname2)
         {
             if (CurrentContext.IsLogged() == false)
             {
                 return Redirect("/Home/Login");
             }
-            if(String.IsNullOrEmpty(uname1)|| String.IsNullOrEmpty(uname2))
+            if (String.IsNullOrEmpty(uname1) || String.IsNullOrEmpty(uname2))
             {
                 TempData["NotPairing"] = "Không thể ghép đôi.";
                 return Redirect("/Home/Index");
             }
-            
+
             return View();
         }
-        public ActionResult EndGame(string uname1,string uname2,string winer)
+        public ActionResult EndGame(string uname1, string uname2, string winer)
         {
-            
-            using (var ctx=new CaroOnlineDBEntities())
+
+            using (var ctx = new CaroOnlineDBEntities())
             {
                 var game = new Games();
                 game.User1 = uname1;
@@ -188,15 +188,15 @@ namespace CaroOnline.Controllers
                     ctx.Games.Add(game);
                     ctx.SaveChanges();
 
-                    return Json(new { data="1",msg=""}, JsonRequestBehavior.AllowGet);
+                    return Json(new { data = "1", msg = "" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
                     return Json(new { data = "0", msg = ex.Message }, JsonRequestBehavior.AllowGet);
-                    
+
                 }
             }
-            
+
         }
         public ActionResult History()
         {
@@ -207,13 +207,13 @@ namespace CaroOnline.Controllers
             }
             using (var ctx = new CaroOnlineDBEntities())
             {
-                var games = ctx.Games.Where(c => c.User1 == u.Name || c.User2 == u.Name).OrderByDescending(c=>c.DateGame).Take(20).ToList();
+                var games = ctx.Games.Where(c => c.User1 == u.Name || c.User2 == u.Name).OrderByDescending(c => c.DateGame).Take(20).ToList();
                 //return Json(games, JsonRequestBehavior.AllowGet);
                 return View(games);
             }
-            
+
         }
-      
+
         public ActionResult GameSave()
         {
             var u = CurrentContext.GetCurUser();
@@ -221,13 +221,13 @@ namespace CaroOnline.Controllers
             {
                 return Redirect("/Home/Index");
             }
-            using (var ctx=new CaroOnlineDBEntities())
+            using (var ctx = new CaroOnlineDBEntities())
             {
-                var games = ctx.GameSave.Where(c => c.User1 == u.Name || c.User2 == u.Name).OrderByDescending(c=>c.Date).ToList();
+                var games = ctx.GameSave.Where(c => c.User1 == u.Name || c.User2 == u.Name).OrderByDescending(c => c.Date).ToList();
                 return View(games);
             }
         }
-        public ActionResult Saved(string u1,string u2,string turn,string chess)
+        public ActionResult Saved(string u1, string u2, string turn, string chess)
         {
             var game = new GameSave();
             game.User1 = u1;
@@ -235,7 +235,7 @@ namespace CaroOnline.Controllers
             game.Turrn = turn;
             game.Chess = chess;
             game.Date = DateTime.Now;
-            using(var ctx=new CaroOnlineDBEntities())
+            using (var ctx = new CaroOnlineDBEntities())
             {
                 try
                 {
@@ -250,20 +250,32 @@ namespace CaroOnline.Controllers
                     TempData["msgError"] = "Lưu game không thành công!";
                     return Redirect("/Home/Index");
                 }
-                
+
             }
-            
+
         }
-        public ActionResult CheckOnline(string uName)
+        public ActionResult CheckOnline(string uName, int idgame)
         {
             foreach (var item in OnlineHub.ListUsers)
             {
                 if (item["Name"].ToString() == uName)
                 {
-                    return Json("1", JsonRequestBehavior.AllowGet);
+                    //createlink
+                    using (var ctx = new CaroOnlineDBEntities())
+                    {
+                        var game = ctx.GameSave.Where(c => c.ID == idgame).FirstOrDefault();
+                        if (game == null)
+                        {
+                            return Json(new { data = "0", msg = "Game không tồn tại" }, JsonRequestBehavior.AllowGet);
+                        }
+                        string link = "/Home/Play?uname1=" + game.User1 + "&uname2=" + game.User2;
+
+                        return Json(new { data = "1", link = link, msg = "" }, JsonRequestBehavior.AllowGet);
+
+                    }
                 }
             }
-            return Json("0", JsonRequestBehavior.AllowGet);
+            return Json(new { data = "0", link = "", msg = "Đối thủ không online." }, JsonRequestBehavior.AllowGet);
         }
     }
 }
