@@ -212,9 +212,36 @@
             var url = new URL(url_string);
             var UserName1 = url.searchParams.get("uname1").trim();
             var UserName2 = url.searchParams.get("uname2").trim();
+            var idgame = url.searchParams.get("idgame").trim();
             var countTime1, countTime;
             var competitorId, competitorImg, competitorOwner, currOwner;
+            if (idgame != "") {//is restart game
+                $.ajax({
+                    url: "/Home/GetChess?idgame=" + idgame,
+                    success: function (result) {
+                        if (result.data != "") {
+                            ArrMaxtrix = JSON.parse(result.data.Chess);
+                            turnUser = result.data.Turrn;
+                            for (var i = 0; i < 21; i++) {
+                                for (var j = 0; j < 21; j++) {
+                                    if (ArrMaxtrix[i][j].Owner == '1') {
+                                        context.drawImage(imgO, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                                    }
+                                    if (ArrMaxtrix[i][j].Owner == '2') {
+                                        context.drawImage(imgX, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                                    }
+                                    
+                                }
+                            }
+                            context.stroke();
+                        }
+                    },
+                    error: function (x, e) {
+                        alert(x);
+                    }
+                });
 
+            }
             $.connection.hub.qs = { 'UserName1': UserName1, 'UserName2': UserName2, 'curUName': curUName };
             var hgame = $.connection.gameHub;
             hgame.client.lostgame = function (turnu, i, j, type) {

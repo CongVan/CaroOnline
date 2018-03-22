@@ -159,7 +159,7 @@ namespace CaroOnline.Controllers
             return RedirectToAction("Login", "Home");
         }
         [CheckLogin]
-        public ActionResult Play(string uname1, string uname2)
+        public ActionResult Play(string uname1="", string uname2="",string idgame="")
         {
             if (CurrentContext.IsLogged() == false)
             {
@@ -268,7 +268,7 @@ namespace CaroOnline.Controllers
                         {
                             return Json(new { data = "0", msg = "Game không tồn tại" }, JsonRequestBehavior.AllowGet);
                         }
-                        string link = "/Home/Play?uname1=" + game.User1 + "&uname2=" + game.User2;
+                        string link = "/Home/Play?uname1=" + game.User1 + "&uname2=" + game.User2+"&idgame="+idgame;
 
                         return Json(new { data = "1", link = link, msg = "" }, JsonRequestBehavior.AllowGet);
 
@@ -276,6 +276,20 @@ namespace CaroOnline.Controllers
                 }
             }
             return Json(new { data = "0", link = "", msg = "Đối thủ không online." }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetChess(int idgame)
+        {
+            using (var ctx = new CaroOnlineDBEntities())
+            {
+                var game = ctx.GameSave.Where(c => c.ID == idgame).FirstOrDefault();
+                if (game == null)
+                {
+                    return Json(new { data = "", msg = "Game không tồn tại" }, JsonRequestBehavior.AllowGet);
+                }
+                
+                return Json(new { data = game, msg = "" }, JsonRequestBehavior.AllowGet);
+
+            }
         }
     }
 }
