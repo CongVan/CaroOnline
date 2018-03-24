@@ -173,7 +173,7 @@ namespace CaroOnline.Controllers
 
             return View();
         }
-        public ActionResult EndGame(string uname1, string uname2, string winer)
+        public ActionResult EndGame(string uname1, string uname2, string winer,int? idsave)
         {
 
             using (var ctx = new CaroOnlineDBEntities())
@@ -186,8 +186,15 @@ namespace CaroOnline.Controllers
                 try
                 {
                     ctx.Games.Add(game);
+                    if (idsave.HasValue)
+                    {
+                        var gamesave = ctx.GameSave.Where(c => c.ID == idsave.Value).FirstOrDefault();
+                        if (gamesave != null)
+                        {
+                            ctx.GameSave.Remove(gamesave);
+                        }
+                    }
                     ctx.SaveChanges();
-
                     return Json(new { data = "1", msg = "" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
@@ -227,8 +234,29 @@ namespace CaroOnline.Controllers
                 return View(games);
             }
         }
-        public ActionResult Saved(string u1, string u2, string turn, string chess)
+        public ActionResult Saved(string u1, string u2, string turn, string chess, string idgame)
+
         {
+            if (!String.IsNullOrEmpty(idgame))
+            {
+                int id = int.Parse(idgame);
+                using(var ctx=new CaroOnlineDBEntities())
+                {
+                    var gupdate = ctx.GameSave.Where(c => c.ID == id).FirstOrDefault();
+                    gupdate.User1 = u1;
+                    gupdate.User2 = u2;
+                    gupdate.Turrn = turn;
+                    gupdate.Chess = chess;
+                    ctx.Entry(gupdate).State = System.Data.Entity.EntityState.Modified;
+                    ctx.SaveChanges();
+                    TempData["msgSuccess"] = "Lưu game thành công!";
+                    return Redirect("/Home/Index");
+                }
+            }
+
+
+
+
             var game = new GameSave();
             game.User1 = u1;
             game.User2 = u2;
@@ -291,5 +319,20 @@ namespace CaroOnline.Controllers
 
             }
         }
+        public ActionResult GetCompentitor(string name)
+        {
+            if (name=="")
+            {
+                return Json(new { data = "", msg = "Người chơi không tồn tại!" }, JsonRequestBehavior.AllowGet);
+            }
+            using(var ctx= new CaroOnlineDBEntities())
+            {
+                
+                var u = ctx.Users.Where(c => c.Name == name).FirstOrDefault();
+                return Json(new { data = u, msg = "" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

@@ -16,41 +16,78 @@
 <img src="~/Content/o.png" style="display:none" id="imgO" />
 <img src="~/Content/x.png" style="display:none" id="imgX" />
 <div class="col-lg-6" style="">
+    
     <div class="card rounded check-board" style="width:630px;height:630px;border:2px solid #ffffff;">
         @* border:1px solid #d3d3d3; *@
         <canvas id="TableChess" class="rounded " width="630" height="630" style="pointer-events:none"></canvas>
         @*onclick="storeGuess(event)"*@
     </div>
 </div>
-<div class="col-lg-3 col-md-6 mb-r px-4">
-
-    <div class="card card-body text-center">
+<div class="col-lg-3 col-md-3 pr-2">
+    <div class=" card mb-2">
+        <div class=" card-header primary-color white-text text-center p-0">
+            <h4><i class="fa fa-info-circle mr-2"></i>THÔNG BÁO</h4>
+            
+        </div>
+        <div class="card-body py-1 px-2 text-center">
+            <h6 class="black-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng.</h6>
+            <h6 class="black-text h4 text-danger font-italic" style="display:none" id="txtTimer"></h6>
+        </div>
+    </div>
+    <div class="card card-body text-center px-5">
         <div class="avatar mt-1 px-5">
             <img src="~/Content/default_user.png" class="rounded-circle img-fluid">
         </div>
         <h5 class="font-bold">
             <strong id="uName2">Tài khoản</strong>
         </h5>
-        <p class="grey-text">Graphic designer</p>
-        <div class="progress" style="height: 20px">
-            <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="">
+            
         </div>
+        <div class="d-flex justify-content-center">
+            <h5 class="badge badge-pill yellow font-weight-light mr-1">
+                <span class="h6" id="compentitorPoint">
+
+                </span>
+            </h5>
         
+        <h5 class="badge badge-pill success-color font-weight-light mr-1" >
+            <span class="h6" id="compentitorWin">
+
+            </span>
+        </h5>
+        <h5 class="badge badge-pill danger-color font-weight-light mr-1" >
+            <span class="h6" id="compentitorLost">
+
+            </span>
+        </h5>
+        <h5 class="badge badge-pill special-color font-weight-light mr-1" >
+            <span class="h6" id="compentitorEqual">
+
+            </span>    
+        </h5>
     </div>
-    <h2 id="test"></h2>
-    <button class="btn btn-primary btn-block btn-lg mb-1" disabled id="btnSave" ><i class="fa fa-save mr-2"></i>LƯU VÁN ĐẤU</button>
+    
+    
+        
+
+    </div>
+    @*<h2 id="test"></h2>*@
+    <div class="progress my-1" style="height: 20px">
+        <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <button class="btn btn-primary btn-block btn-lg mb-1" disabled id="btnSave"><i class="fa fa-save mr-2"></i>LƯU VÁN ĐẤU</button>
     <button class="btn btn-default btn-block btn-lg mb-1" disabled id="btnGameOver"><i class="fa fa-circle-thin mr-2"></i>ĐẦU HÀNG</button>
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
     <button class="btn btn-danger btn-block btn-lg mb-1" id="btnStart" style="display:none"><i class="fa fa-paper-plane-o mr-2"></i>BẮT ĐẦU</button>
-    <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng ...</h4>
-    <h4 class="white-text h4 text-danger font-italic" style="display:none" id="txtTimer"></h4>
-    <button class="btn btn-warning" id="btnTestHub">Test Hub</button>
+    
+    @*<button class="btn btn-warning" id="btnTestHub">Test Hub</button>*@
 
 </div>
 <div class="modal fade show" id="modalLoginAvatarDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog cascading-modal modal-avatar modal-md" role="document">
         <!--Content-->
-        <div class="modal-content" >
+        <div class="modal-content">
 
             <!--Body-->
             <div class="modal-body text-center  px-2 py-1">
@@ -62,11 +99,11 @@
                     <h4 id="msgWin" class="blue-text h4 font-weight-bold"><i class="fa fa-trophy mr-2"></i>BẠN ĐÃ CHIẾN THẮNG <span class="ml-3 warning-text">+90 điểm</span></h4>
                     <h4 id="msgLost" class="warning-text h4 font-weight-bold"><i class="fa fa-frown-o mr-2"></i>BẠN ĐÃ THUA <span class="ml-3 black-text">-100 điểm</span></h4>
                     <h4 id="msgClaim" class="primary-text h4 font-weight-bold"><i class="fa fa-smile-o mr-2"></i>HÒA CỜ</h4>
-                    <div  id="loaderEndGame">
+                    <div id="loaderEndGame">
                         <img src="~/Content/loading.svg" style="width:40px;height:40px" />Vui lòng đợi lưu kết quả trận đấu.
-                        </div>
+                    </div>
                 </div>
-                <a href="/" id="backHome"  class="btn btn-lg btn-outline-success font-weight-bold disabled">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
+                <a href="/" id="backHome" class="btn btn-lg btn-outline-success font-weight-bold disabled">VỀ TRANG CHỦ<i class="ml-2 fa fa-angle-right"></i></a>
             </div>
 
         </div>
@@ -81,12 +118,12 @@
 
             <!--Body-->
             <div class="modal-body text-center  px-2 py-1">
-                
-                    <div id="loaderSaving">
-                        <h4>Việc lưu ván đấu đang chơi sẽ làm dừng ván đấu và bạn sẽ bị trừ 50 điểm. Bạn  vẫn có thể tiếp tục ván đấu đã lưu .</h4>
-                        <img src="~/Content/loading.svg" style="width:40px;height:40px" />
-                    </div>
-               
+
+                <div id="loaderSaving">
+                    <h4>Việc lưu ván đấu đang chơi sẽ làm dừng ván đấu và bạn sẽ bị trừ 50 điểm. Bạn  vẫn có thể tiếp tục ván đấu đã lưu .</h4>
+                    <img src="~/Content/loading.svg" style="width:40px;height:40px" />
+                </div>
+
                 <button class="btn btn-outline-danger" id="btnSubmitSave"><i class="fa fa-save mr-2"></i> Lưu</button>
                 <button class="btn btn-danger" id="btnBackSave"><i class="fa fa-backward"></i> Quay lại</button>
             </div>
@@ -96,10 +133,11 @@
     </div>
 </div>
 <form id="frmSaved" method="post" action="/Home/Saved">
-    <input name="u1" type="hidden"/>
-    <input name="u2" type="hidden"/>
-    <input name="turn" type="hidden"/>
-    <input name="chess" type="hidden"/>
+    <input name="idgame" type="hidden"/>
+    <input name="u1" type="hidden" />
+    <input name="u2" type="hidden" />
+    <input name="turn" type="hidden" />
+    <input name="chess" type="hidden" />
 
 </form>
 
@@ -113,6 +151,7 @@
         var isPause = false;
         var turnUser = "";
         var curUName = "";
+        var turnGameSave = null;
         //var t=;
         var ArrMaxtrix = [];
         for (var i = 0; i < 21; i++) {
@@ -168,7 +207,6 @@
                 context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
             }
             $('#test').text(mouseX + " | " + mouseY);
-
         }, false);
         //draw point
         context.strokeStyle = '#6d4c41';
@@ -212,16 +250,19 @@
             var url = new URL(url_string);
             var UserName1 = url.searchParams.get("uname1").trim();
             var UserName2 = url.searchParams.get("uname2").trim();
-            var idgame = url.searchParams.get("idgame").trim();
+            var idgame = url.searchParams.get("idgame");
+            if (idgame != null) {
+                idgame = idgame.trim();
+            }
             var countTime1, countTime;
             var competitorId, competitorImg, competitorOwner, currOwner;
-            if (idgame != "") {//is restart game
+            if (idgame != null) {//is restart game
                 $.ajax({
                     url: "/Home/GetChess?idgame=" + idgame,
                     success: function (result) {
                         if (result.data != "") {
                             ArrMaxtrix = JSON.parse(result.data.Chess);
-                            turnUser = result.data.Turrn;
+                            turnGameSave = result.data.Turrn;
                             for (var i = 0; i < 21; i++) {
                                 for (var j = 0; j < 21; j++) {
                                     if (ArrMaxtrix[i][j].Owner == '1') {
@@ -230,7 +271,7 @@
                                     if (ArrMaxtrix[i][j].Owner == '2') {
                                         context.drawImage(imgX, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                                     }
-                                    
+
                                 }
                             }
                             context.stroke();
@@ -249,7 +290,7 @@
                 ArrMaxtrix[i][j].Owner = currOwner;
                 context.stroke();
                 //alert("Bạn thua cmnr");
-                $("#msgWin").css("display","none");
+                $("#msgWin").css("display", "none");
                 $("#msgClaim").css("display", "none");
                 $("#msgLost").css("display", "block");
                 if (type == "1") {
@@ -275,15 +316,14 @@
                 turnUser = curUName;
                 $('#txtReady').text("LƯỢT CỦA BẠN");
                 $('#txtReady').css('display', 'block');
-
                 $("#TimeCount").removeClass();
-                $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped");  
+                $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped");
                 var ms = 10;
                 countTime = setInterval(function () {
 
                     $("#txtTimer").css("display", "block");
                     $("#txtTimer").text("Thời gian: " + Math.round(ms) + " giây");
-                    $("#TimeCount").text(Math.round(ms) +" giây");
+                    $("#TimeCount").text(Math.round(ms) + " giây");
                     //$("#TimeCount").css("width", per + "%");
                     if (ms < 7 && ms > 4) {
                         $("#TimeCount").removeClass("bg-success");
@@ -310,7 +350,7 @@
 
                     // ms = ms - 1;
                     if (isPause) {
-                        ms = ms+ 0.01;
+                        ms = ms + 0.01;
                     }
 
                     if (ms <= 0) {
@@ -341,57 +381,10 @@
                 $("#btnSave").removeAttr("disabled");
                 $("#btnGameOver").removeAttr("disabled");
                 turnUser = $('#uName2').text().trim();
-            }
-            hgame.client.endgame = function () {
-                $("#loaderEndGame").css("display", "none");
-                $("#backHome").removeClass("disabled");
-                console.log("Lưu game thành công!");
-            }
-            hgame.client.saved = function () {
-                alert("đối thủ đã lưu game");
-                window.location.href = "/";
-            }
-            hgame.client.hello = function (hello) {
-                alert(hello);
-            }
-            $.connection.hub.start().done(function () {
-                $('#btnTestHub').on('click', function () {
-                    hgame.server.hello();
-                });
-                if (UserName1 != curUName) {//đối thủ là u1
-                    $('#uName2').text(UserName1);
-                    currImg = imgX;
-                    //competitorId = cnnIDUser1;
-                    competitorImg = imgO;
-                    competitorOwner = 1;
-                    currOwner = 2;
-                    //hgame.server.updateCnnID(UserName1);
-                    $('#btnReady').css('display', 'block');
-
-                } else if (UserName2 != curUName) {//đối thủ là u2
-                    $('#uName2').text(UserName2);
-                    currImg = imgO;
-                    //competitorId = cnnIDUser2;
-                    competitorImg = imgX;
-                    competitorOwner = 2;
-                    currOwner = 1;
-                    //hgame.server.updateCnnID(UserName2);
-                    $('#btnStart').css('display', 'block');
-                    $('#btnStart').attr("disabled", "disabled");
-                    $('#txtReady').css('display', 'block');
+                if (idgame != null && turnGameSave != null) {
+                    turnUser = turnGameSave;
                 }
-                $('#btnReady').on('click', function () {
-                    hgame.server.readyGame($('#uName2').text().trim());
-                    $('#txtReady').text("Đang chờ đối thủ bắt đầu.");
-                    $('#txtReady').css('display', 'block');
-                });
-                $('#btnStart').on('click', function () {
-                    $('#btnStart').attr("disabled", "disabled");
-                    $("#btnSave").removeAttr("disabled");
-                    $("#btnGameOver").removeAttr("disabled");
-                    hgame.server.startGame($('#uName2').text().trim());
-                    $('#TableChess').css("pointer-events", 'auto');
-                    turnUser = curUName;
+                if (turnUser == curUName) {
                     $('#txtReady').text("LƯỢT CỦA BẠN");
                     $("#TimeCount").removeClass();
                     $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped");
@@ -449,6 +442,147 @@
                             $("#TimeCount").css("width", 0 + "%");
                         }
                     }, 10);
+                }
+            }
+            hgame.client.endgame = function () {
+                $("#loaderEndGame").css("display", "none");
+                $("#backHome").removeClass("disabled");
+                console.log("Lưu game thành công!");
+            }
+            hgame.client.saved = function () {
+                alert("đối thủ đã lưu game");
+                window.location.href = "/";
+            }
+            hgame.client.hello = function (hello) {
+                alert(hello);
+            }
+            $.connection.hub.start().done(function () {
+                
+                $('#btnTestHub').on('click', function () {
+                    hgame.server.hello();
+                });
+                if (UserName1 != curUName) {//đối thủ là u1
+                    $('#uName2').text(UserName1);
+                    currImg = imgX;
+                    //competitorId = cnnIDUser1;
+                    competitorImg = imgO;
+                    competitorOwner = 1;
+                    currOwner = 2;
+                    //hgame.server.updateCnnID(UserName1);
+                    $('#btnReady').css('display', 'block');
+                    $('#txtReady').text('Hãy sẵng sàng để bắt đầu trận đấu.');
+                    $('#txtReady').css('display', 'block');
+
+                } else if (UserName2 != curUName) {//đối thủ là u2
+                    $('#uName2').text(UserName2);
+                    currImg = imgO;
+                    //competitorId = cnnIDUser2;
+                    competitorImg = imgX;
+                    competitorOwner = 2;
+                    currOwner = 1;
+                    //hgame.server.updateCnnID(UserName2);
+                    $('#btnStart').css('display', 'block');
+                    $('#btnStart').attr("disabled", "disabled");
+                    $('#txtReady').css('display', 'block');
+                }
+                $.ajax({
+                    url: "/Home/GetCompentitor?name=" + $("#uName2").text().trim(),
+                    success: function (result) {
+                        if (result.data != "") {
+                            var p = result.data.Point != null ? result.data.Point : 0;
+                            var w = result.data.Win != null ? result.data.Win : 0;
+                            var l = result.data.Lost != null ? result.data.Lost : 0;
+                            var e = result.data.Equal != null ? result.data.Equal : 0;
+
+                            $("#compentitorPoint").text(p +" Điểm");
+                            $("#compentitorWin").text(w +" Thắng");
+                            $("#compentitorLost").text(l + " Thua");
+                            $("#compentitorEqual").text(e+ " Hòa");
+
+                        } else {
+                            console.log(result.msg);
+                        }
+                    },
+                    error: function (x, e) {
+                        console.log(x);
+                    }
+                });
+                $('#btnReady').on('click', function () {
+                    hgame.server.readyGame($('#uName2').text().trim());
+                    $('#txtReady').text("Đang chờ đối thủ bắt đầu.");
+                    $('#txtReady').css('display', 'block');
+                });
+                $('#btnStart').on('click', function () {
+                    $('#btnStart').attr("disabled", "disabled");
+                    $("#btnSave").removeAttr("disabled");
+                    $("#btnGameOver").removeAttr("disabled");
+                    hgame.server.startGame($('#uName2').text().trim());
+                    $('#TableChess').css("pointer-events", 'auto');
+                    turnUser = curUName;
+                    //update turn user via turn of save game
+                    if (idgame != null && turnGameSave != null) {
+                        turnUser = turnGameSave;
+                    }
+                    if (turnUser == curUName) {
+                        $('#txtReady').text("LƯỢT CỦA BẠN");
+                        $("#TimeCount").removeClass();
+                        $("#TimeCount").addClass("progress-bar bg-success progress-bar-striped");
+                        var ms = 10;
+                        countTime = setInterval(function () {
+
+                            $("#txtTimer").css("display", "block");
+                            $("#txtTimer").text("Thời gian: " + Math.round(ms) + " giây");
+                            $("#TimeCount").text(Math.round(ms) + " giây");
+                            //$("#TimeCount").css("width", per + "%");
+                            if (ms < 7 && ms > 4) {
+                                $("#TimeCount").removeClass("bg-success");
+                                $("#TimeCount").addClass("bg-primary");
+                            }
+                            if (ms <= 4 && ms > 2) {
+                                $("#TimeCount").removeClass("bg-primary");
+                                $("#TimeCount").addClass("bg-warning");
+                            }
+                            if (ms <= 2) {
+                                $("#TimeCount").removeClass("bg-warning");
+                                $("#TimeCount").addClass("bg-danger");
+                            }
+
+                            var per = ms * 10;
+                            $("#TimeCount").attr("aria-valuenow", per);
+                            $("#TimeCount").css("width", per + "%");
+
+                            ms = ms - 0.01;
+                            //if (ms < 0) {
+                            //    clearInterval(countTime);
+                            //    //$('#modalLoginAvatarDemo').modal('toggle');
+                            //    //$("#btnNo").trigger("click");
+                            //}
+
+                            // ms = ms - 1;
+
+                            if (isPause) {
+                                ms += 10;
+                            }
+                            if (ms <= 0) {
+                                clearInterval(countTime);
+                                $("#txtTimer").css("display", "none");
+                                //alert("Bạn đã mất lượt.");
+                                var oi = Math.floor(oldX / Cell.SizeRect()), oj = Math.floor(oldY / Cell.SizeRect());
+                                if (oi >= 0 && oj >= 0) {
+                                    if (ArrMaxtrix[oi][oj].Owner == 0) {
+                                        context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
+                                    }
+                                }
+
+                                turnUser = $("#uName2").text().trim();
+                                hgame.server.paintChess(turnUser, -1, -1, 0);
+                                $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                                $("#TimeCount").attr("aria-valuenow", 0);
+                                $("#TimeCount").css("width", 0 + "%");
+                            }
+                        }, 10);
+                    }
+                    
 
                 });
                 canvas.addEventListener('click', function (evt) {
@@ -459,8 +593,7 @@
                         console.log("không phải lượt của bạn");
                         return;
                     }
-                    clearInterval(countTime);
-                    $("#txtTimer").css("display", "none");
+                    
                     var rect = canvas.getBoundingClientRect();
                     var mouseX = evt.clientX - rect.left - 0.5;
                     var mouseY = evt.clientY - rect.top;
@@ -472,6 +605,8 @@
                     var i = Math.floor(mouseX / Cell.SizeRect()), j = Math.floor(mouseY / Cell.SizeRect());
 
                     if (ArrMaxtrix[i][j].Owner == 0) {
+                        clearInterval(countTime);
+                        $("#txtTimer").css("display", "none");
                         countTurn++;
                         //alert(countTurn);
                         context.drawImage(currImg, (i * Cell.SizeRect()) + 3, (j * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
@@ -497,9 +632,10 @@
                             $("#msgClaim").css("display", "none");
                             $("msgWin").css("display", "block");
                             $('#modalLoginAvatarDemo').modal('toggle');
+                           
                             $.ajax({
                                 url: "/Home/EndGame",
-                                data: { uname1: UserName1, uname2: UserName2, winer: curUName },
+                                data: { uname1: UserName1, uname2: UserName2, winer: curUName, idsave: idgame },
                                 success: function (result) {
                                     if (result.data == "1") {
                                         $("#loaderEndGame").css("display", "none");
@@ -529,17 +665,23 @@
                 }, false);
 
                 $("#btnSave").on('click', function () {
+                    
+
                     isPause = true;
                     $("#modalSaving").modal('toggle');
                 });
                 $("#btnSubmitSave").on("click", function () {
                     isPause = true;
+                    //check turn user and curruser
+                    
+
                     var chess = JSON.stringify(ArrMaxtrix).toString();
+                    $("#frmSaved input[name='idgame']").val(idgame);
                     $("#frmSaved input[name='u1']").val(UserName1);
                     $("#frmSaved input[name='u2']").val(UserName2);
                     $("#frmSaved input[name='turn']").val(turnUser);
                     $("#frmSaved input[name='chess']").val(chess);
-                    
+
                     //$.ajax({
                     //    traditional: true,
                     //    url: "/Home/Saved",
