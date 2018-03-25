@@ -70,7 +70,7 @@
                 </div>
 
                 <button class="btn btn-outline-danger" disabled id="btnRestart"><i class="fa fa-save mr-2"></i>Vào trận</button>
-                <button class="btn btn-danger"  data-dismiss="modal"><i class="fa fa-backward"></i> Quay lại</button>
+                <button class="btn btn-danger" id="btnCloseRestart" data-dismiss="modal"><i class="fa fa-backward"></i> Quay lại</button>
             </div>
 
         </div>
@@ -91,8 +91,8 @@
                     <img src="~/Content/loading.svg" style="width:40px;height:40px" />
                 </div>
 
-                <button class="btn btn-outline-danger" id="btnOkRestart"><i class="fa fa-save mr-2"></i>Đồng ý</button>
-                <button class="btn btn-danger" id="btnNotOkRestarts" data-dismiss="modal" ><i class="fa fa-backward"></i>Thôi</button>
+                <button class="btn btn-outline-danger" id="btnOkRestart"><i class="fa fa-check mr-2"></i>Đồng ý</button>
+                <button class="btn btn-danger" id="btnNotOkRestarts" data-dismiss="modal" ><i class="fa fa-close mr-2"></i>Không đồng ý</button>
             </div>
 
         </div>
@@ -108,15 +108,22 @@
             var user =@Html.Raw(Json.Encode(CurrentContext.GetCurUser()));
             var target = "";
             var link = "";
+            var retartfrom = "";
             $.connection.hub.qs = { 'Uname': user.Name };
             var chat = $.connection.onlineHub;
 
             chat.client.restartGame = function (from, link) {
+                retartfrom = from;
                 link = link;
                 $("#modalRestart").modal("toggle");
                 $("#lblloaderRestart").text("Người chơi " + from + " muốn tiếp tục trận đấu đã lưu với bạn.");
             }
-            
+            chat.client.notOkRestart = function () {
+                $("#modalSaving").modal("toggle");
+                toastr.info("Đối thủ không đồng ý!", "Thông báo", {
+                    "positionClass": "toast-top-right",
+                });
+            }
             chat.client.okRestart = function (link) {
                 window.location.href = link;
             }
@@ -148,11 +155,16 @@
                         }
                     });
                 });
-
+                $("#btnNotOkRestarts").on("click", function () {
+                    chat.server.notOkRestart(retartfrom);
+                });
                 $("#btnOkRestart").on("click", function () {
                     window.location.href = link;
                     chat.server.okRestart(target,link)
                 });
+                //$("#btnCloseRestart").on("click", function () {
+                //    chat.server.closeRestart(target);
+                //});
             });
 
 

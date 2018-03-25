@@ -24,7 +24,39 @@
     </div>
 </div>
 <div class="col-lg-3 col-md-3 pr-2">
-    <div class=" card mb-2">
+    
+        <div class="col-xl-12 mb-1 px-0">
+            <ul class="nav nav-tabs nav-justified py-1 px-0 blue">
+                <li class="nav-item  waves-effect waves-dark m-0">
+                    <a class="nav-link active p-1 white darken-1" data-toggle="tab" href="#panelSocial" role="tab">
+                        <h5 class="blue-text section-heading h5 m-0">
+
+                            <i class="fa fa-info mr-1"></i>&nbsp; THÔNG TIN
+
+
+                        </h5>
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <div class="tab-content card px-1 rounded-top pb-0" style="height:90px">
+
+                <div class="tab-pane fade in show active " id="panelSocial" role="tabpanel">
+                    <div class="text-center">
+                        <h6 class="black-text h6  " style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng.</h6>
+                        <h6 class="black-text h6  " style="display:none" id="txtTimer"></h6>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    
+    @*<div class=" card mb-2">
         <div class=" card-header primary-color white-text text-center p-0">
             <h4><i class="fa fa-info-circle mr-2"></i>THÔNG BÁO</h4>
             
@@ -33,9 +65,9 @@
             <h6 class="black-text h4 text-danger font-italic" style="display:none" id="txtReady">Đang chờ người chơi sẵng sàng.</h6>
             <h6 class="black-text h4 text-danger font-italic" style="display:none" id="txtTimer"></h6>
         </div>
-    </div>
+    </div>*@
     <div class="card card-body text-center px-5">
-        <div class="avatar mt-1 px-5">
+        <div class="avatar mt-1 px-5 py-0">
             <img src="~/Content/default_user.png" class="rounded-circle img-fluid">
         </div>
         <h5 class="font-bold">
@@ -73,9 +105,13 @@
 
     </div>
     @*<h2 id="test"></h2>*@
-    <div class="progress my-1" style="height: 20px">
-        <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="d-flex justify-content-start">
+        <img class="my-1" src="~/Content/loading.svg" style="width:20px;height:20px" />
+        <div class="progress my-1" style="height: 20px">
+            <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
     </div>
+    
     <button class="btn btn-primary btn-block btn-lg mb-1" disabled id="btnSave"><i class="fa fa-save mr-2"></i>LƯU VÁN ĐẤU</button>
     <button class="btn btn-default btn-block btn-lg mb-1" disabled id="btnGameOver"><i class="fa fa-circle-thin mr-2"></i>ĐẦU HÀNG</button>
     <button class="btn btn-success btn-block btn-lg mb-1" id="btnReady" style="display:none"><i class="fa fa-check mr-2"></i>SẴNG SÀNG</button>
@@ -434,7 +470,6 @@
                                     context.clearRect((oi * Cell.SizeRect()) + 3, (oj * Cell.SizeRect()) + 3, Cell.SizeRect() - 7, Cell.SizeRect() - 7);
                                 }
                             }
-
                             turnUser = $("#uName2").text().trim();
                             hgame.server.paintChess(turnUser, -1, -1, 0);
                             $('#txtReady').text("LƯỢT ĐI: " + turnUser);
@@ -442,6 +477,9 @@
                             $("#TimeCount").css("width", 0 + "%");
                         }
                     }, 10);
+
+                } else {
+                    $('#txtReady').text("LƯỢT ĐI: " + turnUser);
                 }
             }
             hgame.client.endgame = function () {
@@ -582,7 +620,9 @@
                             }
                         }, 10);
                     }
-                    
+                    else {
+                        $('#txtReady').text("LƯỢT ĐI: " + turnUser);
+                    }
 
                 });
                 canvas.addEventListener('click', function (evt) {
@@ -673,7 +713,10 @@
                 $("#btnSubmitSave").on("click", function () {
                     isPause = true;
                     //check turn user and curruser
-                    
+                    if (turnUser != curUName) {
+                        alert("Chỉ có thể lưu game khi đến lượt của bạn");
+                        return;
+                    }
 
                     var chess = JSON.stringify(ArrMaxtrix).toString();
                     $("#frmSaved input[name='idgame']").val(idgame);
