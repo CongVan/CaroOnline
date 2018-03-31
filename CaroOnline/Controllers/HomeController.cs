@@ -376,7 +376,14 @@ namespace CaroOnline.Controllers
                 return Json(new { data = u, msg = "" }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        public ActionResult GetAllUser()
+        {
+            using(var ctx=new CaroOnlineDBEntities())
+            {
+                var lstUser = ctx.Users.ToList();
+                return Json(lstUser, JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }

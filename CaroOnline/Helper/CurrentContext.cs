@@ -45,8 +45,6 @@ namespace CaroOnline.Helper
             HttpContext.Current.Session["User"] = null;
             //HttpCookie login = new HttpCookie("userID");
             //login.Expires = DateTime.Now.AddDays(-7d);
-
-
             HttpContext.Current.Response.Cookies["userID"].Expires = DateTime.Now.AddDays(-8);
 
 

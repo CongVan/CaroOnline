@@ -5,31 +5,42 @@
     ViewBag.Title = "Index";
 }
 
-<div class="col-lg-9 col-md-9 col-sm-12" >
+<div class="col-lg-9 col-md-9 col-sm-12">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs nav-justified indigo rounded p-2" role="tablist" style="background-image: linear-gradient(60deg, #3d3393 0%, #2b76b9 37%, #2cacd1 65%, #35eb93 100%);">
         <li class="nav-item">
-            <a class="nav-link active h4-responsive" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-users mr-2"></i>NGƯỜI CHƠI</a>
+            <a class="nav-link active h4-responsive" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-globe mr-2"></i>ONLINE</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link  h4-responsive" id="tabAllUser" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-group mr-2"></i>NGƯỜI CHƠI</a>
         </li>
         <li class="nav-item">
             <a class="nav-link h4-responsive" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-sticky-note-o mr-2"></i> LUẬT CHƠI</a>
         </li>
-        @*<li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Mail</a>
-            </li>*@
+
     </ul>
     <!-- Tab panels -->
     <div class="tab-content grey lighten-3 card px-1 rounded pb-4" style="">
         <!--Panel 1-->
         <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
             <div class="card-body pt-2">
-
+                    
                 @*<div id="test"><button class="btn btn-default" id="btnTest">Test</button></div>*@
                 <div class="row" id="ViewUsers">
                 </div>
             </div>
         </div>
         <!--/.Panel 1-->
+        <!--Panel 3-->
+        <div class="tab-pane fade" id="panel7" role="tabpanel">
+            <div class="card-body pt-2">
+                <div id="contentAllUser" class="row">
+
+                </div>
+            </div>
+
+        </div>
+        <!--/.Panel 3-->
         <!--Panel 2-->
         <div class="tab-pane fade text-center px-5" id="panel6" role="tabpanel">
             <h2 class="success-text mb-2">LUẬT CHƠI CỜ CARO</h2>
@@ -38,22 +49,21 @@
                 Người chơi có 5 quân cờ liên tiếp theo hàng ngang,dọc,chéo trước sẽ chiến thắng.
 
             </p>
-            <p class=" px-5 h5">
-               <span class="success-text">Thắng: +80 điểm.</span>
-                
-                <span class="danger-text">Thua : -100 điểm.</span> 
+            <p class="h5 ">
+                Bạn có thể lưu ván đấu khi đến lượt của mình và có thể tiếp tục trong mục "ván đấu đã lưu".
 
-                <span class="primary-text">Hòa : +0 điểm.</span> 
             </p>
-            
+            <p class=" px-5 h5">
+                <span class="success-text">Thắng: +80 điểm.</span>
+
+                <span class="danger-text">Thua : -100 điểm.</span>
+
+                <span class="primary-text">Hòa : +0 điểm.</span>
+            </p>
+
         </div>
         <!--/.Panel 2-->
-        <!--Panel 3-->
-        @*<div class="tab-pane fade" id="panel7" role="tabpanel">
-                <br>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-            </div>*@
-        <!--/.Panel 3-->
+
     </div>
 
 </div>
@@ -84,19 +94,19 @@
                             <div id="TimeCount" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%; height: 20px" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         @*<div class="progress mt-3 mb-0" style="width:40%">
-                            <div id="TimeCount" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>*@
+                                <div id="TimeCount" class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>*@
                     </div>
                 </div>
-                
+
                 <div class="text-center">
                     <button class="btn btn-teal mt-1 waves-effect waves-light btn-md " style="font-size:.8rem" id="btnYes">
                         Đồng ý <i class="fa fa-chevron-circle-right ml-1"></i>
-                        
+
                     </button>
                     <button class="btn btn-outline-teal mt-1 waves-effect waves-light btn-md" style="font-size:.8rem" id="btnNo">
                         Từ chối<i class="fa fa-ban ml-1"></i>
-                        
+
                     </button>
                 </div>
             </div>
@@ -168,7 +178,7 @@
                 fromback = from;
                 $("#modalRestart").modal("toggle");
                 $("#lblloaderRestart").text("Người chơi " + from + " muốn tiếp tục trận đấu đã lưu với bạn.");
-            }            
+            }
             chat.client.okRestart = function (link) {
                 window.location.href = link;
             }
@@ -270,8 +280,8 @@
                 $("#btnYes").data("uNamefrom", uNameFrom.trim());
                 $('#modalLoginAvatarDemo').modal('toggle');
                 var ms = 10;
-                $("#TimeCount").removeClass();  
-                $("#TimeCount").addClass("progress-bar bg-success");  
+                $("#TimeCount").removeClass();
+                $("#TimeCount").addClass("progress-bar bg-success");
                 countTime=setInterval(function () {
                     if(ms<7 && ms >4){
                         $("#TimeCount").removeClass("bg-success");
@@ -285,7 +295,7 @@
                         $("#TimeCount").removeClass("bg-warning");
                         $("#TimeCount").addClass("bg-danger");
                     }
-                    
+
                     var per=ms*10;
                     $("#TimeCount").attr("aria-valuenow",per);
                     $("#TimeCount").css("width",per+"%");
@@ -307,7 +317,7 @@
                     "closeButton":true,
                     "newestOnTop": true, // true/false
                     "progressBar": true,
-                    "timeOut": "10000", 
+                    "timeOut": "10000",
                 });
                 $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
                 $(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled",false);
@@ -329,7 +339,7 @@
                 //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").text("Thách đấu");
                 //$(".btnPlay[data-uname='" + uNameFrom.trim() + "']").prop("disabled", false);
             }
-            
+
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $("#btnNotOkRestarts").on("click", function () {
@@ -377,7 +387,52 @@
 
 
             });
+            $("#tabAllUser").on('click', function () {
+                $.ajax({
+                    url: "/Home/GetAllUser",
+                    success: function (data) {
+                        $("#contentAllUser").html("");
+                        if (data == "") {
+                            $("#contentAllUser").append('<p id="noDataFound" class="text-muted">Không có tài khoản online.</p>');
+                            return;
+                        }
+                        //$("#ViewUsers").html("");
+                        data.forEach(function (item) {
 
+                            //if($("#"+item.Name).length){
+                            //    return;
+                            //}
+                            var html = '<div class="col-lg-3 col-md-3 col-sm-6 mb-2 px-3 User" id="' + item.Name + '" data-uID="' + item.ID + '" data-cnnID="' + item.CID + '">' +
+                                '<div class="card text-center hoverable  view overlay hm-white-light hm-zoom">' +
+                                '<div class="card-body px-5 ">' +
+                                '<img src="/Content/default_user.png"  class="img-fluid rounded-circle z-depth-1-half">' +
+                                '</div>' +
+                                '<h5 class="card-title primary-text blue-grey lighten-4 py-1 mb-1 font-weight-bold">'
+                                + item.Name +
+                                '<i class="fa fa-circle success-text ml-2"></i>' +
+                                '</h5>' +
+
+                                '<div class="my-2 card-text text-left px-0 d-flex justify-content-between text-center px-1">' +
+                                '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light pr-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">' + item.Win + '</strong></h5>' +
+                                '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light pr-2 pb-1">Thua</span>&nbsp;<strong class="red-text">' + item.Lost + '</strong></h5>' +
+                                '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light pr-2 pb-1">Hòa</span>&nbsp;<strong class="grey-text">' + item.Equal + '</strong></h5>' +
+                                '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">' + item.Point + '</strong></h5>' +
+                                '</div>' +
+                                //'<div class="card-footer px-0 pt-1 mb-0 pb-0">' +
+                                //'<button class="btn btn-md  btn-danger btn-block btnPlay"  data-uName="' + item.Name + '" data-cnnID="' + item.CID + '" data-uID="' + item.ID + '">Thách đấu</button>' +
+                                //'</div>' +
+                                '</div>' +
+                                '</div>';
+                            $("#contentAllUser").append(html);
+                        });
+                        //$("#noDataFound").hide();
+                    },
+                    error: function (x, e) {
+
+                    }
+                })
+
+            });
         });
 
     </script>
