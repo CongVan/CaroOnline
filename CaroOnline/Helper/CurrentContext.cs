@@ -53,7 +53,12 @@ namespace CaroOnline.Helper
         }
         public static Users GetCurUser()
         {
-            return (Users)HttpContext.Current.Session["User"];
+            var cur= (Users)HttpContext.Current.Session["User"];
+            using (var ctx=new CaroOnlineDBEntities())
+            {
+                var user = ctx.Users.Where(c => c.Name == cur.Name).FirstOrDefault();
+                return user;
+            }
         }
         public static bool IsCurrentUrl(string controllerName, string actionName, ViewContext viewContext)
         {

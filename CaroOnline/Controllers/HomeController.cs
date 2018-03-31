@@ -24,6 +24,10 @@ namespace CaroOnline.Controllers
             ViewBag.NotPairing = TempData["NotPairing"] != null ? TempData["NotPairing"].ToString() : null;
 
             //string currName = CurrentContext.GetCurUser().Name;
+            //using (var ctx= new CaroOnlineDBEntities())
+            //{
+            //    var user = ctx.Users.Where(c => c.Name == currName).FirstOrDefault();
+            //}
             //var Users = new List<Users>();
             //var lst = OnlineHub.ListUsers;
             //try
@@ -57,6 +61,8 @@ namespace CaroOnline.Controllers
 
 
         }
+        
+
         [CheckLogin]
         public ActionResult ReloadUser()
         {
@@ -73,7 +79,7 @@ namespace CaroOnline.Controllers
                         if (sName != currName)
                         {
                             var tempID = item["cID"].ToString();
-                            var us = ctx.Users.Where(c => c.Name == sName).Select(c => new { ID = c.ID, Name = c.Name, CID = tempID }).FirstOrDefault();
+                            var us = ctx.Users.Where(c => c.Name == sName).Select(c => new { ID = c.ID, Name = c.Name, CID = tempID,Win=c.Win,Lost=c.Lost,Equal=c.Equal,Point=c.Point }).FirstOrDefault();
                             if (us != null)
                             {
                                 Users.Add(us);
@@ -138,6 +144,10 @@ namespace CaroOnline.Controllers
             {
                 try
                 {
+                    model.Point = 0;
+                    model.Win = 0;
+                    model.Lost = 0;
+                    model.Equal = 0;
                     ctx.Users.Add(model);
                     ctx.SaveChanges();
                 }
@@ -185,14 +195,48 @@ namespace CaroOnline.Controllers
                 game.DateGame = DateTime.Now;
                 try
                 {
-                    ctx.Games.Add(game);
+                    
                     if (idsave.HasValue)
                     {
                         var gamesave = ctx.GameSave.Where(c => c.ID == idsave.Value).FirstOrDefault();
+                        
                         if (gamesave != null)
                         {
                             ctx.GameSave.Remove(gamesave);
                         }
+                    }
+                    else
+                    {
+                        var u1 = ctx.Users.Where(c => c.Name == uname1).FirstOrDefault();
+                        var u2 = ctx.Users.Where(c => c.Name == uname2).FirstOrDefault();
+                        if (u1 == null || u2 == null )
+                        {
+                            return Json(new { data = "0", msg = "Có lỗi xảy ra khi lưu kết quả!" }, JsonRequestBehavior.AllowGet);
+                        }
+                        if (uname1 == winer)
+                        {
+                            u1.Point += 90;
+                            u1.Win++;
+                        }
+                        else
+                        {
+                            u1.Point -= 100;
+                            u1.Lost++;
+                        }
+                        if (uname2 == winer)
+                        {
+                            u2.Point += 90;
+                            u2.Win++;
+                        }
+                        else
+                        {
+                            u2.Point -= 100;
+                            u2.Lost++;
+                        }
+                        ctx.Entry(u1).State = System.Data.Entity.EntityState.Modified;
+                        ctx.Entry(u2).State = System.Data.Entity.EntityState.Modified;
+                        ctx.Games.Add(game);
+                        
                     }
                     ctx.SaveChanges();
                     return Json(new { data = "1", msg = "" }, JsonRequestBehavior.AllowGet);

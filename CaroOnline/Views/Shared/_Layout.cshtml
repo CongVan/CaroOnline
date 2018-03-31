@@ -1,4 +1,5 @@
 ﻿@using CaroOnline.Helper
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,7 +181,7 @@
         <div class="container-fluid body-content mt-1">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <div class="card testimonial-card" style="  background: linear-gradient(to right, #02111d, #037bb5, #02111d);">
+                    <div class="card testimonial-card">
 
                         <!--Bacground color-->
                         <div class="card-up" style="background-image: url('/Content/images.jpg');background-repeat:round">
@@ -197,32 +198,31 @@
                             <a class="activator pt-1"><i class="fa fa-circle success-text"></i></a>
                             @if (CurrentContext.IsLogged())
                             {
-                                 
-                                    
-                                
-                                <p class="mb-1 card-title primary-text grey lighten-4 py-1 justify-content-center h4 " id="currUserName">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
+
+
+
+                                <p class="mb-0 card-title primary-text lighten-4 py-1 justify-content-center h3 z-depth-1" id="currUserName">@CurrentContext.GetCurUser().Name &nbsp; &nbsp;</p>
                                 <input type="hidden" id="currConnectID" />
 
-                                <h6 class="red-text ">
-                                    @{ 
-                                        var point = CurrentContext.GetCurUser().Point.HasValue ? CurrentContext.GetCurUser().Point : 0;
-                                        var win= CurrentContext.GetCurUser().Win.HasValue ?CurrentContext.GetCurUser().Win : 0;
-                                        var lost = CurrentContext.GetCurUser().Lost.HasValue? CurrentContext.GetCurUser().Lost:0;
-                                        var equal = CurrentContext.GetCurUser().Equal.HasValue? CurrentContext.GetCurUser().Equal:0;
-                                    }
-                                    
-                                    
-                                    
-                                </h6>
-                                <div>
-                                <h5 class="badge badge-pill yellow font-weight-light">@point Điểm</h5>
+                                <h6 class="red-text " hidden>
+                                    @{
 
+                                        var cur = CurrentContext.GetCurUser();
+                                    }
+
+
+
+                                </h6>
+                                <div class="z-depth-2 pt-2">
+                                    <h5 class="badge badge-pill blue darken-1 font-weight-light">@cur.Point.Value.ToString() Điểm</h5>
+                                    <br />
+                                    <h5 class="badge badge-pill success-color font-weight-light">@cur.Win.Value.ToString() Thắng</h5>
+                                    <h5 class="badge badge-pill danger-color font-weight-light">@cur.Lost.Value.ToString() Thua</h5>
+                                    <h5 class="badge badge-pill special-color font-weight-light">@cur.Equal.Value.ToString() Hòa</h5>
                                 </div>
-                                @*<a class="btn-floating btn-lg green"><i class="fa fa-bolt"></i></a>*@
-                                <h5 class="badge badge-pill success-color font-weight-light">@win Thắng</h5>
-                                <h5 class="badge badge-pill danger-color font-weight-light">@lost Thua</h5>
-                                <h5 class="badge badge-pill special-color font-weight-light">@equal Hòa</h5>
-                            }
+
+
+                                        }
 
                             <div class="list-group">
                                 @if (CurrentContext.IsCurrentUrl("Home", "Index", ViewContext))
@@ -237,7 +237,7 @@
                                         <i class="fa fa-home text-danger">&nbsp;|&nbsp;</i>Trang chủ
                                     </a>
                                 }
-                                
+
                                 @if (CurrentContext.IsCurrentUrl("Home", "Play", ViewContext))
                                 {
                                     <a href="/Home/Play" class="active hvr-underline-from-center list-group-item list-group-item-action card my-1 font-weight-normal h4-responsive text-uppercase"><i class="fa fa-gamepad">&nbsp;|&nbsp;</i>  Vào chơi</a>
@@ -265,7 +265,7 @@
 
 
 
-                                
+
                                 <a href="/Home/Logout" class="hvr-underline-from-center list-group-item list-group-item-action card my-1 h4-responsive text-uppercase"><i class="fa fa-sign-out text-danger">&nbsp;|&nbsp;</i> Thoát</a>
                                 @*<a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>*@
                             </div>

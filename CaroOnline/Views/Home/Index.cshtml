@@ -168,8 +168,7 @@
                 fromback = from;
                 $("#modalRestart").modal("toggle");
                 $("#lblloaderRestart").text("Người chơi " + from + " muốn tiếp tục trận đấu đã lưu với bạn.");
-            }
-            
+            }            
             chat.client.okRestart = function (link) {
                 window.location.href = link;
             }
@@ -221,10 +220,10 @@
                                 '</h5>'+
 
                                 '<div class="my-2 card-text text-left px-0 d-flex justify-content-between text-center px-1">'+
-                                    '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light pr-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">12</strong></h5>'+
-                                    '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light pr-2 pb-1">Thua</span>&nbsp;<strong class="red-text">12</strong></h5>'+
-                                    '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light pr-2 pb-1">Hòa</span>&nbsp;<strong class="grey-text">12</strong></h5>'+
-                                    '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">500</strong></h5>'+
+                                '<h5 class="mb-0"><span class="badge green darken-2 font-weight-light pr-2 pb-1">Thắng</span>&nbsp; <strong class="green-text">' + item.Win +'</strong></h5>'+
+                                '<h5 class="mb-0"><span class="badge  red accent-4 font-weight-light pr-2 pb-1">Thua</span>&nbsp;<strong class="red-text">' + item.Lost +'</strong></h5>'+
+                                '<h5 class="mb-0"><span class="badge  unique-color-dark font-weight-light pr-2 pb-1">Hòa</span>&nbsp;<strong class="grey-text">' + item.Equal +'</strong></h5>'+
+                                '<h5 class="mb-0 border border-primary"><span class="badge   blue darken-2 font-weight-light px-2 pb-1">Điểm</span>&nbsp;<strong class="blue-text">' + item.Point +'</strong></h5>'+
                                 '</div>'+
                                 '<div class="card-footer px-0 pt-1 mb-0 pb-0">'+
                                 '<button class="btn btn-md  btn-danger btn-block btnPlay"  data-uName="' + item.Name +'" data-cnnID="' + item.CID + '" data-uID="' + item.ID +'">Thách đấu</button>'+
