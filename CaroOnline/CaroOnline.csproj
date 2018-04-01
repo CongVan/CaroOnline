@@ -230,6 +230,7 @@
     <Content Include="Content\loading.svg" />
     <Content Include="Content\o12.png" />
     <Content Include="Content\o22.png" />
+    <Content Include="Content\on.png" />
     <Content Include="Content\rsz_border.jpg" />
     <Content Include="Content\x.png" />
     <Content Include="Content\o.png" />
